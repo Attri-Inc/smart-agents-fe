@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-aisa-dev-113241-authRole",
+      "UnauthRoleArn": "arn:aws:iam::945586918699:role/amplify-aisa-dev-113241-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::945586918699:role/amplify-aisa-dev-113241-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-aisa-dev-113241-deployment",
+      "UnauthRoleName": "amplify-aisa-dev-113241-unauthRole",
+      "StackName": "amplify-aisa-dev-113241",
+      "StackId": "arn:aws:cloudformation:us-east-1:945586918699:stack/amplify-aisa-dev-113241/c6300e70-ff78-11ed-abf4-0e89cb2d4977",
+      "AmplifyAppId": "d27sptv69gesha"
+    },
+    "categories": {
+      "hosting": {
+        "S3AndCloudFront": {}
+      }
+    }
+  }
+}
