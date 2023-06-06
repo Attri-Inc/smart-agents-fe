@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-import { CLIENT_ID } from "./constants/authentication.ts";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,7 +17,7 @@ const queryClient = new QueryClient({
   },
 });
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <GoogleOAuthProvider clientId={CLIENT_ID}>
+  <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
         <App />
