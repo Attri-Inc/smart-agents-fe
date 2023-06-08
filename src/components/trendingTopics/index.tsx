@@ -15,8 +15,8 @@ const TrendingTopics = (): JSX.Element => {
 
   return (
     <div className="pt-6">
-      <p className="font-inter font-medium text-gray-900 text-lg pb-2">
-        Trending Topics
+      <p className="font-inter font-semibold text-gray-900 text-2xl pb-4">
+        Trending Today
       </p>
       <ul
         className={

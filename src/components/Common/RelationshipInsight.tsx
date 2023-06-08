@@ -1,10 +1,7 @@
 import Avatar2 from "../../assets/Avatar3.png";
 import Arrow from "../icons/Arrow";
-import LinkedIn from "../icons/LinkedIn";
 import LightBlub from "../icons/LightBlub";
 import Mail from "../icons/Mail";
-import Modrate from "../icons/Modrate";
-import Partnership from "../icons/Partnership";
 import { useQuery } from "react-query";
 import { getTopConnections } from "../../utils/APIHelperFun";
 import TopConnectionsSkeleton from "./skeleton/TopConnectionsSkeleton";
@@ -21,8 +18,7 @@ interface RelationshipInsightProps {
   labelId: string;
 }
 
-const RelationshipInsight = ({ title, labelId }: RelationshipInsightProps) => {
-  const topConnections = "topConnections";
+const RelationshipInsight = ({ title }: RelationshipInsightProps) => {
   const {
     data: topConnectionData,
     isLoading,
@@ -42,7 +38,7 @@ const RelationshipInsight = ({ title, labelId }: RelationshipInsightProps) => {
           <ul>
             {data?.top_connections.map((topConnectionsDetail: any) => (
               <li className="flex items-center justify-between w-full py-4 border-b-2 flex-1">
-                <div className="flex items-center">
+                <div className="flex items-center w-80">
                   <img src={Avatar2} alt="avatar" />
                   <div className="pl-4">
                     <p className="font-inter text-sm text-indigo-600 font-medium">
@@ -56,44 +52,21 @@ const RelationshipInsight = ({ title, labelId }: RelationshipInsightProps) => {
                     </div>
                   </div>
                 </div>
-                {labelId === topConnections ? (
-                  <div className="">
-                    <div className="flex items-center">
-                      <LinkedIn />
-                      <span className="px-2 font-inter text-sm text-gray-900">
-                        3rd
-                      </span>
-                      <LightBlub />
-                      <span className="px-2 font-inter text-sm text-gray-900">
-                        {`${topConnectionsDetail.number_of_common_interest} Common Interest`}
-                      </span>
-                    </div>
-                    <p className="font-inter text-sm text-gray-500 pt-1">
-                      {`Last contact on ${
-                        topConnectionsDetail?.last_contact_on
-                          ? topConnectionsDetail?.last_contact_on.slice(0, 10)
-                          : "-"
-                      }`}
-                    </p>
+                <div className="w-64">
+                  <div className="flex items-center">
+                    <LightBlub />
+                    <span className="px-2 font-inter text-sm text-gray-900">
+                      {`${topConnectionsDetail.number_of_common_interest} Common Interest`}
+                    </span>
                   </div>
-                ) : (
-                  <div>
-                    <div className="flex items-center">
-                      <Modrate />
-                      <span className="px-2 font-inter text-sm text-gray-900">
-                        Moderate
-                      </span>
-                      <Partnership />
-                      <span className="px-2 font-inter text-sm text-gray-900">
-                        Partnership
-                      </span>
-                    </div>
-                    <p className="font-inter text-sm text-gray-500 pt-1">
-                      Last contact on January 7, 2020
-                    </p>
-                  </div>
-                )}
-
+                  <p className="font-inter text-sm text-gray-500 pt-1">
+                    {`Last contacted on ${
+                      topConnectionsDetail?.last_contact_on
+                        ? topConnectionsDetail?.last_contact_on.slice(0, 10)
+                        : "-"
+                    }`}
+                  </p>
+                </div>
                 <Arrow className="cursor-pointer" />
               </li>
             ))}

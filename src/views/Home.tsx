@@ -38,22 +38,18 @@ const Home = (): JSX.Element => {
         <div className="h-full w-full">
           <div>
             <div>
-              <h3 className="text-lg text-inter tracking-wide text-gray-900">
-                <span className="font-bold">Hi, </span>
-                Md Riyaz Ansari
+              <h3 className="text-2xl text-inter tracking-wide text-gray-900 ">
+                <span className="font-bold">Hi Md Riyaz Ansari, </span>
               </h3>
             </div>
-            <p className="pt-4 text-inter text-gray-700">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Voluptatibus aut aperiam tempora hic, perferendis itaque vel
-              optio, nisi voluptatem maxime quibusdam necessitatibus repellat
-              est, molestiae exercitationem
+            <p className="pt-4 text-inter text-gray-700 text-2xl">
+              Welcome, Here are your TODOs
             </p>
           </div>
           <div className="pt-8 md:flex justify-between">
             <div className="w-7/12 md:full">
               <h1 className="font-inter font-semibold text-gray-900 text-2xl pb-4">
-                Your todos for today
+                Follow up Tasks
               </h1>
               <div className="pr-8">
                 <ul className="divide-y divider-gray-200 dark:divide-gray-700 border-y">
@@ -97,7 +93,7 @@ const Home = (): JSX.Element => {
             </div>
             <div className="w-5/12 pr-4">
               <h1 className="font-inter font-semibold text-gray-900 text-2xl pb-4">
-                Today
+                Events
               </h1>
               <ul className="overflow-y-scroll h-80 border-2 rounded-lg">
                 {today.map((item: any) => (

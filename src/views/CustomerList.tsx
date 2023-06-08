@@ -114,7 +114,7 @@ const Customers = (): JSX.Element => {
       </div>
       <div className="w-full px-8 py-4 h-screen overflow-y-auto">
         <h1 className="font-inter font-semibold text-gray-900 text-2xl pb-4">
-          Customers list
+          Your Contacts
         </h1>
         <div className="relative overflow-x-auto">
           <table className="border-x border-b w-full text-sm text-left text-gray-500">

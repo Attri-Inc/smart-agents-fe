@@ -38,14 +38,14 @@ const CommonInterest = (props: commonInterestProps): JSX.Element => {
       <ul className="divide-y divider-gray-200 dark:divide-gray-700 border-y">
         {commonCustomersInterest?.map((commonInterest: commonInterestData) => (
           <li className="flex items-center justify-between w-full py-4">
-            <div className="flex items-center">
+            <div className="flex items-center w-64">
               <div className="flex items-center pb-2">
-                <p className="font-inter text-sm text-indigo-600 font-medium capitalize">
+                <p className="font-inter text-base text-indigo-600 font-medium capitalize">
                   {commonInterest.keyword}
                 </p>
               </div>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center width w-64">
               <div className="flex items-center -space-x-4 pr-8">
                 <img
                   className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
@@ -71,8 +71,8 @@ const CommonInterest = (props: commonInterestProps): JSX.Element => {
                   +{commonInterest.number_of_connection}
                 </span>
               </div>
-              <Arrow className="cursor-pointer" />
             </div>
+            <Arrow className="cursor-pointer" />
           </li>
         ))}
       </ul>

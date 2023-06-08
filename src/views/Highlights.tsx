@@ -3,23 +3,18 @@ import { useState } from "react";
 import RelationshipInsight from "../components/Common/RelationshipInsight";
 import Avatar1 from "../assets/Avatar1.png";
 import Avatar2 from "../assets/Avatar2.png";
-import TrendingTopics from "../components/trendingTopics";
 import Box from "../components/Common/Box";
 import Email from "../components/icons/Email";
 import Call from "../components/icons/Call";
 import Twitter from "../components/icons/Twitter";
 import LinkedIn from "../components/icons/LinkedIn";
-import Table from "../components/Common/Table";
 import QueryInput from "../components/Common/QueryInput";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/sidebar";
 import SearchBar from "../components/sarchbar";
 import { useQuery } from "react-query";
-import {
-  getNetworHighlights,
-  getcustomerCommonInterest,
-} from "../utils/APIHelperFun";
+import { getcustomerCommonInterest } from "../utils/APIHelperFun";
 import CommonInterest from "../components/commomInterest/CommonInterest";
 import NetworkContects from "../components/networkContacts/NetworkContects";
 
@@ -41,29 +36,6 @@ const profiles = [
     userid: "ankit.copper@example.com",
     img: Avatar2,
     lastConnected: "January 7, 2022",
-  },
-];
-const profiles1 = [
-  {
-    name: "Jane Copper",
-    userid: "jane.copper@example.com",
-    img: Avatar2,
-    lastConnected: "January 7, 2020",
-    labelId: "potentialOpportunities",
-  },
-  {
-    name: "Riyaz Kazmi",
-    userid: "riyaz.kazmi@example.com",
-    img: Avatar1,
-    lastConnected: "January 10, 2023",
-    labelId: "potentialOpportunities",
-  },
-  {
-    name: "Ankit Copper",
-    userid: "ankit.copper@example.com",
-    img: Avatar2,
-    lastConnected: "January 7, 2022",
-    labelId: "potentialOpportunities",
   },
 ];
 
@@ -109,11 +81,6 @@ const Highlights = () => {
   const handleOnQuerySearch = (e: any) => {
     setUserAskedText(e.target.value);
   };
-  const {
-    data: networkHilightPercentage,
-    isLoading,
-    isError,
-  } = useQuery("network_hightlight_tabel_data", getNetworHighlights);
 
   const {
     data: commonCustomersInterest,
@@ -163,11 +130,6 @@ const Highlights = () => {
                 title="Top Connections"
                 labelId="topConnections"
               />
-              <RelationshipInsight
-                userDetails={profiles1}
-                title="Potential Opportunities"
-                labelId="potentialOpportunities"
-              />
               <CommonInterest
                 commonCustomersInterest={data?.common_interest}
                 isCustomerCommonDataLoading={isCustomerCommonDataLoading}
@@ -177,7 +139,7 @@ const Highlights = () => {
             <Tab.Panel>
               <div className="py-4">
                 <h3 className="text-lg font-inter font-medium text-gray-900">
-                  Contacts Insight
+                  Network growth
                 </h3>
                 <div>
                   <NetworkContects />
@@ -192,20 +154,6 @@ const Highlights = () => {
                     <Box {...contact} />
                   ))}
                 </div>
-              </div>
-              <TrendingTopics />
-              <TrendingTopics />
-              <div className="p-4">
-                <h3 className="text-lg font-inter font-medium text-gray-900 pb-2">
-                  Engagement Rates
-                </h3>
-                {!isLoading && networkHilightPercentage && !isError ? (
-                  <Table
-                    columns={networkHilightPercentage?.data?.network_highlights}
-                  />
-                ) : (
-                  <h1>Something is wrong</h1>
-                )}
               </div>
             </Tab.Panel>
           </Tab.Panels>
