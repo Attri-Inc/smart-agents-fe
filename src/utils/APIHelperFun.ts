@@ -12,3 +12,11 @@ export const getTopConnections = async (): Promise<any> => {
   const data = await apiClient.get('/top_connections');
   return data;
 };
+export const getcustomerCommonInterest = async (): Promise<any> => {
+  const data = await apiClient.get('/common_interest');
+  return data;
+};
+export const getNetworkContacts = async (intervalDays: number): Promise<any> => {
+  const data = await apiClient.get(`/network_growth?interval_days=${intervalDays}`);
+  return data;
+};

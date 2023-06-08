@@ -11,8 +11,6 @@ const TrendingTopics = (): JSX.Element => {
     isError,
   } = useQuery("trending_topics", fetchTrendingTopics);
 
-  console.log("trendingTopics", trendingTopics);
-
   const { data } = !isLoading && !isError && trendingTopics?.data;
 
   return (
@@ -20,7 +18,13 @@ const TrendingTopics = (): JSX.Element => {
       <p className="font-inter font-medium text-gray-900 text-lg pb-2">
         Trending Topics
       </p>
-      <ul className="[&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] w-full h-96 overflow-y-auto divide-y divider-gray-200 dark:divide-gray-700">
+      <ul
+        className={
+          data?.AI
+            ? `[&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] w-full h-96 overflow-y-auto divide-y divider-gray-200 dark:divide-gray-700`
+            : ""
+        }
+      >
         {!isLoading && !isError ? (
           Array.isArray(data.AI) ? (
             <>

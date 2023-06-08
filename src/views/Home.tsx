@@ -50,8 +50,8 @@ const Home = (): JSX.Element => {
               est, molestiae exercitationem
             </p>
           </div>
-          <div className="pt-8 flex justify-between">
-            <div className="w-7/12">
+          <div className="pt-8 md:flex justify-between">
+            <div className="w-7/12 md:full">
               <h1 className="font-inter font-semibold text-gray-900 text-2xl pb-4">
                 Your todos for today
               </h1>
@@ -94,9 +94,6 @@ const Home = (): JSX.Element => {
                   </span>
                 </div>
               </div>
-              <div className="pr-8">
-                <TrendingTopics />
-              </div>
             </div>
             <div className="w-5/12 pr-4">
               <h1 className="font-inter font-semibold text-gray-900 text-2xl pb-4">
@@ -111,6 +108,9 @@ const Home = (): JSX.Element => {
                 ))}
               </ul>
             </div>
+          </div>
+          <div className="pr-8">
+            <TrendingTopics />
           </div>
           <div className="w-full py-4 flex items-end">
             <QueryInput
