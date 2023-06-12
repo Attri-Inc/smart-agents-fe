@@ -1,67 +1,89 @@
-import Avatar from "../../assets/Avatar.png";
-import Arrow from "../icons/Arrow";
+import CustomButton from "../customButton";
+
+const followUpTask = [
+  {
+    label: "Send Follow-up email",
+    name: "Samantha Reynolds",
+    content:
+      "needs to send a brief and professional follow-up email, expressing gratitude.",
+    id: 1,
+  },
+  {
+    label: "Send Follow-up email",
+    name: "Samantha Reynolds",
+    content:
+      "needs to send a brief and professional follow-up email, expressing gratitude.",
+    id: 2,
+  },
+  {
+    label: "Send Follow-up email",
+    name: "Samantha Reynolds",
+    content:
+      "needs to send a brief and professional follow-up email, expressing gratitude.",
+    id: 3,
+  },
+  {
+    label: "Send Follow-up email",
+    name: "Samantha Reynolds",
+    content:
+      "needs to send a brief and professional follow-up email, expressing gratitude.",
+    id: 3,
+  },
+  {
+    label: "Send Follow-up email",
+    name: "Samantha Reynolds",
+    content:
+      "needs to send a brief and professional follow-up email, expressing gratitude.",
+    id: 3,
+  },
+  {
+    label: "Send Follow-up email",
+    name: "Samantha Reynolds",
+    content:
+      "needs to send a brief and professional follow-up email, expressing gratitude.",
+    id: 3,
+  },
+  {
+    label: "Send Follow-up email",
+    name: "Samantha Reynolds",
+    content:
+      "needs to send a brief and professional follow-up email, expressing gratitude.",
+    id: 3,
+  },
+  {
+    label: "Send Follow-up email",
+    name: "Samantha Reynolds",
+    content:
+      "needs to send a brief and professional follow-up email, expressing gratitude.",
+    id: 3,
+  },
+];
 
 const FollowUpTask = () => {
   return (
-    <div className="pt-6">
-      <h1 className="font-inter font-semibold text-gray-900 text-2xl pb-4">
-        Today's Highlight
-      </h1>
-      <p className="font-inter font-medium text-gray-900 text-lg pb-2">
-        Follow-up Tasks
-      </p>
-      <ul className="divide-y divider-gray-200 dark:divide-gray-700 border-y">
-        <li className="flex items-center justify-between w-full py-4">
-          <div className="flex items-center">
-            <img src={Avatar} alt="avatar" />
-            <div className="pl-4">
-              <p className="font-inter text-sm text-gray-900">
-                Leonard Kranser
+    <div className="w-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] max-h-[32rem] overflow-y-auto">
+      <ul className="">
+        {followUpTask.map((todo: any) => (
+          <li className="border m-4 p-4 rounded-lg">
+            <h1 className="font-inter text-base text-gray-900 pb-2">
+              {todo.label}
+            </h1>
+            <div className="">
+              <p className="font-inter text-gray-500">
+                <span className="font-inter text-indigo-600">{todo.name}</span>{" "}
+                {todo.content}
               </p>
-              <span className="font-inter text-sm text-gray-500">
-                @leonardkranser
-              </span>
             </div>
-          </div>
-          <p>Send Follow-up email</p>
-          <Arrow />
-        </li>
-        <li className="flex items-center justify-between w-full py-4">
-          <div className="flex items-center">
-            <img src={Avatar} alt="avatar" />
-            <div className="pl-4">
-              <p className="font-inter text-sm text-gray-900">
-                Leonard Kranser
-              </p>
-              <span className="font-inter text-sm text-gray-500">
-                @leonardkranser
-              </span>
-            </div>
-          </div>
-          <p>Send Follow-up email</p>
-          <Arrow />
-        </li>
-        <li className="flex items-center justify-between w-full py-4">
-          <div className="flex items-center">
-            <img src={Avatar} alt="avatar" />
-            <div className="pl-4">
-              <p className="font-inter text-sm text-gray-900">
-                Leonard Kranser
-              </p>
-              <span className="font-inter text-sm text-gray-500">
-                @leonardkranser
-              </span>
-            </div>
-          </div>
-          <p>Send Follow-up email</p>
-          <Arrow className="cursor-pointer" />
-        </li>
+            <CustomButton
+              title="Mark as complete"
+              disabled={false}
+              containerStyle="text-xs bg-indigo-100 text-indigo-700 rounded mt-6"
+              type="button"
+              handleClick={() => {}}
+            />
+          </li>
+        ))}
       </ul>
-      <div className="flex justify-end">
-        <span className="font-inter text-sm text-indigo-600 cursor-pointer font-medium pt-1">
-          View All
-        </span>
-      </div>
     </div>
   );
 };

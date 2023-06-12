@@ -12,7 +12,6 @@ import QueryInput from "../components/Common/QueryInput";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/sidebar";
-import SearchBar from "../components/sarchbar";
 import { useQuery } from "react-query";
 import { getcustomerCommonInterest } from "../utils/APIHelperFun";
 import CommonInterest from "../components/commomInterest/CommonInterest";
@@ -98,67 +97,74 @@ const Highlights = () => {
       <div className="absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out">
         <Sidebar />
       </div>
-      <div className="w-full px-8 py-4 h-screen overflow-y-auto">
-        <h1 className="font-inter font-semibold text-gray-900 text-2xl ">
-          Highlights
-        </h1>
-        <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
-          <Tab.List className="flex border-b-2 ">
-            <Tab
-              className={`p-4 hover:text-indigo-600 ${
-                selectedIndex === 0
-                  ? "border-b-2 border-indigo-500 text-indigo-600"
-                  : ""
-              } `}
+      <div className="w-full flex flex-col h-screen overflow-auto">
+        <div className="h-full">
+          <div className="w-full px-8 py-4 h-screen overflow-y-auto">
+            <h1 className="font-inter font-semibold text-gray-900 text-xl">
+              Highlights
+            </h1>
+            <Tab.Group
+              selectedIndex={selectedIndex}
+              onChange={setSelectedIndex}
             >
-              Relationship Insights
-            </Tab>
-            <Tab
-              className={`p-4 hover:text-indigo-600 ${
-                selectedIndex === 1
-                  ? "border-b-2 border-indigo-500 text-indigo-600"
-                  : ""
-              } `}
-            >
-              Network Insights
-            </Tab>
-          </Tab.List>
-          <Tab.Panels>
-            <Tab.Panel>
-              <RelationshipInsight
-                userDetails={profiles}
-                title="Top Connections"
-                labelId="topConnections"
-              />
-              <CommonInterest
-                commonCustomersInterest={data?.common_interest}
-                isCustomerCommonDataLoading={isCustomerCommonDataLoading}
-                isCustomerCommonDataEror={isCustomerCommonDataEror}
-              />
-            </Tab.Panel>
-            <Tab.Panel>
-              <div className="py-4">
-                <h3 className="text-lg font-inter font-medium text-gray-900">
-                  Network growth
-                </h3>
-                <div>
-                  <NetworkContects />
-                </div>
-              </div>
-              <div className="pt-4">
-                <h3 className="text-lg font-inter font-medium text-gray-900">
-                  Communication Channel Breakdown
-                </h3>
-                <div className="flex gap-4 flex-wrap">
-                  {communications.map((contact) => (
-                    <Box {...contact} />
-                  ))}
-                </div>
-              </div>
-            </Tab.Panel>
-          </Tab.Panels>
-        </Tab.Group>
-        <div className="w-full py-4 flex items-end">
+              <Tab.List className="flex border-b-2 ">
+                <Tab
+                  className={`py-4 hover:text-indigo-600 ${
+                    selectedIndex === 0
+                      ? "border-b-2 border-indigo-500 text-indigo-600"
+                      : ""
+                  } `}
+                >
+                  Relationship Insights
+                </Tab>
+                <Tab
+                  className={`py-4 pl-4 hover:text-indigo-600 ${
+                    selectedIndex === 1
+                      ? "border-b-2 border-indigo-500 text-indigo-600"
+                      : ""
+                  } `}
+                >
+                  Network Insights
+                </Tab>
+              </Tab.List>
+              <Tab.Panels>
+                <Tab.Panel>
+                  <RelationshipInsight
+                    userDetails={profiles}
+                    title="Top Connections"
+                    labelId="topConnections"
+                  />
+                  <CommonInterest
+                    commonCustomersInterest={data?.common_interest}
+                    isCustomerCommonDataLoading={isCustomerCommonDataLoading}
+                    isCustomerCommonDataEror={isCustomerCommonDataEror}
+                  />
+                </Tab.Panel>
+                <Tab.Panel>
+                  <div className="py-4">
+                    <h3 className="text-lg font-inter font-medium text-gray-900">
+                      Network growth
+                    </h3>
+                    <div>
+                      <NetworkContects />
+                    </div>
+                  </div>
+                  <div className="pt-4">
+                    <h3 className="text-lg font-inter font-medium text-gray-900">
+                      Communication Channel Breakdown
+                    </h3>
+                    <div className="flex gap-4 flex-wrap">
+                      {communications.map((contact) => (
+                        <Box {...contact} />
+                      ))}
+                    </div>
+                  </div>
+                </Tab.Panel>
+              </Tab.Panels>
+            </Tab.Group>
+          </div>
+        </div>
+        <div className="h-28 py-8 bg-gradient-to-t from-indigo-200 border-t text-black sticky bottom-0">
           <QueryInput
             onclick={handleRedirectToQueryPage}
             onChange={handleOnQuerySearch}
@@ -166,7 +172,6 @@ const Highlights = () => {
           />
         </div>
       </div>
-      <SearchBar />
     </div>
   );
 };

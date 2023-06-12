@@ -36,10 +36,16 @@ export default {
         "backgoundColor-2": "#F0FDFA",
         "backgoundColor-green": "#0F766E",
         "backgoundColor-blue": "#0464FC",
+        "authBackgoundColor": "#1d2228",
+        
       },
       boxShadow: {
         "3xl": "0px 1px 2px rgba(0, 0, 0, 0.05)",
+        "authShadow": "0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06)"
       },
+      backgroundImage: {
+        "bg-chatColor": "linear-gradient(360deg, rgba(67, 56, 202, 0.2) 0%, rgba(67, 56, 202, 0) 100%), #FFFFFF;"
+      }
     },
   },
   plugins: [],

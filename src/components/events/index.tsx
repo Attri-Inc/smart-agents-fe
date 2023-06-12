@@ -1,155 +1,99 @@
 import Avatar from "../../assets/Avatar.png";
-import Avatar1 from "../../assets/Avatar1.png";
 import Avatar2 from "../../assets/Avatar2.png";
 import Avatar3 from "../../assets/Avatar3.png";
-import Arrow from "../icons/Arrow";
-import DarkCalendar from "../icons/DarkCalendar";
+import CustomButton from "../customButton";
+import Calendar from "../icons/Calendar";
+const events = [
+  {
+    label: "Startup Conference",
+    location: "at New York",
+    date: "January 7, 2020",
+    customers: 54,
+    id: 1,
+  },
+  {
+    label: "Startup Conference",
+    location: "at New York",
+    date: "January 7, 2020",
+    customers: 20,
+    id: 2,
+  },
+  {
+    label: "Startup Conference",
+    location: "at New York",
+    date: "January 7, 2020",
+    customers: 34,
+    id: 3,
+  },
+  {
+    label: "Startup Conference",
+    location: "at New York",
+    date: "January 7, 2020",
+    customers: 30,
+    id: 4,
+  },
+];
+
+const avatarImage = [
+  {
+    id: 1,
+    img: Avatar,
+  },
+  {
+    id: 1,
+    img: Avatar2,
+  },
+  {
+    id: 1,
+    img: Avatar2,
+  },
+  {
+    id: 1,
+    img: Avatar3,
+  },
+];
 
 const Events = () => {
   return (
-    <div className="pt-6">
-      <p className="font-inter font-medium text-gray-900 text-lg pb-2">
-        Events
-      </p>
-      <ul className="divide-y divider-gray-200 dark:divide-gray-700 border-y">
-        <li className="flex items-center justify-between w-full py-4">
-          <div className="flex items-center">
-            <div>
-              <div className="flex items-center pb-2">
-                <p className="font-inter text-sm text-indigo-600 font-medium">
-                  Startup Conference
-                </p>
-                <p className="text-gray-500 pl-2">at New York</p>
-              </div>
-              <div className="flex items-center">
-                <DarkCalendar />
-                <span className="font-inter text-sm text-gray-500 pl-2">
-                  On January 7, 2020
+    <div className="[&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] max-h-[32rem] overflow-y-auto">
+      <ul className="">
+        {events.map((event: any) => (
+          <li className="w-full py-4 border m-4 p-4 rounded-lg ">
+            <p className="text-sm-base text-gray-600 font-inter">
+              <span className="text-text-base text-indigo-600 font-inter">
+                {event.label}{" "}
+              </span>
+              {event.location}
+            </p>
+            <div className="flex gap-4 py-2">
+              <Calendar />
+              <h1 className="text-gray-500 font-inter">On {event.date}</h1>
+            </div>
+            <div className="flex items-center pt-2">
+              <div className="flex items-center -space-x-4 pr-8">
+                {avatarImage.map((customer: any) => (
+                  <img
+                    key={customer.id}
+                    className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
+                    src={customer.img}
+                    alt=""
+                  />
+                ))}
+                <span className="pl-8 text-gray-400 font-medium">
+                  +{event.customers}
                 </span>
               </div>
             </div>
-          </div>
-          <div className="flex items-center">
-            <div className="flex items-center -space-x-4 pr-8">
-              <img
-                className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                src={Avatar2}
-                alt=""
-              />
-              <img
-                className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                src={Avatar3}
-                alt=""
-              />
-              <img
-                className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                src={Avatar1}
-                alt=""
-              />
-              <img
-                className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                src={Avatar}
-                alt=""
-              />
-              <span className="pl-8 text-gray-400 font-medium">+90</span>
-            </div>
-            <Arrow className="cursor-pointer" />
-          </div>
-        </li>
-        <li className="flex items-center justify-between w-full py-4">
-          <div className="flex items-center">
-            <div>
-              <div className="flex items-center pb-2">
-                <p className="font-inter text-sm text-indigo-600 font-medium">
-                  Startup Conference
-                </p>
-                <p className="text-gray-500 pl-2">at New York</p>
-              </div>
-              <div className="flex items-center">
-                <DarkCalendar />
-                <span className="font-inter text-sm text-gray-500 pl-2">
-                  On January 7, 2020
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center">
-            <div className="flex items-center -space-x-4 pr-8">
-              <img
-                className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                src={Avatar2}
-                alt=""
-              />
-              <img
-                className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                src={Avatar3}
-                alt=""
-              />
-              <img
-                className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                src={Avatar1}
-                alt=""
-              />
-              <img
-                className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                src={Avatar}
-                alt=""
-              />
-              <span className="pl-8 text-gray-400 font-medium">+90</span>
-            </div>
-            <Arrow className="cursor-pointer" />
-          </div>
-        </li>
-        <li className="flex items-center justify-between w-full py-4">
-          <div className="flex items-center">
-            <div>
-              <div className="flex items-center pb-2">
-                <p className="font-inter text-sm text-indigo-600 font-medium">
-                  Startup Conference
-                </p>
-                <p className="text-gray-500 pl-2">at New York</p>
-              </div>
-              <div className="flex items-center">
-                <DarkCalendar />
-                <span className="font-inter text-sm text-gray-500 pl-2">
-                  On January 7, 2020
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center">
-            <div className="flex items-center -space-x-4 pr-8">
-              <img
-                className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                src={Avatar2}
-                alt=""
-              />
-              <img
-                className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                src={Avatar3}
-                alt=""
-              />
-              <img
-                className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                src={Avatar1}
-                alt=""
-              />
-              <img
-                className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                src={Avatar}
-                alt=""
-              />
-              <span className="pl-8 text-gray-400 font-medium">+90</span>
-            </div>
-            <Arrow className="cursor-pointer" />
-          </div>
-        </li>
+            <CustomButton
+              title="Mark as complete"
+              disabled={false}
+              containerStyle="text-xs bg-indigo-100 text-indigo-700 rounded mt-6"
+              type="button"
+              handleClick={() => {}}
+            />
+          </li>
+        ))}
       </ul>
-      <div className="flex justify-end">
-        <span className="font-inter text-sm text-indigo-600 cursor-pointer font-medium pt-1">
-          View All
-        </span>
-      </div>
     </div>
   );
 };

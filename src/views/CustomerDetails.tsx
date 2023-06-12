@@ -7,12 +7,37 @@ import { useNavigate, useLocation } from "react-router-dom";
 import React from "react";
 
 import Sidebar from "../components/sidebar";
-import SearchBar from "../components/sarchbar";
 import EmailCommunication from "../components/Common/EmailCommunication";
+import { getTimeLines } from "../utils/APIHelperFun";
+import { useQuery } from "react-query";
+import { FaMeetup, FaSms } from "react-icons/fa";
+
+const iconsList = [
+  { id: 1, label: "sms", icon: <FaSms className="bg-indigo-100 text-2xl" /> },
+  { id: 2, label: "email", icon: <Email /> },
+  { id: 3, label: "call", icon: <Call /> },
+  { id: 4, label: "Calendar", icon: <Calendar /> },
+  { id: 5, label: "twitter", icon: <Twitter /> },
+  {
+    id: 6,
+    label: "meeting",
+    icon: <FaMeetup className="bg-indigo-100 text-2xl" />,
+  },
+];
 
 const CustomerDetails = (): JSX.Element => {
   const [userAskedText, setUserAskedText] = React.useState<any>();
   const navigate = useNavigate();
+
+  const {
+    data: timeLines,
+    isLoading: timeLinesDataLoading,
+    isError: timeLinesDataEror,
+  } = useQuery("time_lines", getTimeLines);
+
+  const { scheduled_items } =
+    !timeLinesDataLoading && !timeLinesDataEror && timeLines.data;
+  console.log("timeLines", timeLines);
 
   const {
     state: { name, connectionDetails, socialMedia, img },
@@ -24,13 +49,21 @@ const CustomerDetails = (): JSX.Element => {
     setUserAskedText(e.target.value);
   };
 
+  const getTimelineIcons = (type: string): JSX.Element => {
+    const icon = iconsList.find(
+      (timelineIcon) => timelineIcon.label?.toLowerCase() == type.toLowerCase()
+    );
+    if (icon) return icon.icon;
+    return <Email />;
+  };
+
   return (
     <div className="relative h-screen overflow-hidden md:flex divide-gray-200 divide-x">
       <div className="absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out">
         <Sidebar />
       </div>
-      <div className="w-full px-8 py-4 h-screen overflow-y-auto">
-        <div className="w-full h-full">
+      <div className="w-full h-screen overflow-y-auto">
+        <div className="w-full px-8 py-4 ">
           <h1 className="font-inter font-semibold text-gray-900 text-2xl pb-4 ">
             Customer details
           </h1>
@@ -154,76 +187,37 @@ const CustomerDetails = (): JSX.Element => {
               <div className="divider-gray-200 dark:divide-gray-700 text-sm text-gray-500">
                 <div className="px-8">
                   <ul className="relative border-l border-gray-200 dark:border-gray-200">
-                    <li className="mb-20 ml-6">
-                      <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-400 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                        <Email />
-                      </span>
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-500 text-sm font-inter mr-2 px-2.5 py-0.5 ml-3">
-                          Emailed
-                        </span>
-                        <span className="text-gray-500 font-inter">Sep 22</span>
-                      </div>
-                    </li>
-                    <li className="mb-20 ml-6">
-                      <span className="absolute flex items-center justify-center w-8 h-8 bg-blue-500 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                        <Call />
-                      </span>
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-500 text-sm font-inter mr-2 px-2.5 py-0.5 ml-3">
-                          Called
-                        </span>
-                        <span className="text-gray-500 font-inter">Sep 22</span>
-                      </div>
-                    </li>
-                    <li className="mb-20 ml-6">
-                      <span className="absolute flex items-center justify-center w-8 h-8 bg-green-500 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                        <Email />
-                      </span>
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-500 text-sm font-inter mr-2 px-2.5 py-0.5 ml-3">
-                          Emailed
-                        </span>
-                        <span className="text-gray-500 font-inter">Sep 22</span>
-                      </div>
-                    </li>
-                    <li className="mb-20 ml-6">
-                      <span className="absolute flex items-center justify-center w-8 h-8 bg-blue-500 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                        <Calendar />
-                      </span>
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-500 text-sm font-inter mr-2 px-2.5 py-0.5 ml-3">
-                          Met for chat
-                        </span>
-                        <span className="text-gray-500 font-inter">Sep 22</span>
-                      </div>
-                    </li>
-                    <li className="mb-20 ml-6">
-                      <span className="absolute flex items-center justify-center w-8 h-8 bg-green-500 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                        <Twitter />
-                      </span>
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-500 text-sm font-inter mr-2 px-2.5 py-0.5 ml-3">
-                          On Twitter
-                        </span>
-                        <span className="text-gray-500 font-inter">Sep 22</span>
-                      </div>
-                    </li>
+                    {!timeLinesDataLoading &&
+                      !timeLinesDataEror &&
+                      scheduled_items?.map((timeline: any) => (
+                        <li className="mb-20 ml-6 marker:">
+                          <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-400 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
+                            {getTimelineIcons(timeline.interaction_type)}
+                          </span>
+                          <div className="flex items-center justify-between">
+                            <span className="text-gray-500 text-sm font-inter mr-2 px-2.5 py-0.5 ml-3 capitalize">
+                              {timeline.interaction_type}
+                            </span>
+                            <span className="text-gray-500 font-inter">
+                              {timeline.dispatch_time.slice(0, 16)}
+                            </span>
+                          </div>
+                        </li>
+                      ))}
                   </ul>
                 </div>
               </div>
             </div>
           </div>
-          <div className="w-10/12">
-            <QueryInput
-              onclick={handleRedirectToQueryPage}
-              onChange={handleOnQuerySearch}
-              value={userAskedText}
-            />
-          </div>
+        </div>
+        <div className="h-28 py-8 bg-gradient-to-t from-indigo-200 border-t text-black sticky bottom-0">
+          <QueryInput
+            onclick={handleRedirectToQueryPage}
+            onChange={handleOnQuerySearch}
+            value={userAskedText}
+          />
         </div>
       </div>
-      <SearchBar />
     </div>
   );
 };

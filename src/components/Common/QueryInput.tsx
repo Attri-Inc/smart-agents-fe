@@ -1,4 +1,5 @@
-import { FiSend } from "react-icons/fi";
+import Star from "../icons/Star";
+import MicroPhone from "../icons/MicroPhone";
 interface QueryInputProps {
   onclick?: () => void;
   onChange: (e: any) => void;
@@ -8,8 +9,9 @@ interface QueryInputProps {
 const QueryInput = (props: QueryInputProps): JSX.Element => {
   const { onclick, onChange, value } = props;
   return (
-    <div className="flex items-center w-9/12 fixed bottom-4">
-      <div className="w-full static">
+    <div className="flex items-center justify-center h-full">
+      <Star className="mr-4" />
+      <div className="w-9/12">
         <input
           onClick={() => onclick && onclick()}
           onChange={onChange}
@@ -18,7 +20,7 @@ const QueryInput = (props: QueryInputProps): JSX.Element => {
           placeholder="Send a message."
         />
       </div>
-      <FiSend className="text-2xl text-zinc-400 absolute right-8" />
+      <MicroPhone className="text-2xl text-zinc-400 absolute right-[14%]" />
     </div>
   );
 };
