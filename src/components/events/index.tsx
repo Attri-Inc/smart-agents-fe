@@ -65,7 +65,7 @@ const Events = () => {
               </span>
               {event.location}
             </p>
-            <div className="flex gap-4 py-2">
+            <div className="flex gap-4 py-2 items-center">
               <Calendar />
               <h1 className="text-gray-500 font-inter">On {event.date}</h1>
             </div>
