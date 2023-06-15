@@ -19,6 +19,14 @@ const Login = () => {
 
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: (codeResponse) => {
+      console.log("codeResponse", codeResponse);
+      fetch(codeResponse.scope)
+        .then((data) => {
+          return data.json();
+        })
+        .then((post) => {
+          console.log("post", post);
+        });
       if (codeResponse.code) {
         localStorage.setItem(TOKEN, JSON.stringify(codeResponse.code));
         navigate("/");

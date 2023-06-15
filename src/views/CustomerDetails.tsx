@@ -2,15 +2,23 @@ import Email from "../components/icons/Email";
 import Call from "../components/icons/Call";
 import Calendar from "../components/icons/Calendar";
 import Twitter from "../components/icons/Twitter";
+import Avatar3 from "../assets/Avatar3.png";
 import QueryInput from "../components/Common/QueryInput";
 import { useNavigate, useLocation } from "react-router-dom";
 import React from "react";
 
 import Sidebar from "../components/sidebar";
 import EmailCommunication from "../components/Common/EmailCommunication";
-import { getTimeLines } from "../utils/APIHelperFun";
+import {
+  getCustomerDetails,
+  getEmailCommunicationDetails,
+  getTimeLines,
+} from "../utils/APIHelperFun";
 import { useQuery } from "react-query";
 import { FaMeetup, FaSms } from "react-icons/fa";
+import TrendingTopicsSkeleton from "../components/Common/skeleton/TrendingTopicsSkeleton";
+import ProfileSkeleton from "../components/Common/skeleton/ProfileSkeleton";
+import Loader from "../components/Common/skeleton/TrendingTopicsSkeleton";
 
 const iconsList = [
   { id: 1, label: "sms", icon: <FaSms className="bg-indigo-100 text-2xl" /> },
@@ -30,18 +38,42 @@ const CustomerDetails = (): JSX.Element => {
   const navigate = useNavigate();
 
   const {
+    state: { registered_email },
+  } = useLocation();
+
+  const {
+    data: customerDetails,
+    isLoading: isCustomerDetailsLoading,
+    isError: isCustomerDetailsErorr,
+  } = useQuery("customer_details", () => getCustomerDetails(registered_email));
+
+  const { customer_details } =
+    !isCustomerDetailsLoading &&
+    !isCustomerDetailsErorr &&
+    customerDetails.data;
+
+  const { company, customer_type, image, initial_communication, name } =
+    !isCustomerDetailsLoading && !isCustomerDetailsErorr && customer_details;
+
+  const {
     data: timeLines,
     isLoading: timeLinesDataLoading,
     isError: timeLinesDataEror,
   } = useQuery("time_lines", getTimeLines);
 
-  const { scheduled_items } =
-    !timeLinesDataLoading && !timeLinesDataEror && timeLines.data;
-  console.log("timeLines", timeLines);
-
   const {
-    state: { name, connectionDetails, socialMedia, img },
-  } = useLocation();
+    data: customerEmails,
+    isLoading: isCustomerEmailsLoading,
+    isError: isCustomerEmailsError,
+  } = useQuery("email_communication", () =>
+    getEmailCommunicationDetails("aaron@acleelaw.com", "email")
+  );
+
+  const { customer_activity } =
+    !isCustomerEmailsError && !isCustomerEmailsLoading && customerEmails.data;
+  const { interaction_items } =
+    !timeLinesDataLoading && !timeLinesDataEror && timeLines.data;
+  console.log("customer_activity", customer_activity);
 
   const handleRedirectToQueryPage = () => navigate("/query");
 
@@ -69,63 +101,93 @@ const CustomerDetails = (): JSX.Element => {
           </h1>
           <div className="w-full flex justify-between">
             <div className="w-3/12">
-              <div className="divide-y divider-gray-200 dark:divide-gray-700 border-y border-x text-sm text-gray-500">
-                <div className=" flex items-center justify-between px-4 py-4">
-                  <div className="flex flex-col items-center">
-                    <p className="font-inter text-gray-500 font-medium text-sm pb-1">
-                      Picture
-                    </p>
-                    <div className="w-16 h-16 rounded">
-                      <img src={img} className="h-full w-full bg-contain" />
-                    </div>
-                  </div>
-                  <span className="text-indigo-600 text-sm font-medium cursor-pointer ">
-                    Update
-                  </span>
+              {isCustomerDetailsLoading ? (
+                <div className="w-full pt-4">
+                  <ProfileSkeleton />
                 </div>
-                <div className="flex items-center justify-between px-4 py-4">
-                  <div>
-                    <p className="font-inter text-gray-500 font-medium text-sm pb-1">
-                      Full name
-                    </p>
-                    <p className="font-inter text-gray-900 text-sm pb-1">
-                      {name}
-                    </p>
-                  </div>
-                  <span className="text-indigo-600 text-sm font-medium cursor-pointer ">
-                    Update
-                  </span>
+              ) : isCustomerDetailsErorr ? (
+                <div className="h-32">
+                  <h1 className="text-center pt-8 font-inter font-medium text-gray-900">
+                    Something is wrong!
+                  </h1>
                 </div>
-                {socialMedia.map((media: any) => (
-                  <div className="flex items-center justify-between px-4 py-4">
-                    <div>
+              ) : (
+                <div className="divide-y divider-gray-200 dark:divide-gray-700 border-y border-x text-sm text-gray-500">
+                  <div className=" flex items-center justify-between px-4 py-4">
+                    <div className="flex flex-col items-center">
                       <p className="font-inter text-gray-500 font-medium text-sm pb-1">
-                        {media.label}
+                        Picture
                       </p>
-                      <p className="font-inter text-gray-900 text-sm pb-1">
-                        {media.value}
-                      </p>
+                      <div className="w-16 h-16 rounded">
+                        <img
+                          src={image[0] ? image[0] : Avatar3}
+                          className="h-full w-full bg-contain"
+                        />
+                      </div>
                     </div>
-                    <span className="text-indigo-600 text-sm font-inter cursor-pointer ">
+                    <span className="text-indigo-600 text-sm font-medium cursor-pointer ">
                       Update
                     </span>
                   </div>
-                ))}
-                {connectionDetails.map((connection: any) => (
-                  <div className="px-4 py-4">
+                  <div className="flex items-center justify-between px-4 py-4">
                     <div>
                       <p className="font-inter text-gray-500 font-medium text-sm pb-1">
-                        {connection.label}
+                        Full name
                       </p>
-                      <p className="font-inter text-gray-500 text-sm pb-1">
-                        {connection.value}
+                      <p className="font-inter text-gray-900 text-sm pb-1">
+                        {name[0]}
                       </p>
                     </div>
+                    <span className="text-indigo-600 text-sm font-medium cursor-pointer ">
+                      Update
+                    </span>
                   </div>
-                ))}
-              </div>
+                  {customer_type.map((media: any) => (
+                    <div className="flex items-center justify-between px-4 py-4">
+                      <div>
+                        <p className="font-inter text-gray-500 font-medium text-sm pb-1">
+                          Customer Type
+                        </p>
+                        <p className="font-inter text-gray-900 text-sm pb-1">
+                          {media}
+                        </p>
+                      </div>
+                      <span className="text-indigo-600 text-sm font-inter cursor-pointer ">
+                        Update
+                      </span>
+                    </div>
+                  ))}
+                  {company.map((media: any) => (
+                    <div className="flex items-center justify-between px-4 py-4">
+                      <div>
+                        <p className="font-inter text-gray-500 font-medium text-sm pb-1">
+                          Company
+                        </p>
+                        <p className="font-inter text-gray-900 text-sm pb-1">
+                          {media}
+                        </p>
+                      </div>
+                      <span className="text-indigo-600 text-sm font-inter cursor-pointer ">
+                        Update
+                      </span>
+                    </div>
+                  ))}
+                  {initial_communication.map((connection: any) => (
+                    <div className="px-4 py-4">
+                      <div>
+                        <p className="font-inter text-gray-500 font-medium text-sm pb-1">
+                          Commnincation date
+                        </p>
+                        <p className="font-inter text-gray-500 text-sm pb-1">
+                          {connection}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-            <div className="w-6/12 flex">
+            <div className="w-5/12 flex">
               <div className="w-full px-2 border-r">
                 <div className="flex justify-center h-fit gap-2 divide-x pb-4 ">
                   <div className="">
@@ -177,34 +239,59 @@ const CustomerDetails = (): JSX.Element => {
                   <p className="font-inter text-gray-500 font-medium text-lg">
                     Email Commnunication
                   </p>
-                  <div className="flex flex-wrap gap-4">
-                    <EmailCommunication />
+                  <div className="[&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] w-full h-screen overflow-y-auto">
+                    {isCustomerEmailsLoading ? (
+                      <div>
+                        {Array.from([1, 2, 3]).map(() => (
+                          <div className="my-2">
+                            <TrendingTopicsSkeleton />
+                          </div>
+                        ))}
+                      </div>
+                    ) : isCustomerEmailsError ? (
+                      <h1>Something is wrong!</h1>
+                    ) : (
+                      <EmailCommunication
+                        emailCommunications={customer_activity}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
             </div>
-            <div className="w-2/5">
+            <div className="w-4/12">
+              <h1 className="font-inter text-center text-gray-900 text-xl pb-4 ">
+                Customer details
+              </h1>
               <div className="divider-gray-200 dark:divide-gray-700 text-sm text-gray-500">
                 <div className="px-8">
-                  <ul className="relative border-l border-gray-200 dark:border-gray-200">
-                    {!timeLinesDataLoading &&
-                      !timeLinesDataEror &&
-                      scheduled_items?.map((timeline: any) => (
-                        <li className="mb-20 ml-6 marker:">
-                          <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-400 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                            {getTimelineIcons(timeline.interaction_type)}
-                          </span>
-                          <div className="flex items-center justify-between">
-                            <span className="text-gray-500 text-sm font-inter mr-2 px-2.5 py-0.5 ml-3 capitalize">
-                              {timeline.interaction_type}
+                  {timeLinesDataLoading ? (
+                    <Loader />
+                  ) : timeLinesDataEror ? (
+                    <h1 className="h-32 text-center pt-8 font-inter font-medium text-gray-900">
+                      Something is wrong!
+                    </h1>
+                  ) : (
+                    <ul className="relative border-l border-gray-200 dark:border-gray-200">
+                      {!timeLinesDataLoading &&
+                        !timeLinesDataEror &&
+                        interaction_items?.map((timeline: any) => (
+                          <li className="mb-20 ml-6 marker:">
+                            <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-400 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
+                              {getTimelineIcons(timeline.interaction_type)}
                             </span>
-                            <span className="text-gray-500 font-inter">
-                              {timeline.dispatch_time.slice(0, 16)}
-                            </span>
-                          </div>
-                        </li>
-                      ))}
-                  </ul>
+                            <div className="flex items-center justify-between">
+                              <span className="text-gray-500 text-sm font-inter mr-2 px-2.5 py-0.5 ml-3 capitalize">
+                                {timeline.interaction_type}
+                              </span>
+                              <span className="text-gray-500 font-inter">
+                                {timeline.dispatch_time.slice(0, 16)}
+                              </span>
+                            </div>
+                          </li>
+                        ))}
+                    </ul>
+                  )}
                 </div>
               </div>
             </div>

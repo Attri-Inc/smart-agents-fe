@@ -1,21 +1,19 @@
-import { Tab } from "@headlessui/react";
-import { useState } from "react";
 import RelationshipInsight from "../components/Common/RelationshipInsight";
 import Avatar1 from "../assets/Avatar1.png";
 import Avatar2 from "../assets/Avatar2.png";
-import Box from "../components/Common/Box";
-import Email from "../components/icons/Email";
-import Call from "../components/icons/Call";
-import Twitter from "../components/icons/Twitter";
-import LinkedIn from "../components/icons/LinkedIn";
 import QueryInput from "../components/Common/QueryInput";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/sidebar";
 import { useQuery } from "react-query";
-import { getcustomerCommonInterest } from "../utils/APIHelperFun";
+import {
+  getNetworHighlightsByEmail,
+  getcustomerCommonInterest,
+} from "../utils/APIHelperFun";
 import CommonInterest from "../components/commomInterest/CommonInterest";
 import NetworkContects from "../components/networkContacts/NetworkContects";
+import NewtworkBreakdown from "../components/Common/NewtworkBreakdown";
+import CardLoader from "../components/Common/skeleton/CardLoader";
 
 const profiles = [
   {
@@ -38,41 +36,7 @@ const profiles = [
   },
 ];
 
-const communications = [
-  {
-    label: "Email",
-    value: "45%",
-    icon: <Email color="#B91C1C" />,
-    bgColor: "bg-backgoundColor-1",
-  },
-  {
-    label: "Phone",
-    value: "25%",
-    icon: <Call color=" #0F766E" />,
-    bgColor: "bg-backgoundColor-2",
-  },
-  {
-    label: "Twitter",
-    value: "15%",
-    icon: <Twitter color=" #0369A1" />,
-    bgColor: "bg-backgoundColor-2",
-  },
-  {
-    label: "LinkedIn",
-    value: "54%",
-    icon: <LinkedIn color=" #0369A1" />,
-    bgColor: "bg-backgoundColor-2",
-  },
-  {
-    label: "Other",
-    value: "5%",
-    icon: <Twitter color=" #0369A1" />,
-    bgColor: "bg-backgoundColor-2",
-  },
-];
-
 const Highlights = () => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const [userAskedText, setUserAskedText] = React.useState<any>();
   const navigate = useNavigate();
 
@@ -86,6 +50,19 @@ const Highlights = () => {
     isLoading: isCustomerCommonDataLoading,
     isError: isCustomerCommonDataEror,
   } = useQuery("common_interest", getcustomerCommonInterest);
+  const {
+    data: networkGrowthRatio,
+    isLoading: isNetworkGrowthRatioLoading,
+    isError: isNetworkGrowthRatioEror,
+  } = useQuery("network_breakdown", () =>
+    getNetworHighlightsByEmail("aaron@acleelaw.com")
+  );
+
+  const { network_highlights } =
+    !isNetworkGrowthRatioLoading &&
+    !isNetworkGrowthRatioEror &&
+    networkGrowthRatio.data;
+  console.log("networkGrowthRatio", networkGrowthRatio);
 
   const { data } =
     !isCustomerCommonDataEror &&
@@ -99,69 +76,43 @@ const Highlights = () => {
       </div>
       <div className="w-full flex flex-col h-screen overflow-auto">
         <div className="h-full">
-          <div className="w-full px-8 py-4 h-screen overflow-y-auto">
-            <h1 className="font-inter font-semibold text-gray-900 text-xl">
-              Highlights
+          <div className="w-full px-12 py-4 h-screen overflow-y-auto">
+            <h1 className="font-inter tracking-wide font-bold text-gray-900 text-xl pb-4">
+              Newtwork Highlights
             </h1>
-            <Tab.Group
-              selectedIndex={selectedIndex}
-              onChange={setSelectedIndex}
-            >
-              <Tab.List className="flex border-b-2 ">
-                <Tab
-                  className={`py-4 hover:text-indigo-600 ${
-                    selectedIndex === 0
-                      ? "border-b-2 border-indigo-500 text-indigo-600"
-                      : ""
-                  } `}
-                >
-                  Relationship Insights
-                </Tab>
-                <Tab
-                  className={`py-4 pl-4 hover:text-indigo-600 ${
-                    selectedIndex === 1
-                      ? "border-b-2 border-indigo-500 text-indigo-600"
-                      : ""
-                  } `}
-                >
-                  Network Insights
-                </Tab>
-              </Tab.List>
-              <Tab.Panels>
-                <Tab.Panel>
-                  <RelationshipInsight
-                    userDetails={profiles}
-                    title="Top Connections"
-                    labelId="topConnections"
-                  />
-                  <CommonInterest
-                    commonCustomersInterest={data?.common_interest}
-                    isCustomerCommonDataLoading={isCustomerCommonDataLoading}
-                    isCustomerCommonDataEror={isCustomerCommonDataEror}
-                  />
-                </Tab.Panel>
-                <Tab.Panel>
-                  <div className="py-4">
-                    <h3 className="text-lg font-inter font-medium text-gray-900">
-                      Network growth
-                    </h3>
-                    <div>
-                      <NetworkContects />
-                    </div>
-                  </div>
-                  <div className="pt-4">
-                    <h3 className="text-lg font-inter font-medium text-gray-900">
-                      Communication Channel Breakdown
-                    </h3>
-                    <div className="flex gap-4 flex-wrap">
-                      {communications.map((contact) => (
-                        <Box {...contact} />
-                      ))}
-                    </div>
-                  </div>
-                </Tab.Panel>
-              </Tab.Panels>
-            </Tab.Group>
+
+            <div className="py-4">
+              <h3 className="text-lg font-inter font-medium text-gray-900">
+                Network growth
+              </h3>
+              <div>
+                <NetworkContects />
+              </div>
+            </div>
+            <div className="py-4">
+              <h3 className="text-lg font-inter font-medium text-gray-900">
+                Communication Channel Breakdown
+              </h3>
+              {isNetworkGrowthRatioLoading ? (
+                <CardLoader />
+              ) : isNetworkGrowthRatioEror ? (
+                <div className="h-32 text-center pt-8 font-inter font-medium text-gray-900">
+                  <h1>Something is wrong!</h1>
+                </div>
+              ) : (
+                <NewtworkBreakdown cardData={network_highlights} />
+              )}
+            </div>
+            <RelationshipInsight
+              userDetails={profiles}
+              title="Top Connections"
+              labelId="topConnections"
+            />
+            <CommonInterest
+              commonCustomersInterest={data?.common_interest}
+              isCustomerCommonDataLoading={isCustomerCommonDataLoading}
+              isCustomerCommonDataEror={isCustomerCommonDataEror}
+            />
           </div>
         </div>
         <div className="h-28 py-8 bg-gradient-to-t from-indigo-200 border-t text-black sticky bottom-0">

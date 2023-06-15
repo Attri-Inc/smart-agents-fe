@@ -44,7 +44,7 @@ const App = (): JSX.Element => {
             }
           />
           <Route
-            path="/customer"
+            path="/customer/:id"
             element={
               <PrivateRoute>
                 <CustomerDetails />
