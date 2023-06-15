@@ -179,7 +179,7 @@ const CustomerDetails = (): JSX.Element => {
                           Commnincation date
                         </p>
                         <p className="font-inter text-gray-500 text-sm pb-1">
-                          {connection}
+                          {connection.slice(0, 10)}
                         </p>
                       </div>
                     </div>
@@ -261,7 +261,7 @@ const CustomerDetails = (): JSX.Element => {
             </div>
             <div className="w-4/12">
               <h1 className="font-inter text-center text-gray-900 text-xl pb-4 ">
-                Customer details
+                Customer timeline
               </h1>
               <div className="divider-gray-200 dark:divide-gray-700 text-sm text-gray-500">
                 <div className="px-8">
