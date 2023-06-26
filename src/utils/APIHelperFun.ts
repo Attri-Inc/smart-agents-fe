@@ -51,3 +51,7 @@ export const customerChat = async (query: string): Promise<any> => {
   const data = await apiClient.get(`/chat?query=${query}`);
   return data;
 };
+export const getFollowUp = async (alert: boolean): Promise<any> => {
+  const data = await apiClient.get(`/workflow?with_alert=${alert}`);
+  return data;
+};

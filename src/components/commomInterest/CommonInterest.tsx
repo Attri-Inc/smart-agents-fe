@@ -22,65 +22,73 @@ const CommonInterest = (props: commonInterestProps): JSX.Element => {
     isCustomerCommonDataLoading,
   } = props;
 
-  if (isCustomerCommonDataEror) {
-    return <h1>Something is wrong !</h1>;
-  }
-
-  if (isCustomerCommonDataLoading) {
-    return <TopConnectionsSkeleton />;
-  }
-
   return (
     <div className="pt-6">
       <p className="font-inter font-medium text-gray-900 text-lg pb-2">
         Common Interests
       </p>
-      <ul className="divide-y divider-gray-200 dark:divide-gray-700 border-y">
-        {commonCustomersInterest?.map((commonInterest: commonInterestData) => (
-          <li className="flex items-center justify-between w-full py-4">
-            <div className="flex items-center w-64">
-              <div className="flex items-center pb-2">
-                <p className="font-inter text-base text-indigo-600 font-medium capitalize">
-                  {commonInterest.keyword}
-                </p>
+      <ul
+        className={`divider-gray-200 dark:divide-gray-700 ${
+          isCustomerCommonDataEror ? "" : "border-y"
+        }`}
+      >
+        {isCustomerCommonDataLoading ? (
+          <TopConnectionsSkeleton />
+        ) : isCustomerCommonDataEror ? (
+          <div className="w-full h-32">
+            <h1 className="text-center pt-8 h-32 text-inter font-medium text-gray-900">
+              Something is wrong!
+            </h1>
+          </div>
+        ) : (
+          commonCustomersInterest?.map((commonInterest: commonInterestData) => (
+            <li className="flex items-center justify-between w-full py-4">
+              <div className="flex items-center w-64">
+                <div className="flex items-center pb-2">
+                  <p className="font-inter text-base text-indigo-600 font-medium capitalize">
+                    {commonInterest.keyword}
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-center width w-64">
-              <div className="flex items-center -space-x-4 pr-8">
-                <img
-                  className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                  src={Avatar2}
-                  alt=""
-                />
-                <img
-                  className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                  src={Avatar3}
-                  alt=""
-                />
-                <img
-                  className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                  src={Avatar1}
-                  alt=""
-                />
-                <img
-                  className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-                  src={Avatar}
-                  alt=""
-                />
-                <span className="pl-8 text-gray-400 font-medium">
-                  +{commonInterest.number_of_connection}
-                </span>
+              <div className="flex items-center width w-64">
+                <div className="flex items-center -space-x-4 pr-8">
+                  <img
+                    className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
+                    src={Avatar2}
+                    alt=""
+                  />
+                  <img
+                    className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
+                    src={Avatar3}
+                    alt=""
+                  />
+                  <img
+                    className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
+                    src={Avatar1}
+                    alt=""
+                  />
+                  <img
+                    className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
+                    src={Avatar}
+                    alt=""
+                  />
+                  <span className="pl-8 text-gray-400 font-medium">
+                    +{commonInterest.number_of_connection}
+                  </span>
+                </div>
               </div>
-            </div>
-            <Arrow className="cursor-pointer" />
-          </li>
-        ))}
+              <Arrow className="cursor-pointer" />
+            </li>
+          ))
+        )}
       </ul>
-      <div className="flex justify-end">
-        <span className="font-inter text-sm text-indigo-600 cursor-pointer font-medium pt-1">
-          View All
-        </span>
-      </div>
+      {!isCustomerCommonDataEror && !isCustomerCommonDataLoading && (
+        <div className="flex justify-end">
+          <span className="font-inter text-sm text-indigo-600 cursor-pointer font-medium pt-1">
+            View All
+          </span>
+        </div>
+      )}
     </div>
   );
 };

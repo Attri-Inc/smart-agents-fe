@@ -70,10 +70,8 @@ const Highlights = () => {
     commonCustomersInterest;
 
   return (
-    <div className="relative h-screen overflow-hidden md:flex divide-gray-200 divide-x">
-      <div className="absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out">
-        <Sidebar />
-      </div>
+    <div className="relative h-screen overflow-hidden flex divide-gray-200 divide-x">
+      <Sidebar />
       <div className="w-full flex flex-col h-screen overflow-auto">
         <div className="h-full">
           <div className="w-full px-12 py-4 h-screen overflow-y-auto">

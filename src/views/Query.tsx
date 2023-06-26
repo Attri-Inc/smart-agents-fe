@@ -9,11 +9,11 @@ import AIChatIcon from "../components/icons/AIChatIcon";
 
 interface UserChat {
   id: string;
-  text: string;
+  userQuery: string;
 }
 interface AIChatData {
   id: string;
-  text: string;
+  botAnswer: string;
 }
 const Query = () => {
   const [userChatData, setUserChatData] = useState<UserChat[]>([]);
@@ -26,24 +26,28 @@ const Query = () => {
     queryFn: () => customerChat(query),
     enabled: !!query,
     onSuccess: (data: any) => {
-      console.log("data", data);
-      setAIChatData((prev) => [...prev, { text: data.data, id: randomId(10) }]);
+      setAIChatData((prev) => [
+        ...prev,
+        { botAnswer: data.data, id: randomId(10) },
+      ]);
     },
   });
 
   const handleOnQuerySearch = (e: any) => {
-    setQuery(() => e.target.userTextInput.value);
+    setQuery(e.target.userTextInput.value);
     e.preventDefault();
-    if (query !== "") {
+    if (e.target.userTextInput.value !== "") {
       setUserChatData((prev: UserChat[]) => [
         ...prev,
         {
-          text: e.target.userTextInput.value,
+          userQuery: e.target.userTextInput.value,
           id: randomId(),
         },
       ]);
     }
   };
+
+  console.log("userChatData", userChatData);
 
   return (
     <div className="relative h-screen overflow-hidden md:flex divide-gray-200 divide-x">
@@ -60,7 +64,7 @@ const Query = () => {
                 className="flex items-center gap-4 pb-3 t w-full"
               >
                 <div className="p-4 bg-white rounded-lg max-w-lg">
-                  <p>{chat.text}</p>
+                  <p>{chat.botAnswer}</p>
                 </div>
                 <AIChatIcon />
               </div>
@@ -80,7 +84,7 @@ const Query = () => {
             <div className="flex justify-end w-full">
               <div key={chat.id} className=" gap-4 pb-3 flex items-center">
                 <div className="p-4 bg-white rounded-lg max-w-lg">
-                  <p>{chat.text}</p>
+                  <p>{chat.userQuery}</p>
                 </div>
                 <div>
                   <img src={Avatar3} className="h-10 w-10 rounded-full" />

@@ -4,6 +4,14 @@ import QueryInput from "../components/Common/QueryInput";
 import Sidebar from "../components/sidebar";
 import { useQuery } from "react-query";
 import { getCustomerList } from "../utils/APIHelperFun";
+import Avatar from "../assets/Ellipse 1.png";
+import { FaClock, FaTimes, FaTimesCircle } from "react-icons/fa";
+import { TbFileTime } from "react-icons/tb";
+import { FiClock } from "react-icons/fi";
+import LinkedIn from "../components/icons/LinkedIn";
+import Twitter from "../components/icons/Twitter";
+import Email from "../components/icons/Email";
+import TableSkeleton from "../components/Common/skeleton/TableSkeleton";
 
 const Customers = (): JSX.Element => {
   const [userAskedText, setUserAskedText] = React.useState<any>();
@@ -16,6 +24,8 @@ const Customers = (): JSX.Element => {
     isError: isCustomerListErorr,
   } = useQuery("customer-list", () => getCustomerList());
 
+  console.log("customerList");
+
   const { customer_details } =
     !isCustomerListLoading && !isCustomerListErorr && customerList.data;
 
@@ -23,7 +33,7 @@ const Customers = (): JSX.Element => {
     setUserAskedText(e.target.value);
   };
   const navigate = useNavigate();
-  const columns = ["CONTACT NAME", "CONTACT", "COMPANY"];
+  const columns = ["CONTACT NAME", "CONTACT", "SOCIAL"];
 
   return (
     <div className="h-screen overflow-hidden md:flex divide-gray-200 divide-x">
@@ -36,7 +46,7 @@ const Customers = (): JSX.Element => {
             <h1 className="font-inter font-semibold text-gray-900 text-2xl pb-4">
               Your Contact
             </h1>
-            <div className="">
+            <div className="w-8/12">
               <table className="border-x border-b w-full text-sm text-left text-gray-500 h-screen">
                 <thead className="border-y font-inter text-xs text-gray-500 uppercase bg-gray-50">
                   <tr className="divider-gray-200">
@@ -51,8 +61,23 @@ const Customers = (): JSX.Element => {
                   </tr>
                 </thead>
                 <tbody className="">
-                  {!isCustomerListLoading &&
-                    !isCustomerListErorr &&
+                  {isCustomerListLoading ? (
+                    <tr className="mx-4">
+                      <td className="mx-4">
+                        <TableSkeleton />
+                      </td>
+                      <td scope="row">
+                        <TableSkeleton />
+                      </td>
+                      <td scope="row">
+                        <TableSkeleton />
+                      </td>
+                    </tr>
+                  ) : isCustomerListErorr ? (
+                    <h1 className="text-center text-inter pt-10">
+                      Something is wrong !
+                    </h1>
+                  ) : (
                     customer_details[0].map((customer: any) => (
                       <tr className="bg-white border-b font-inter">
                         <td
@@ -62,18 +87,46 @@ const Customers = (): JSX.Element => {
                             })
                           }
                           scope="row"
-                          className="px-6 py-4 font-medium text-sm text-gray-900 whitespace-nowrap cursor-pointer"
+                          className="px-6 py-4 w-96 flex gap-4 font-medium text-sm text-gray-900 whitespace-nowrap cursor-pointer"
                         >
-                          {customer.name}
+                          <div className="w-10 h-10">
+                            <img
+                              src={Avatar}
+                              className="w-full h-full rounded-full object-contained"
+                            />
+                          </div>
+                          <div>
+                            <h2 className="text-sm font-medium text-inter text-gray-900 capitalize">
+                              {customer.name}
+                            </h2>
+                            <div className="flex gap-1 items-center pt-1">
+                              <FiClock className="text-base text-gray-500" />
+                              <span className="text-xs font-medium text-inter text-gray-500">
+                                Tue, 24 May
+                              </span>
+                            </div>
+                          </div>
                         </td>
                         <td className="px-6 py-4  text-sm text-gray-500">
-                          {customer.registered_email}
+                          <div>
+                            <p className="text-gray-900 text-inter text-sm">
+                              {customer.registered_email}
+                            </p>
+                            <span className="text-gray-500 inline-block pt-1 text-inter text-sm">
+                              +1 (444) 444-3333
+                            </span>
+                          </div>
                         </td>
                         <td className="px-6 py-4  text-sm text-gray-500">
-                          {customer.company}
+                          <div className="flex gap-4 items-center">
+                            <LinkedIn color="#9CA3AF" />
+                            <Twitter color="#9CA3AF" />
+                            <Email color="#9CA3AF" />
+                          </div>
                         </td>
                       </tr>
-                    ))}
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>

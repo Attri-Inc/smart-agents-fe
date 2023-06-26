@@ -4,10 +4,12 @@ import TimeLinesPage from "./views/TimeLines";
 import Home from "./views/Home";
 import Query from "./views/Query";
 import CustomerList from "./views/CustomerList";
-import CustomerDetails from "./views/CustomerDetails";
+import CustomerDetails from "./views/customerDetails";
 import Login from "./views/authentication/Login";
 import { TOKEN } from "./constants/authentication";
 import PageNotFound from "./views/authentication/PageNotFound";
+import WorkFlow from "./views/WorkFlow";
+import Settings from "./views/settings";
 
 const App = (): JSX.Element => {
   const PrivateRoute = ({ children }: any) => {
@@ -64,6 +66,22 @@ const App = (): JSX.Element => {
             element={
               <PrivateRoute>
                 <TimeLinesPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/workflow"
+            element={
+              <PrivateRoute>
+                <WorkFlow />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <PrivateRoute>
+                <Settings />
               </PrivateRoute>
             }
           />

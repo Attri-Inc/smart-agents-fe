@@ -1,39 +1,12 @@
+import { SiGooglemeet } from "react-icons/si";
 import Avatar from "../../assets/Avatar.png";
 import Avatar2 from "../../assets/Avatar2.png";
 import Avatar3 from "../../assets/Avatar3.png";
 import CustomButton from "../customButton";
-import Calendar from "../icons/Calendar";
-
-const events = [
-  {
-    label: "Startup Conference",
-    location: "at New York",
-    date: "January 7, 2020",
-    customers: 54,
-    id: 1,
-  },
-  {
-    label: "Startup Conference",
-    location: "at New York",
-    date: "January 7, 2020",
-    customers: 20,
-    id: 2,
-  },
-  {
-    label: "Startup Conference",
-    location: "at New York",
-    date: "January 7, 2020",
-    customers: 34,
-    id: 3,
-  },
-  {
-    label: "Startup Conference",
-    location: "at New York",
-    date: "January 7, 2020",
-    customers: 30,
-    id: 4,
-  },
-];
+import { Link } from "react-router-dom";
+import Attendees from "../Common/Attendees";
+import { FaClock } from "react-icons/fa";
+import Camera from "../icons/Camera";
 
 const avatarImage = [
   {
@@ -54,48 +27,379 @@ const avatarImage = [
   },
 ];
 
-const Events = () => {
+const eventList: any = [
+  {
+    attendees: [
+      {
+        email: "sriharsha.y@attri.ai",
+        image: "",
+        name: "Sriharsha Y",
+      },
+      {
+        email: "yashwanth.reddy@attri.ai",
+        image: "",
+        name: "Yashwanth Reddy",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+    ],
+    date: "Jun 21, 2023",
+    description: "Daily Standup",
+    meeting_link: "https://meet.google.com/ivz-iaeh-jiq",
+    time: "10:00 to 10:30",
+  },
+  {
+    attendees: [
+      {
+        email: "sriharsha.y@attri.ai",
+        image: "",
+        name: "Sriharsha Y",
+      },
+      {
+        email: "yashwanth.reddy@attri.ai",
+        image: "",
+        name: "Yashwanth Reddy",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "ayush.aggarwal@attri.ai",
+        image: "",
+        name: "Ayush Aggarwal",
+      },
+    ],
+    date: "Jun 21, 2023",
+    description: "Daily Standup",
+    meeting_link: "https://meet.google.com/ivz-iaeh-jiq",
+    time: "10:00 to 10:30",
+  },
+  {
+    attendees: [
+      {
+        email: "sriharsha.y@attri.ai",
+        image: "",
+        name: "Sriharsha Y",
+      },
+      {
+        email: "yashwanth.reddy@attri.ai",
+        image: "",
+        name: "Yashwanth Reddy",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "ayush.aggarwal@attri.ai",
+        image: "",
+        name: "Ayush Aggarwal",
+      },
+    ],
+    date: "Jun 21, 2023",
+    description: "Daily Standup",
+    meeting_link: "https://meet.google.com/ivz-iaeh-jiq",
+    time: "10:00 to 10:30",
+  },
+  {
+    attendees: [
+      {
+        email: "sriharsha.y@attri.ai",
+        image: "",
+        name: "Sriharsha Y",
+      },
+      {
+        email: "yashwanth.reddy@attri.ai",
+        image: "",
+        name: "Yashwanth Reddy",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "ayush.aggarwal@attri.ai",
+        image: "",
+        name: "Ayush Aggarwal",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "ayush.aggarwal@attri.ai",
+        image: "",
+        name: "Ayush Aggarwal",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "ayush.aggarwal@attri.ai",
+        image: "",
+        name: "Ayush Aggarwal",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "ayush.aggarwal@attri.ai",
+        image: "",
+        name: "Ayush Aggarwal",
+      },
+    ],
+    date: "Jun 21, 2023",
+    description: "Daily Standup",
+    meeting_link: "https://meet.google.com/ivz-iaeh-jiq",
+    time: "10:00 to 10:30",
+  },
+  {
+    attendees: [
+      {
+        email: "sriharsha.y@attri.ai",
+        image: "",
+        name: "Sriharsha Y",
+      },
+      {
+        email: "yashwanth.reddy@attri.ai",
+        image: "",
+        name: "Yashwanth Reddy",
+      },
+      {
+        email: "riyaz.ansari@attri.ai",
+        image: "",
+        name: "Riyaz Ansari",
+      },
+      {
+        email: "akila.s@attri.ai",
+        image: "",
+        name: "Akila S",
+      },
+      {
+        email: "ayush.aggarwal@attri.ai",
+        image: "",
+        name: "Ayush Aggarwal",
+      },
+    ],
+    date: "Jun 21, 2023",
+    description: "Daily Standup",
+    meeting_link: "https://meet.google.com/ivz-iaeh-jiq",
+    time: "10:00 to 10:30",
+  },
+];
+
+const Events = (): JSX.Element => {
   return (
-    <div className="full">
+    <div className="w-full">
       <ul className="w-full flex flex-nowrap mb-4 overflow-x-scroll scrollbar-hide">
-        {events.map((event: any) => (
-          <li className="w-full py-4 border m-4 p-4 rounded-lg inline-block">
-            <div className="w-96">
-              <p className="text-sm-base text-gray-600 font-inter">
-                <span className="text-text-base text-indigo-600 font-inter">
-                  {event.label}{" "}
-                </span>
-                {event.location}
-              </p>
-              <div className="flex gap-4 py-2 items-center">
-                <Calendar />
-                <h1 className="text-gray-500 font-inter">On {event.date}</h1>
-              </div>
-              <div className="flex items-center pt-2">
-                <div className="flex items-center -space-x-4 pr-8">
-                  {avatarImage.map((customer: any) => (
-                    <img
-                      key={customer.id}
-                      className="w-8 h-8 border-2 border-white rounded-full dark:border-gray-800"
-                      src={customer.img}
-                      alt=""
-                    />
-                  ))}
-                  <span className="pl-8 text-gray-400 font-medium">
-                    +{event.customers}
-                  </span>
+        {eventList.map((event: any) => {
+          return (
+            <li className="border m-4 p-3 rounded-lg inline-block">
+              <div className="w-96">
+                <div className="">
+                  <p className="text-base text-gray-900 text-inter font-medium py-1">
+                    {event.description}
+                  </p>
+                  <div className="flex items-center py-2">
+                    <FaClock className="text-gray-400" />
+                    <span className="block text-sm text-gray-600 text-inter pl-2">
+                      10:20 AM to 10:40 AM
+                    </span>
+                  </div>
                 </div>
+                <div className="w-full flex gap-4 py-1 items-center">
+                  <Camera />
+                  <Link
+                    to={event.meeting_link}
+                    className="text-inter text-base text-gray-500"
+                  >
+                    {event.meeting_link}
+                  </Link>
+                </div>
+                <Attendees attendees={event.attendees} />
+                <CustomButton
+                  title="Viwe Details"
+                  disabled={false}
+                  containerStyle="text-xs bg-white text-gray-700 rounded mt-6 border font-medium"
+                  type="button"
+                  handleClick={() => {}}
+                />
               </div>
-              <CustomButton
-                title="Mark as complete"
-                disabled={false}
-                containerStyle="text-xs bg-indigo-100 text-indigo-700 rounded mt-6"
-                type="button"
-                handleClick={() => {}}
-              />
-            </div>
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
