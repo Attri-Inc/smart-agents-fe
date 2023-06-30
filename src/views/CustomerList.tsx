@@ -5,8 +5,6 @@ import Sidebar from "../components/sidebar";
 import { useQuery } from "react-query";
 import { getCustomerList } from "../utils/APIHelperFun";
 import Avatar from "../assets/Ellipse 1.png";
-import { FaClock, FaTimes, FaTimesCircle } from "react-icons/fa";
-import { TbFileTime } from "react-icons/tb";
 import { FiClock } from "react-icons/fi";
 import LinkedIn from "../components/icons/LinkedIn";
 import Twitter from "../components/icons/Twitter";

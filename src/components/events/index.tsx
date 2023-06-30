@@ -1,31 +1,8 @@
-import { SiGooglemeet } from "react-icons/si";
-import Avatar from "../../assets/Avatar.png";
-import Avatar2 from "../../assets/Avatar2.png";
-import Avatar3 from "../../assets/Avatar3.png";
 import CustomButton from "../customButton";
 import { Link } from "react-router-dom";
 import Attendees from "../Common/Attendees";
 import { FaClock } from "react-icons/fa";
 import Camera from "../icons/Camera";
-
-const avatarImage = [
-  {
-    id: 1,
-    img: Avatar,
-  },
-  {
-    id: 1,
-    img: Avatar2,
-  },
-  {
-    id: 1,
-    img: Avatar2,
-  },
-  {
-    id: 1,
-    img: Avatar3,
-  },
-];
 
 const eventList: any = [
   {

@@ -2,9 +2,7 @@ import { useState } from "react";
 import classNames from "classnames";
 import Logo from "../icons/Logo";
 import { FiMap } from "react-icons/fi";
-import { googleLogout } from "@react-oauth/google";
 import { Link, useNavigate, NavLink } from "react-router-dom";
-import { TOKEN } from "../../constants/authentication";
 import Avatar from "../../assets/Ellipse 1.png";
 import Settings from "../icons/Settings";
 import Home from "../icons/Home";
@@ -46,11 +44,11 @@ const Sidebar = () => {
   const navigate = useNavigate();
   // menuList objects
 
-  const handleLogout = () => {
-    googleLogout();
-    localStorage.removeItem(TOKEN);
-    navigate("/login");
-  };
+  // const handleLogout = () => {
+  //   googleLogout();
+  //   localStorage.removeItem(TOKEN);
+  //   navigate("/login");
+  // };
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);

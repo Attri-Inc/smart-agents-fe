@@ -1,7 +1,3 @@
-import React from "react";
-
-type Props = {};
-
 const CrossIcon = (props: any) => {
   return (
     <svg

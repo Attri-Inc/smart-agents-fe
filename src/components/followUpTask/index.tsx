@@ -1,6 +1,4 @@
-import { useQuery } from "react-query";
 import CustomButton from "../customButton";
-import { getFollowUp } from "../../utils/APIHelperFun";
 import FollowUpSkeleton from "../Common/skeleton/FollowUpSkeleton";
 import Avatar from "../../assets/Avatar3.png";
 import Badge from "../Common/Badge";
@@ -66,17 +64,15 @@ const followUpLists = [
 ];
 
 const FollowUpTask = (): JSX.Element => {
-  const {
-    data: followUpList,
-    isLoading,
-    isError,
-  } = useQuery("followUp", () => getFollowUp(false));
+  // const {
+  //   data: followUpList,
+  //   isLoading,
+  //   isError,
+  // } = useQuery("followUp", () => getFollowUp(false));
 
   const { FollowUp, Hired, listingsPrepared } = todosConstants;
 
-  const { worflows } = !isError && !isLoading && followUpList.data;
-
-  console.log("followUpList", followUpList);
+  // const { worflows } = !isError && !isLoading && followUpList.data;
 
   const renderButtonOnTodosCard = () => (
     <div className="mt-4">
@@ -98,7 +94,6 @@ const FollowUpTask = (): JSX.Element => {
   );
 
   const getTodosButtons = (type: string) => {
-    console.log("type", type);
     switch (type) {
       case listingsPrepared:
         return renderButtonOnTodosCard();

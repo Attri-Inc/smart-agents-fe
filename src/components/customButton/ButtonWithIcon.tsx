@@ -1,5 +1,4 @@
 import React, { MouseEventHandler } from "react";
-import { FaPlus } from "react-icons/fa";
 
 export interface CustomeButtonProps {
   title: string;
@@ -15,7 +14,6 @@ const ButtonWithIcon = ({
   disabled,
   type,
   icon,
-  containerStyle,
   handleClick,
 }: CustomeButtonProps) => {
   return (

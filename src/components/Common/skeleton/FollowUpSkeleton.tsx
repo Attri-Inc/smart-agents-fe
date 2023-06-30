@@ -1,8 +1,4 @@
-import React from "react";
-
-type Props = {};
-
-const FollowUpSkeleton = (props: Props) => {
+const FollowUpSkeleton = () => {
   return (
     <div className="animate-pulse flex gap-4">
       {Array.from([1, 2, 3, 4]).map(() => (

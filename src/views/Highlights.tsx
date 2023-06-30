@@ -8,9 +8,8 @@ import Sidebar from "../components/sidebar";
 import { useQuery } from "react-query";
 import {
   getNetworHighlightsByEmail,
-  getcustomerCommonInterest,
+  // getcustomerCommonInterest,
 } from "../utils/APIHelperFun";
-import CommonInterest from "../components/commomInterest/CommonInterest";
 import NetworkContects from "../components/networkContacts/NetworkContects";
 import NewtworkBreakdown from "../components/Common/NewtworkBreakdown";
 import CardLoader from "../components/Common/skeleton/CardLoader";
@@ -45,11 +44,11 @@ const Highlights = () => {
     setUserAskedText(e.target.value);
   };
 
-  const {
-    data: commonCustomersInterest,
-    isLoading: isCustomerCommonDataLoading,
-    isError: isCustomerCommonDataEror,
-  } = useQuery("common_interest", getcustomerCommonInterest);
+  // const {
+  //   data: commonCustomersInterest,
+  //   isLoading: isCustomerCommonDataLoading,
+  //   isError: isCustomerCommonDataEror,
+  // } = useQuery("common_interest", getcustomerCommonInterest);
   const {
     data: networkGrowthRatio,
     isLoading: isNetworkGrowthRatioLoading,
@@ -62,12 +61,6 @@ const Highlights = () => {
     !isNetworkGrowthRatioLoading &&
     !isNetworkGrowthRatioEror &&
     networkGrowthRatio.data;
-  console.log("networkGrowthRatio", networkGrowthRatio);
-
-  const { data } =
-    !isCustomerCommonDataEror &&
-    !isCustomerCommonDataLoading &&
-    commonCustomersInterest;
 
   return (
     <div className="relative h-screen overflow-hidden flex divide-gray-200 divide-x">

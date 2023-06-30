@@ -19,7 +19,7 @@ const EmailCommunications = () => {
         <Spinner />
       </div>
     );
-  if (isError) return "Something is wrong";
+  if (isError) return <div>Something is wrong!</div>;
 
   return (
     <div className="pt-4">

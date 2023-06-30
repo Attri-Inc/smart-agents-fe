@@ -1,8 +1,4 @@
-import React from "react";
-
-type Props = {};
-
-const CustomInput = ({}: any) => {
+const CustomInput = () => {
   return <input />;
 };
 

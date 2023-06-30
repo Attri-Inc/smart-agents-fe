@@ -1,8 +1,4 @@
-import React from "react";
-
-type Props = {};
-
-const TableSkeleton = (props: Props) => {
+const TableSkeleton = () => {
   return (
     <div className="animate-pulse">
       {Array.from(

@@ -1,7 +1,3 @@
-import React from "react";
-
-type Props = {};
-
 const User = (props: any) => {
   return (
     <svg

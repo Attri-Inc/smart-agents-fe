@@ -1,4 +1,3 @@
-import React from "react";
 import { FaArrowLeft, FaBars, FaPlus } from "react-icons/fa";
 import Call from "../../components/icons/Call";
 import Mail from "../../components/icons/Mail";
@@ -6,12 +5,15 @@ import Avatar from "../../assets/Ellipse 1.png";
 import { useNavigate } from "react-router-dom";
 import ProfileSkeleton from "../../components/Common/skeleton/ProfileSkeleton";
 
-const CustomerDetails = ({ isError, isLoading, customerDetails }: any) => {
+const CustomerDetails = ({
+  isError,
+  isLoading,
+  customerDetails,
+}: any): JSX.Element => {
   const navigate = useNavigate();
   if (isLoading) return <ProfileSkeleton />;
-  if (isError) return "Something is wrong!";
+  if (isError) return <h1>Something is wrong!</h1>;
 
-  console.log("customerDetails", customerDetails);
   return (
     <div>
       <div

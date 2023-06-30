@@ -1,6 +1,5 @@
 import avatar from "../../assets/Avatar2.png";
 import CustomButton from "../customButton";
-import Badge from "./Badge";
 
 const WorkFlowCard = ({ workFlow }: any) => {
   const { name, email, date, status, cta } = workFlow;
