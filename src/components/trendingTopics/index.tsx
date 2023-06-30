@@ -53,20 +53,24 @@ const TrendingTopics = (): JSX.Element => {
             </p>
             <Link
               to={currentReadingTopic.link}
+              target="_blank"
               className="text-inter text-indigo-600 text-sm"
             >
-              {currentReadingTopic.link}
+              <div>{currentReadingTopic.link}</div>
             </Link>
           </div>
-          <div>
-            <h1 className="font-medium text-gray-500 text-inter text-sm">
+          <div className="pt-4">
+            <h1 className="font-medium text-gray-500 text-inter text-sm py-1">
               Share
             </h1>
             <div className="flex gap-4 items-center">
-              <Twitter />
-              <LinkedIn />
-              <UserGroup />
-              <FaShare />
+              <Twitter color="#000000" className="opacity-40 cursor-pointer " />
+              <LinkedIn color="#000000" className="opacity-40 cursor-pointer" />
+              <UserGroup
+                color="#000000"
+                className="opacity-40 cursor-pointer"
+              />
+              <FaShare color="#000000" className="opacity-40 cursor-pointer" />
             </div>
           </div>
         </div>

@@ -23,6 +23,7 @@ export default {
         "gray-600": "#4B5563",
         "indigo-600": "#4F46E5",
         "indigo-500": "#6366F1",
+        'black-icon': 'rgba(0, 0, 0, 0.5)',
 
         "border-100": "#D1D5DB",
         "gray-100": "#F3F4F6",

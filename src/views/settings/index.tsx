@@ -12,9 +12,7 @@ const settingsTab = [
   { label: "App Preferences", id: 4 },
 ];
 
-type Props = {};
-
-const Settings = (props: Props) => {
+const Settings = () => {
   function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(" ");
   }

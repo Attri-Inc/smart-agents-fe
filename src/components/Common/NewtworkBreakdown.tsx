@@ -74,7 +74,7 @@ const NewtworkBreakdown = (props: any) => {
               </div>
               <div className="pl-4">
                 <span className="font-inter text-xl font-medium">
-                  {netwokRatio.percentage_of_interaction__type}%
+                  {Math.floor(netwokRatio.percentage_of_interaction__type)}%
                 </span>
                 <p className="text-sm text-gray-500 font-inter font-normal capitalize">
                   {netwokRatio.interaction_type}

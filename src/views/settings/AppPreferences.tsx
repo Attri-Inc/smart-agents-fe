@@ -1,14 +1,10 @@
-import React, { useContext, useState } from "react";
+import { useContext } from "react";
 import MenuList from "../../components/Common/MenuList";
 import { AppPreferenceContext } from "../../states/appPreference/preferenceContext";
 
-type Props = {};
-
-const appModes = [{ value: "Light Mode" }, { value: "Dark Mode" }];
-
-const AppPreferences = (props: Props) => {
+const AppPreferences = () => {
   const {
-    state: { dateFormat, timeFormat, theme },
+    state: { dateFormat, timeFormat, theme, timeZoneFormat },
   } = useContext(AppPreferenceContext);
 
   return (
@@ -42,7 +38,13 @@ const AppPreferences = (props: Props) => {
             Select your preffered Time-zone
           </small>
         </div>
-        <div className="h-6">{/* <MenuList options={appModes\} /> */}</div>
+        <div className="h-6">
+          <MenuList
+            options={timeZoneFormat.timeZoneFormatList}
+            selected={timeZoneFormat.selectedTimeZoneFormat}
+            type="TIMEZONE_FORMAT"
+          />
+        </div>
       </div>
       <div className="flex items-center gap-8 py-4 border-b">
         <div className="w-5/12 pr-8">

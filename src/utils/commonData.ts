@@ -48,3 +48,10 @@ export const workFlowStage =[
     {id: 4, label: 'Follow Up', bgColor: 'bg-cyan-50' },
     {id: 5, label: 'Proposal Communication', bgColor: 'bg-teal-50' },
 ]
+
+
+export const timezones = [
+    {id: 1,  name: "Asia/Shanghai" },
+    {id: 2,  name: "Asia/Chongqing" },
+    {id: 3,  name:  'Asia/Hong_Kong' },
+]

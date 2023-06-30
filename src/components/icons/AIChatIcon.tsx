@@ -1,6 +1,7 @@
-const AIChatIcon = () => {
+const AIChatIcon = (props: any) => {
   return (
     <svg
+      {...props}
       width="34"
       height="36"
       viewBox="0 0 34 36"

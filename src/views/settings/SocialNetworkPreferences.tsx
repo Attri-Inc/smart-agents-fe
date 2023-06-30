@@ -1,9 +1,6 @@
-import React from "react";
 import CustomButton from "../../components/customButton";
 
-type Props = {};
-
-const SocialNetworkPreferences = (props: Props) => {
+const SocialNetworkPreferences = () => {
   return (
     <div className="pt-4">
       <div className="">

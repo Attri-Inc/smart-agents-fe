@@ -28,7 +28,7 @@ const Query = () => {
     onSuccess: (data: any) => {
       setAIChatData((prev) => [
         ...prev,
-        { botAnswer: data.data, id: randomId(10) },
+        { botAnswer: data.data.message, id: randomId(10) },
       ]);
     },
   });
@@ -61,12 +61,13 @@ const Query = () => {
             {AIChatData?.map((chat: AIChatData) => (
               <div
                 key={chat.id}
-                className="flex items-center gap-4 pb-3 t w-full"
+                className="flex items-stretch gap-4 pb-3 t w-full"
               >
-                <div className="p-4 bg-white rounded-lg max-w-lg">
+                <AIChatIcon className="self-end" />
+
+                <div className="p-4 bg-white max-w-lg rounded-tl-xl rounded-br-lg rounded-tr-xl">
                   <p>{chat.botAnswer}</p>
                 </div>
-                <AIChatIcon />
               </div>
             ))}
             {isLoading ? (
@@ -82,11 +83,11 @@ const Query = () => {
 
           {userChatData?.map((chat: UserChat) => (
             <div className="flex justify-end w-full">
-              <div key={chat.id} className=" gap-4 pb-3 flex items-center">
-                <div className="p-4 bg-white rounded-lg max-w-lg">
+              <div key={chat.id} className=" gap-4 pb-3 flex items-stretch">
+                <div className="p-4 bg-white max-w-lg rounded-tl-xl rounded-bl-lg rounded-tr-xl">
                   <p>{chat.userQuery}</p>
                 </div>
-                <div>
+                <div className="self-end">
                   <img src={Avatar3} className="h-10 w-10 rounded-full" />
                 </div>
               </div>

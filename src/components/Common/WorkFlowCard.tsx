@@ -1,22 +1,31 @@
 import avatar from "../../assets/Avatar2.png";
 import CustomButton from "../customButton";
+import Badge from "./Badge";
 
-const WorkFlowCard = () => {
+const WorkFlowCard = ({ workFlow }: any) => {
+  const { name, email, date, status, cta } = workFlow;
+
+  console.log("workFlow", workFlow);
+
   return (
-    <div className="bg-gray-300 rounded-lg p-4 w-52 mb-2">
+    <div className="bg-gray-300 rounded-lg mb-2 px-4 py-2 w-full">
       <div className="flex items-center mb-2">
         <img src={avatar} className="w-8 h-8 rounded-full mr-2" />
         <h2 className="text-sm text-justify font-medium text-indigo-600">
-          John Doe
+          {name}
         </h2>
       </div>
-      <p className="text-gray-600 mb-4">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra
-      </p>
+      <p className="text-gray-600 py-1">{email}</p>
+      <div>
+        <p>
+          <span>{status}</span> on
+          <span className="text-gray-600 block pt-1">{date}</span>
+        </p>
+      </div>
       <CustomButton
-        title="Schedule"
+        title={cta}
         disabled={false}
-        containerStyle="text-xs bg-indigo-100 text-indigo-700 rounded border font-medium"
+        containerStyle="text-xs bg-indigo-100 text-indigo-700 rounded border font-medium mt-2"
         type="button"
         handleClick={() => {}}
       />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import CustomDialog from "../../components/Common/CustomDialog";
 import ProfilePic from "../../assets/Ellipse 1.png";
 import { randomId } from "../../utils/helper";
@@ -8,9 +8,8 @@ import {
   interestTopicsKeyword,
 } from "../../utils/commonData";
 import InterestTopicsList from "./component/InterestTopicsList";
-type Props = {};
 
-const ProfileSetting = (props: Props) => {
+const ProfileSetting = () => {
   const [organizationWebsites, setOrganizationWebsite] = useState<any[]>([]);
   const [interestWebsites, setInterestWebsites] = useState<any[]>([]);
   const [interestTopics, setInterestTopics] = useState<

@@ -106,11 +106,11 @@ const Highlights = () => {
               title="Top Connections"
               labelId="topConnections"
             />
-            <CommonInterest
+            {/* <CommonInterest
               commonCustomersInterest={data?.common_interest}
               isCustomerCommonDataLoading={isCustomerCommonDataLoading}
               isCustomerCommonDataEror={isCustomerCommonDataEror}
-            />
+            /> */}
           </div>
         </div>
         <div className="h-28 py-8 bg-gradient-to-t from-indigo-200 border-t text-black sticky bottom-0">

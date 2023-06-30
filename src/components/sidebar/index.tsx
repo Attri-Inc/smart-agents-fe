@@ -3,38 +3,38 @@ import classNames from "classnames";
 import Logo from "../icons/Logo";
 import { FiMap } from "react-icons/fi";
 import { googleLogout } from "@react-oauth/google";
-import { FiUsers, FiHome, FiTrendingUp } from "react-icons/fi";
 import { Link, useNavigate, NavLink } from "react-router-dom";
 import { TOKEN } from "../../constants/authentication";
 import Avatar from "../../assets/Ellipse 1.png";
 import Settings from "../icons/Settings";
-import { FaCross } from "react-icons/fa";
-import { HiXMark } from "react-icons/hi2";
+import Home from "../icons/Home";
+import User from "../icons/User";
+import Hilight from "../icons/Hilight";
 
 const menuList: any[] = [
   {
     id: 1,
     url: "",
     label: "Home",
-    renderIcon: <FiHome />,
+    renderIcon: <Home />,
   },
   {
     id: 2,
     url: "customers",
     label: "People",
-    renderIcon: <FiUsers />,
+    renderIcon: <User />,
   },
   {
     id: 3,
     url: "highlights",
     label: "Highlights",
-    renderIcon: <FiTrendingUp />,
+    renderIcon: <Hilight />,
   },
   {
     id: 4,
     url: "workflow",
     label: "WorkFlow",
-    renderIcon: <FiMap />,
+    renderIcon: <FiMap className="text-xl font-extrabold	text-gray-400" />,
   },
 ];
 
@@ -90,7 +90,14 @@ const Sidebar = () => {
                   className={`p-2 my-2 flex items-center hover:bg-gray-100 rounded-lg`}
                 >
                   <div className="pr-4">{menu.renderIcon}</div>
-                  <p className="font-inter">{menu.label}</p>
+                  <div className="w-full flex justify-between items-center">
+                    <p className="font-inter text-sm font-medium text-gray-600">
+                      {menu.label}
+                    </p>
+                    {/* <span className="font-medium text-gray-600 inline-block px-2 rounded-lg bg-white">
+                      2
+                    </span> */}
+                  </div>
                 </li>
               </NavLink>
             ))}
@@ -107,7 +114,7 @@ const Sidebar = () => {
             }`}
           >
             <Settings />
-            <p className="font-inter">Settings</p>
+            <p className="text-sm font-medium text-gray-600">Settings</p>
           </div>
           <div className="flex gap-4 items-center">
             <div className="h-10 w-10">

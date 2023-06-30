@@ -7,6 +7,7 @@ import {
   dateFormatDate,
   themeData,
   timeFormatData,
+  timezones,
 } from "../../utils/commonData";
 
 export interface ThemeListType {
@@ -22,11 +23,16 @@ export interface DateFormat {
   dateFormatList: DateFormatDataType[];
   selectedDateFormat: DateFormatDataType;
 }
+export interface TimeZoneFormat {
+  timeZoneFormatList: TimeFormatDataType[];
+  selectedTimeZoneFormat: TimeFormatDataType;
+}
 
 export interface InitialStateType {
   theme: ThemeListType;
   timeFormat: TimeFormat;
   dateFormat: DateFormat;
+  timeZoneFormat: TimeZoneFormat;
 }
 
 interface PayloadType {
@@ -50,6 +56,10 @@ const initialState: InitialStateType = {
   dateFormat: {
     dateFormatList: dateFormatDate,
     selectedDateFormat: { id: 1, name: "DD/MM/YYYY" },
+  },
+  timeZoneFormat: {
+    timeZoneFormatList: timezones,
+    selectedTimeZoneFormat: timezones[0],
   },
 };
 

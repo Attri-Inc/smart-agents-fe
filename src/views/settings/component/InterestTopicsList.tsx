@@ -1,4 +1,3 @@
-import React from "react";
 import { InterestTopicsKeywordType } from "../../../utils/commonData";
 
 interface InterestTopicsListType {
@@ -14,7 +13,7 @@ const InterestTopicsList = ({
 
   return (
     <div>
-      {interestTopics?.map((topic: InterestTopicsKeywordType) => (
+      {interestTopics.slice(0, 5)?.map((topic: InterestTopicsKeywordType) => (
         <span
           className="py-2 px-4 cursor-pointer text-sm text-inter font-medium m-2 rounded-full inline-block bg-gray-200"
           key={topic.id}

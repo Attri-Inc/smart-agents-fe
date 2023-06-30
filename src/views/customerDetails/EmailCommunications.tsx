@@ -1,10 +1,8 @@
-import React from "react";
 import { useQuery } from "react-query";
 import { getEmailCommunicationDetails } from "../../utils/APIHelperFun";
+import Spinner from "../../components/Common/skeleton/Spinner";
 
-type Props = {};
-
-const EmailCommunications = (props: Props) => {
+const EmailCommunications = () => {
   const {
     data: customerEmails,
     isLoading,
@@ -15,7 +13,12 @@ const EmailCommunications = (props: Props) => {
 
   console.log("customerEmails", customerEmails);
 
-  if (isLoading) return "Loading...";
+  if (isLoading)
+    return (
+      <div className="flex justify-center w-full pt-8">
+        <Spinner />
+      </div>
+    );
   if (isError) return "Something is wrong";
 
   return (

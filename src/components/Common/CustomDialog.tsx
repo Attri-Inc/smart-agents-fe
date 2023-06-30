@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import React, { Fragment } from "react";
-import { HiXMark } from "react-icons/hi2";
+import CrossIcon from "../icons/CrossIcon";
 
 interface CustomeDialogProps {
   isOpen: boolean;
@@ -52,10 +52,14 @@ const CustomDialog = ({
                 >
                   <Dialog.Title
                     as="h3"
-                    className="text-lg border-b pb-2 flex w-full items-center justify-between font-medium leading-6 text-gray-900"
+                    className="text-lg border-b pb-3 flex w-full items-center justify-between font-medium leading-6 text-gray-900"
                   >
                     {title}
-                    <HiXMark onClick={toggleModal} />
+
+                    <CrossIcon
+                      onClick={toggleModal}
+                      className="cursor-pointer"
+                    />
                   </Dialog.Title>
                   <div>{LogComminicationForm}</div>
                 </Dialog.Panel>

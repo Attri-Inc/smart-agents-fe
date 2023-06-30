@@ -41,6 +41,18 @@ const AppPreferenceReducer = (state: InitialStateType, action: ActionType) => {
             }}
         return updatedDate;
       }
+      case "TIMEZONE_FORMAT": {
+        const updatedTimeZone = { ...state,
+          timeZoneFormat: {
+              ...state.timeZoneFormat,
+              selectedTimeZoneFormat: {
+                ...state.timeZoneFormat.selectedTimeZoneFormat,
+                id: action.payload.id,
+                name: action.payload.name,
+              },
+            }}
+        return updatedTimeZone;
+      }
       default:
         return state;
     }
