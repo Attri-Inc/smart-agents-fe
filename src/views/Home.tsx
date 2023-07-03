@@ -20,37 +20,39 @@ const Home = (): JSX.Element => {
         <Sidebar />
       </div>
       <div className="mx-auto border overflow-auto">
-        <div className="w-full px-20">
-          <h1 className="text-2xl text-inter tracking-wide font-bold text-gray-900  pl-4 pt-4">
-            Hi there, Welcome
-          </h1>
-          <div className="pt-8">
-            <div className="w-full">
-              <h1 className="font-inter font-bold text-gray-900 text-xl px-4">
-                ToDos for today!
-              </h1>
-              <FollowUpTask />
-            </div>
-            <div className="w-full">
-              <h1 className="font-inter font-bold text-gray-900 text-xl px-4">
-                Events
-              </h1>
-              <Events />
-            </div>
-          </div>
-          <div className="w-full">
-            <h1 className="font-inter font-bold text-gray-900 text-xl px-4">
-              Trending Today
+        <div className="w-full h-screen">
+          <div className="w-full px-20">
+            <h1 className="text-2xl text-inter tracking-wide font-bold text-gray-900  pl-4 pt-4">
+              Hi there, Welcome
             </h1>
-            <TrendingTopics />
+            <div className="pt-8">
+              <div className="w-full">
+                <h1 className="font-inter font-bold text-gray-900 text-xl px-4">
+                  ToDos for today!
+                </h1>
+                <FollowUpTask />
+              </div>
+              <div className="w-full">
+                <h1 className="font-inter font-bold text-gray-900 text-xl px-4">
+                  Events
+                </h1>
+                <Events />
+              </div>
+            </div>
+            <div className="w-full">
+              <h1 className="font-inter font-bold text-gray-900 text-xl px-4">
+                Trending Today
+              </h1>
+              <TrendingTopics />
+            </div>
           </div>
-        </div>
-        <div className="h-28 bg-gradient-to-t from-indigo-200 border-t text-black sticky bottom-0">
-          <QueryInput
-            onclick={handleRedirectToQueryPage}
-            onChange={handleOnQuerySearch}
-            value={userAskedText}
-          />
+          <div className="h-28 bg-gradient-to-t from-indigo-200 border-t text-black sticky bottom-0">
+            <QueryInput
+              onclick={handleRedirectToQueryPage}
+              onChange={handleOnQuerySearch}
+              value={userAskedText}
+            />
+          </div>
         </div>
       </div>
     </div>

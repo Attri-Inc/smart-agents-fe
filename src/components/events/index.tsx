@@ -1,40 +1,21 @@
-import CustomButton from "../customButton";
 import { Link } from "react-router-dom";
 import Attendees from "../Common/Attendees";
 import { FaClock } from "react-icons/fa";
 import Camera from "../icons/Camera";
-
-const eventList: any = [
-  {
-    attendees: [
-      {
-        email: "sriharsha.y@attri.ai",
-        image: "",
-        name: "Sriharsha Y",
-      },
-      {
-        email: "yashwanth.reddy@attri.ai",
-        image: "",
-        name: "Yashwanth Reddy",
-      },
-      {
-        email: "riyaz.ansari@attri.ai",
-        image: "",
-        name: "Riyaz Ansari",
-      },
-    ],
-    date: "Jun 21, 2023",
-    description: "Daily Standup",
-    meeting_link: "https://meet.google.com/ivz-iaeh-jiq",
-    time: "10:00 to 10:30",
-  },
-];
+import { getEvents } from "../../utils/APIHelperFun";
+import { useQuery } from "react-query";
+import EventSkeleton from "../Common/skeleton/EventSkeleton";
+import { BiCalendar } from "react-icons/bi";
 
 const Events = (): JSX.Element => {
+  const { data: events, isLoading, isError } = useQuery("events", getEvents);
+
+  if (isLoading) return <EventSkeleton />;
+  if (isError) return <h1>Something is wrong !</h1>;
   return (
     <div className="w-full">
       <ul className="w-full flex flex-nowrap mb-4 overflow-x-scroll scrollbar-hide">
-        {eventList.map((event: any) => {
+        {events.data.map((event: any) => {
           return (
             <li className="border m-4 p-3 rounded-lg inline-block">
               <div className="w-96">
@@ -43,9 +24,15 @@ const Events = (): JSX.Element => {
                     {event.description}
                   </p>
                   <div className="flex items-center py-2">
+                    <BiCalendar className="text-gray-400" />
+                    <span className="block text-sm text-gray-600 text-inter pl-2">
+                      {event.date}
+                    </span>
+                  </div>
+                  <div className="flex items-center py-2">
                     <FaClock className="text-gray-400" />
                     <span className="block text-sm text-gray-600 text-inter pl-2">
-                      10:20 AM to 10:40 AM
+                      {event.time}
                     </span>
                   </div>
                 </div>
@@ -53,19 +40,13 @@ const Events = (): JSX.Element => {
                   <Camera />
                   <Link
                     to={event.meeting_link}
-                    className="text-inter text-base text-gray-500"
+                    className="text-inter text-base text-gray-500 hover:text-indigo-500"
+                    target="_blank"
                   >
                     {event.meeting_link}
                   </Link>
                 </div>
                 <Attendees attendees={event.attendees} />
-                <CustomButton
-                  title="View Details"
-                  disabled={false}
-                  containerStyle="text-xs bg-white text-gray-700 rounded mt-6 border font-medium"
-                  type="button"
-                  handleClick={() => {}}
-                />
               </div>
             </li>
           );

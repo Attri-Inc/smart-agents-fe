@@ -55,3 +55,7 @@ export const getFollowUp = async (alert: boolean): Promise<any> => {
   const data = await apiClient.get(`/workflow?with_alert=${alert}`);
   return data;
 };
+export const getEvents = async (): Promise<any> => {
+  const data = await apiClient.get(`/get_events`);
+  return data;
+};

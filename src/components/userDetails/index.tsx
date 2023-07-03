@@ -149,7 +149,7 @@ const UserDetails = ({ userDetails }: any) => {
                       <Calendar />
                     </span>
                     <div className="flex items-center justify-between">
-                      <h3 className="flex items-center mb-1 text-lg font-inter font-inter text-gray-900">
+                      <h3 className="flex items-center mb-1 text-lg font-inter text-gray-900">
                         <span className="text-gray-500 text-sm font-inter mr-2 px-2.5 py-0.5 ml-3">
                           Met for
                         </span>
@@ -163,7 +163,7 @@ const UserDetails = ({ userDetails }: any) => {
                       <Twitter />
                     </span>
                     <div className="flex items-center justify-between">
-                      <h3 className="flex items-center mb-1 text-lg font-inter font-inter text-gray-900">
+                      <h3 className="flex items-center mb-1 text-lg font-inter text-gray-900">
                         <span className="text-gray-500 text-sm font-inter mr-2 px-2.5 py-0.5 ml-3">
                           On Twitter
                         </span>

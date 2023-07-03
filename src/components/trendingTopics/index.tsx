@@ -46,26 +46,25 @@ const TrendingTopics = (): JSX.Element => {
             {currentReadingTopic.summary}
           </p>
         </div>
-        <div className="w-4/12">
-          <div>
+        <div className="w-5/12">
+          <div className="">
             <p className="text-inter text-sm font-medium text-gray-900">
               Must Read:
             </p>
             <Link
               to={currentReadingTopic.link}
               target="_blank"
-              className="text-inter text-indigo-600 text-sm"
+              className="text-inter text-indigo-600 text-sm mr-2 block"
             >
-              <div>{currentReadingTopic.link}</div>
+              {currentReadingTopic.link}
             </Link>
+            {/* <div className="mr-4"> {currentReadingTopic.link}</div> */}
           </div>
           <div className="pt-4">
             <h1 className="font-medium text-gray-500 text-inter text-sm py-1">
               Share
             </h1>
             <div className="flex gap-4 items-center">
-              <Twitter color="#000000" className="opacity-40 cursor-pointer " />
-              <LinkedIn color="#000000" className="opacity-40 cursor-pointer" />
               <UserGroup
                 color="#000000"
                 className="opacity-40 cursor-pointer"

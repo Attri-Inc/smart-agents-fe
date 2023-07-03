@@ -6,6 +6,7 @@ import MicroPhone from "../components/icons/MicroPhone";
 import { useQuery } from "react-query";
 import { customerChat } from "../utils/APIHelperFun";
 import AIChatIcon from "../components/icons/AIChatIcon";
+import { BiMicrophone, BiMicrophoneOff } from "react-icons/bi";
 
 interface UserChat {
   id: string;
@@ -20,6 +21,77 @@ const Query = () => {
   const [AIChatData, setAIChatData] = useState<AIChatData[]>([]);
   const [query, setQuery] = useState("");
   const userInputChat = useRef() as MutableRefObject<HTMLInputElement>;
+  const [isListening, setIsListening] = useState(false);
+  // const [recognizedText, setRecognizedText] = useState("");
+
+  let recognition: SpeechRecognition | null;
+
+  const handleToggleListening = () => {
+    if (!isListening) {
+      startRecognition();
+    } else {
+      stopRecognition();
+    }
+  };
+
+  const startRecognition = () => {
+    let audio = new Audio("./record.wav");
+    recognition = new window.webkitSpeechRecognition() as SpeechRecognition;
+    // recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = "en-US";
+
+    recognition.onstart = () => {
+      audio.play();
+      setIsListening(true);
+    };
+
+    recognition.onresult = (event) => {
+      let interimTranscript = "";
+      let finalTranscript = "";
+
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          finalTranscript += transcript + " ";
+        } else {
+          interimTranscript += transcript;
+        }
+      }
+      finalTranscript !== "" &&
+        setUserChatData((prev: UserChat[]) => [
+          ...prev,
+          {
+            userQuery: finalTranscript,
+            id: randomId(),
+          },
+        ]);
+      setQuery(finalTranscript);
+      userInputChat.current.value = finalTranscript;
+    };
+
+    recognition.onerror = (event) => {
+      console.error("Speech recognition error:", event.error);
+      stopRecognition();
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    console.log("recognition", recognition);
+
+    recognition.start();
+  };
+
+  const stopRecognition = () => {
+    console.log("onrecognitionend", recognition);
+    if (isListening) {
+      recognition && recognition.stop();
+      recognition = null;
+      setIsListening(false);
+    }
+  };
 
   const { isLoading, isError } = useQuery({
     queryKey: ["query", query],
@@ -46,8 +118,6 @@ const Query = () => {
       ]);
     }
   };
-
-  console.log("userChatData", userChatData);
 
   return (
     <div className="relative h-screen overflow-hidden md:flex divide-gray-200 divide-x">
@@ -109,7 +179,12 @@ const Query = () => {
               />
             </form>
           </div>
-          <MicroPhone className="text-2xl text-zinc-400 absolute right-32 bottom-8 cursor-pointer" />
+          <div className="absolute right-32 bottom-7 cursor-pointer">
+            {/* <AudioSpeech /> */}
+            <button onClick={handleToggleListening}>
+              {isListening ? <BiMicrophone /> : <BiMicrophoneOff />}
+            </button>
+          </div>
         </div>
       </div>
     </div>

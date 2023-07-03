@@ -13,6 +13,7 @@ import {
 import NetworkContects from "../components/networkContacts/NetworkContects";
 import NewtworkBreakdown from "../components/Common/NewtworkBreakdown";
 import CardLoader from "../components/Common/skeleton/CardLoader";
+import AudioSpeech from "../components/AudioSpeech";
 
 const profiles = [
   {

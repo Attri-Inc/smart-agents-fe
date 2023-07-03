@@ -1,26 +1,3 @@
-import Avatar from "../../assets/Avatar.png";
-import Avatar2 from "../../assets/Avatar2.png";
-import Avatar3 from "../../assets/Avatar3.png";
-
-const avatarImage = [
-  {
-    id: 1,
-    img: Avatar,
-  },
-  {
-    id: 1,
-    img: Avatar2,
-  },
-  {
-    id: 1,
-    img: Avatar2,
-  },
-  {
-    id: 1,
-    img: Avatar3,
-  },
-];
-
 interface Attendees {
   email: string;
   name: string;
@@ -32,38 +9,36 @@ interface AttendeesProps {
 }
 
 const Attendees = ({ attendees }: AttendeesProps) => {
-  const showCount = attendees.length > 4;
+  const showCount = attendees.length > 2;
+
   return (
-    <div>
+    <>
       <ul>
-        {attendees.slice(0, 4).map((attendee: any, index: any) => {
+        {attendees.slice(0, 2).map((attendee: any, index: number) => {
           return (
-            <li key={index} className="flex justify-between py-1 items-center">
+            <li
+              key={index}
+              className={` ${
+                showCount && index === 1
+                  ? "flex justify-between items-center"
+                  : "py-1"
+              } `}
+            >
               <p className="text-sm-base text-gray-600 font-inter">
                 {attendee.name}
               </p>
+              {showCount && index === 1 && (
+                <div className="flex items-center">
+                  <span className="text-gray-500 font-bold font-inter text-sm">{`+${
+                    attendees.length - 2
+                  } more`}</span>
+                </div>
+              )}
             </li>
           );
         })}
       </ul>
-      {showCount && (
-        <div className="flex items-center">
-          <div className="flex items-center -space-x-3 pr-2">
-            {avatarImage.map((customer: any) => (
-              <img
-                key={customer.id}
-                className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800 object-cover"
-                src={customer.img}
-                alt=""
-              />
-            ))}
-          </div>
-          <span className="text-gray-500 font-bold font-inter text-sm">{`+${
-            attendees.length - 4
-          }`}</span>
-        </div>
-      )}
-    </div>
+    </>
   );
 };
 
