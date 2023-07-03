@@ -2,7 +2,6 @@ import { useState, useRef, MutableRefObject } from "react";
 import Sidebar from "../components/sidebar";
 import { randomId } from "../utils/helper";
 import Avatar3 from "../assets/Avatar3.png";
-import MicroPhone from "../components/icons/MicroPhone";
 import { useQuery } from "react-query";
 import { customerChat } from "../utils/APIHelperFun";
 import AIChatIcon from "../components/icons/AIChatIcon";
@@ -22,7 +21,6 @@ const Query = () => {
   const [query, setQuery] = useState("");
   const userInputChat = useRef() as MutableRefObject<HTMLInputElement>;
   const [isListening, setIsListening] = useState(false);
-  // const [recognizedText, setRecognizedText] = useState("");
 
   let recognition: SpeechRecognition | null;
 
@@ -47,15 +45,12 @@ const Query = () => {
     };
 
     recognition.onresult = (event) => {
-      let interimTranscript = "";
       let finalTranscript = "";
 
       for (let i = event.resultIndex; i < event.results.length; i++) {
         const transcript = event.results[i][0].transcript;
         if (event.results[i].isFinal) {
           finalTranscript += transcript + " ";
-        } else {
-          interimTranscript += transcript;
         }
       }
       finalTranscript !== "" &&

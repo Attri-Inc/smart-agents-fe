@@ -5,8 +5,6 @@ import CustomDialog from "../Common/CustomDialog";
 import { useState } from "react";
 import TrendingUp from "../icons/TrendingUp";
 import FollowUpSkeleton from "../Common/skeleton/FollowUpSkeleton";
-import Twitter from "../icons/Twitter";
-import LinkedIn from "../icons/LinkedIn";
 import UserGroup from "../icons/UserGroup";
 import { FaShare } from "react-icons/fa";
 
@@ -58,7 +56,6 @@ const TrendingTopics = (): JSX.Element => {
             >
               {currentReadingTopic.link}
             </Link>
-            {/* <div className="mr-4"> {currentReadingTopic.link}</div> */}
           </div>
           <div className="pt-4">
             <h1 className="font-medium text-gray-500 text-inter text-sm py-1">
