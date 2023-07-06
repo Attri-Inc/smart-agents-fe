@@ -1,22 +1,47 @@
 import { useQuery } from "react-query";
-import { fetchTrendingTopics } from "../../utils/APIHelperFun";
-import { Link } from "react-router-dom";
+import {
+  fetchTrendingTopics,
+  sendEmailToSingleContact,
+} from "../../utils/APIHelperFun";
 import CustomDialog from "../Common/CustomDialog";
 import { useState } from "react";
 import TrendingUp from "../icons/TrendingUp";
 import FollowUpSkeleton from "../Common/skeleton/FollowUpSkeleton";
-import UserGroup from "../icons/UserGroup";
-import { FaShare } from "react-icons/fa";
+import AutoComplete from "../Common/AutoComplete";
+import TrendingTopicsModal from "./TrendingTopicsModal";
+import { contact } from "./sampleData";
+import Spinner from "../Common/skeleton/Spinner";
 
 const TrendingTopics = (): JSX.Element => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isEmailSubjectLoading, setIsEmailSubjectLoading] =
+    useState<boolean>(false);
+  const [emailMessage, setEmailMessage] = useState<string>("");
+  const [isEmailSending, setIsEmailSending] = useState<boolean>(false);
   const [currentReadingTopic, setCurrentReadingTopic] = useState<any>();
+  const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false);
+  const [emailSubject, setEmailSubject] = useState<string>("");
+  const [selected, setSelected] = useState();
+  const [selectContacts, setSelectContacts] = useState<any[]>([]);
+  const [isMultipleSelectModalOpen, isSetMultipleSelectModalOpen] =
+    useState<boolean>(false);
+
+  const toggleShareModal = () => setIsShareModalOpen(!isShareModalOpen);
+  const toggleShareModalMultiple = () =>
+    isSetMultipleSelectModalOpen(!isMultipleSelectModalOpen);
+
   const toggle = () => setIsOpen(!isOpen);
   const {
     data: trendingTopics,
     isLoading,
     isError,
   } = useQuery("trending_topics", fetchTrendingTopics);
+
+  // const {
+  //   data: customerList,
+  //   isLoading: isCustomerListLoading,
+  //   isError: isCustomerListErorr,
+  // } = useQuery("emailRecipent-list", () => getCustomerList());
 
   const { data } = !isLoading && !isError && trendingTopics?.data;
   const getOtherLinks: any[] | string =
@@ -32,47 +57,41 @@ const TrendingTopics = (): JSX.Element => {
       </h1>
     </div>
   );
+  const RenderShareEmailTitle = () => (
+    <div className="flex gap-4 items-center">
+      <TrendingUp color="#4F46E5" className="font-medium text-indigo-600" />
+      <h1 className="font-inter text-base font-medium text-indigo-600 pb-2">
+        Send an Email
+      </h1>
+    </div>
+  );
 
-  const RenderTrendingTopics = () => {
-    return (
-      <div className="flex gap-20 py-4">
-        <div className="w-7/12">
-          <p
-            className="text-inter text-sm text-justify leading-relaxed
-"
-          >
-            {currentReadingTopic.summary}
-          </p>
-        </div>
-        <div className="w-5/12">
-          <div className="">
-            <p className="text-inter text-sm font-medium text-gray-900">
-              Must Read:
-            </p>
-            <Link
-              to={currentReadingTopic.link}
-              target="_blank"
-              className="text-inter text-indigo-600 text-sm mr-2 block"
-            >
-              {currentReadingTopic.link}
-            </Link>
-          </div>
-          <div className="pt-4">
-            <h1 className="font-medium text-gray-500 text-inter text-sm py-1">
-              Share
-            </h1>
-            <div className="flex gap-4 items-center">
-              <UserGroup
-                color="#000000"
-                className="opacity-40 cursor-pointer"
-              />
-              <FaShare color="#000000" className="opacity-40 cursor-pointer" />
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+  const handleSendEmailToSingleContact = async () => {
+    console.log("toggleShareModalMultiple", toggleShareModalMultiple);
+    try {
+      setIsEmailSending(true);
+      await sendEmailToSingleContact(
+        currentReadingTopic.summary,
+        selected.registered_email
+      );
+      setIsEmailSending(false);
+      // setEmailSubject(response.data);
+    } catch (error) {
+      setIsEmailSending(false);
+      // Handle error
+      console.error("Error fetching email subject:", error);
+    }
   };
+
+  const handleSingleSendEmailClose = () => {
+    toggleShareModal();
+    setEmailSubject(" ");
+    setIsEmailSubjectLoading(false);
+    toggleShareModalMultiple();
+  };
+  const handleMultipleContactModalOpen = () => {};
+
+  console.log("selectContacts", selectContacts);
   return (
     <>
       <div className="w-full">
@@ -91,6 +110,7 @@ const TrendingTopics = (): JSX.Element => {
                   onClick={() => {
                     toggle();
                     setCurrentReadingTopic(topics);
+                    setEmailMessage(topics.summary);
                   }}
                 >
                   <div className="w-96">
@@ -127,7 +147,98 @@ const TrendingTopics = (): JSX.Element => {
         title={<RenderTrendingTile />}
         toggleModal={toggle}
         width="w-8/12"
-        LogComminicationForm={<RenderTrendingTopics />}
+        LogComminicationForm={
+          <TrendingTopicsModal
+            currentReadingTopic={currentReadingTopic}
+            toggleShareModal={toggleShareModal}
+            setEmailSubject={setEmailSubject}
+            setIsEmailSubjectLoading={setIsEmailSubjectLoading}
+            isSetMultipleSelectModalOpen={isSetMultipleSelectModalOpen}
+          />
+        }
+      />
+
+      <CustomDialog
+        isOpen={isShareModalOpen}
+        title={<RenderShareEmailTitle />}
+        toggleModal={handleSingleSendEmailClose}
+        width="w-6/12"
+        LogComminicationForm={
+          <div>
+            <div className="mb-6">
+              <label className="block mb-2 font-medium text-inter text-sm text-gray-700 dark:text-white">
+                Subject
+              </label>
+              <div className="flex relative items-center">
+                <input
+                  type="text"
+                  id="title"
+                  value={emailSubject}
+                  onChange={(e) => setEmailSubject(e.target.value)}
+                  className="shadow-sm bg-white border  border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                  placeholder="Subject"
+                  required
+                />
+                {isEmailSubjectLoading && (
+                  <div className="absolute right-0">
+                    <Spinner size="w-6 h-6" />
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="pb-4">
+              <label className="block mb-2 text-inter font-medium text-sm text-gray-700 dark:text-white">
+                Body
+              </label>
+              <textarea
+                id="chat"
+                rows={8}
+                onChange={(e) => setEmailMessage(e.target.value)}
+                value={emailMessage}
+                className="block rounded-lg p-2.5 w-full text-sm text-gray-900 bg-white border border-gray-400 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Body"
+              />
+            </div>
+            <div className="pb-6">
+              <label className="block mb-2 text-inter font-medium text-sm text-gray-700 dark:text-white">
+                Contact List
+              </label>
+              {!isError && !isLoading && (
+                <AutoComplete
+                  options={contact}
+                  setSelected={setSelected}
+                  setSelectContacts={setSelectContacts}
+                  selected={selected}
+                  isMultipleSelectModalOpen={isMultipleSelectModalOpen}
+                />
+              )}
+            </div>
+            <ul className="flex gap-2 flex-wrap items-center">
+              {isMultipleSelectModalOpen &&
+                selectContacts.map((contact: any) => (
+                  <li className="py-1 px-2 rounded-full bg-indigo-400 text-white">
+                    {contact.name}
+                  </li>
+                ))}
+            </ul>
+            <div className="flex gap-4 justify-end pt-2">
+              <button
+                onClick={toggleShareModal}
+                className="py-2 px-3 bg-white text-inter text-gray-700 rounded-md border"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleSendEmailToSingleContact}
+                className="py-2 px-3 bg-indigo-600 text-white rounded-md flex items-center gap-3"
+              >
+                Save{" "}
+                {isEmailSending && <Spinner size="w-5 h-5" className="ml-2" />}
+              </button>
+            </div>
+          </div>
+        }
       />
     </>
   );

@@ -19,7 +19,6 @@ const Login = () => {
 
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: (codeResponse) => {
-      console.log("codeResponse", codeResponse);
       fetch(codeResponse.scope)
         .then((data) => {
           return data.json();
@@ -29,7 +28,7 @@ const Login = () => {
         });
       if (codeResponse.code) {
         localStorage.setItem(TOKEN, JSON.stringify(codeResponse.code));
-        navigate("/");
+        navigate("/onboarding");
       }
     },
     flow: "auth-code",

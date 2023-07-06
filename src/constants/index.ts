@@ -1,7 +1,8 @@
 export const todosConstants = {
-    listingsPrepared: 'Listings Prepared',
-    FollowUp : 'Follow-up',
-    Hired: 'Hired',
+    send: 'Send',
+    cancelFollowUp : 'Cancel this followup',
+    cancelAllFollowUp : 'Cancel all followup',
+    Schedule: 'Schedule',
 }
 
 

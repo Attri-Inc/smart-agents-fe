@@ -19,14 +19,14 @@ const Home = (): JSX.Element => {
       <div>
         <Sidebar />
       </div>
-      <div className="mx-auto border overflow-auto">
+      <div className="mx-auto border overflow-auto w-full">
         <div className="w-full h-screen">
           <div className="w-full px-20">
             <h1 className="text-2xl text-inter tracking-wide font-bold text-gray-900  pl-4 pt-4">
               Hi there, Welcome
             </h1>
             <div className="pt-8">
-              <div className="w-full">
+              <div className="w-full ">
                 <h1 className="font-inter font-bold text-gray-900 text-xl px-4">
                   ToDos for today!
                 </h1>

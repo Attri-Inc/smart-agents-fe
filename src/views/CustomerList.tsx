@@ -22,8 +22,6 @@ const Customers = (): JSX.Element => {
     isError: isCustomerListErorr,
   } = useQuery("customer-list", () => getCustomerList());
 
-  console.log("customerList");
-
   const { customer_details } =
     !isCustomerListLoading && !isCustomerListErorr && customerList.data;
 

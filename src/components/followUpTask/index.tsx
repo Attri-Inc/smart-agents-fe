@@ -3,8 +3,13 @@ import FollowUpSkeleton from "../Common/skeleton/FollowUpSkeleton";
 import Avatar from "../../assets/Avatar3.png";
 import Badge from "../Common/Badge";
 import { todosConstants } from "../../constants";
-import { getFollowUp } from "../../utils/APIHelperFun";
+import {
+  cancelFollowUpAPI,
+  getFollowUp,
+  sendAPI,
+} from "../../utils/APIHelperFun";
 import { useQuery } from "react-query";
+import { useState } from "react";
 
 const FollowUpTask = (): JSX.Element => {
   const {
@@ -13,11 +18,10 @@ const FollowUpTask = (): JSX.Element => {
     isError,
   } = useQuery("followUp", () => getFollowUp(true));
 
-  const { FollowUp, Hired, listingsPrepared } = todosConstants;
+  const [loading, setLoading] = useState<boolean>(false);
+  const { send, cancelAllFollowUp, cancelFollowUp, Schedule } = todosConstants;
 
   const { worflows } = !isError && !isLoading && followUpList.data;
-
-  console.log("worflows", worflows);
 
   if (isLoading) return <FollowUpSkeleton />;
   if (isError)
@@ -27,7 +31,7 @@ const FollowUpTask = (): JSX.Element => {
       </div>
     );
 
-  const renderButtonOnTodosCard = () => (
+  const renderButtonOnTodosCard = (todo: any) => (
     <div className="mt-4">
       <CustomButton
         title="Send"
@@ -46,53 +50,53 @@ const FollowUpTask = (): JSX.Element => {
     </div>
   );
 
-  const getTodosButtons = (type: string) => {
-    switch (type) {
-      case listingsPrepared:
-        return renderButtonOnTodosCard();
-      case FollowUp:
-        return (
-          <>
-            {renderButtonOnTodosCard()}
-            <div className="mt-4">
-              <CustomButton
-                title="Cancel this followup"
-                disabled={false}
-                containerStyle="text-xs bg-white text-gray-700 rounded border font-medium mr-4"
-                type="button"
-                handleClick={() => {}}
-              />
-              <CustomButton
-                title="Cancel all followup"
-                disabled={false}
-                containerStyle="text-xs bg-white text-gray-700 rounded border font-medium"
-                type="button"
-                handleClick={() => {}}
-              />
-            </div>
-          </>
-        );
-      case Hired:
-        return (
-          <CustomButton
-            title="Schedule"
-            disabled={false}
-            containerStyle="text-xs bg-white text-gray-700 rounded mt-4 border font-medium"
-            type="button"
-            handleClick={() => {}}
-          />
-        );
-      default:
-        return (
-          <CustomButton
-            title="Send"
-            disabled={false}
-            containerStyle="text-xs bg-white text-gray-700 rounded border mr-4 font-medium mt-6"
-            type="button"
-            handleClick={() => {}}
-          />
-        );
+  const handleCancelFollowUp = async (todo: any) => {
+    try {
+      setLoading(true);
+      await cancelFollowUpAPI(false, todo.registered_email);
+      setLoading(false);
+      // setEmailSubject(response.data);
+    } catch (error) {
+      setLoading(false);
+      // Handle error
+      console.error("Error fetching email subject:", error);
     }
+  };
+  const handleCancelAllFollowUp = async (todo: any) => {
+    try {
+      setLoading(true);
+      await sendAPI(true, todo.registered_email);
+      setLoading(false);
+      // setEmailSubject(response.data);
+    } catch (error) {
+      setLoading(false);
+      // Handle error
+      console.error("Error fetching email subject:", error);
+    }
+  };
+
+  const getTodosButtons = (todo: any) => {
+    return (
+      <>
+        {renderButtonOnTodosCard(todo)}
+        <div className="mt-4">
+          <CustomButton
+            title="Cancel this followup"
+            disabled={false}
+            containerStyle="text-xs bg-white text-gray-700 rounded border font-medium mr-4"
+            type="button"
+            handleClick={() => handleCancelFollowUp(todo)}
+          />
+          <CustomButton
+            title="Cancel all followup"
+            disabled={false}
+            containerStyle="text-xs bg-white text-gray-700 rounded border font-medium"
+            type="button"
+            handleClick={() => handleCancelAllFollowUp(todo)}
+          />
+        </div>
+      </>
+    );
   };
 
   return (
@@ -123,7 +127,12 @@ const FollowUpTask = (): JSX.Element => {
                   On {todo.interaction_time.slice(0, 10)}
                 </span>
               </div>
-              <div>{getTodosButtons(todo.status_code)}</div>
+              <div>
+                {todo.status_code == "Follow up"
+                  ? getTodosButtons(todo)
+                  : // getTodosButtons()
+                    renderButtonOnTodosCard(todo)}
+              </div>
             </div>
           </li>
         ))}

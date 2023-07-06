@@ -18,6 +18,7 @@ interface AIChatData {
 const Query = () => {
   const [userChatData, setUserChatData] = useState<UserChat[]>([]);
   const [AIChatData, setAIChatData] = useState<AIChatData[]>([]);
+  const [chat, setChat] = useState<any[]>([]);
   const [query, setQuery] = useState("");
   const userInputChat = useRef() as MutableRefObject<HTMLInputElement>;
   const [isListening, setIsListening] = useState(false);
@@ -54,10 +55,11 @@ const Query = () => {
         }
       }
       finalTranscript !== "" &&
-        setUserChatData((prev: UserChat[]) => [
+        setChat((prev: any) => [
           ...prev,
           {
-            userQuery: finalTranscript,
+            type: "USER",
+            message: finalTranscript,
             id: randomId(),
           },
         ]);
@@ -73,8 +75,6 @@ const Query = () => {
     recognition.onend = () => {
       setIsListening(false);
     };
-
-    console.log("recognition", recognition);
 
     recognition.start();
   };
@@ -93,9 +93,9 @@ const Query = () => {
     queryFn: () => customerChat(query),
     enabled: !!query,
     onSuccess: (data: any) => {
-      setAIChatData((prev) => [
+      setChat((prev) => [
         ...prev,
-        { botAnswer: data.data.message, id: randomId(10) },
+        { message: data.data.message, id: randomId(10), type: "AI" },
       ]);
     },
   });
@@ -104,10 +104,11 @@ const Query = () => {
     setQuery(e.target.userTextInput.value);
     e.preventDefault();
     if (e.target.userTextInput.value !== "") {
-      setUserChatData((prev: UserChat[]) => [
+      setChat((prev: UserChat[]) => [
         ...prev,
         {
-          userQuery: e.target.userTextInput.value,
+          message: e.target.userTextInput.value,
+          type: "USER",
           id: randomId(),
         },
       ]);
@@ -121,43 +122,61 @@ const Query = () => {
       </div>
       <div className="w-full px-8 py-4 h-screen overflow-hidden  bg-indigo-100">
         <div className="[&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] w-full h-[38rem] overflow-y-auto">
-          {/* AI generated chat */}
-          <div>
-            {AIChatData?.map((chat: AIChatData) => (
-              <div
-                key={chat.id}
-                className="flex items-stretch gap-4 pb-3 t w-full"
-              >
-                <AIChatIcon className="self-end" />
+          <div className="w-full mx-auto">
+            <div className="flex flex-col overflow-hidden">
+              <div className="flex flex-col">
+                {chat.map((message, index) => (
+                  <div
+                    key={index}
+                    className={`my-2 ${
+                      message.type == "USER" ? "self-end" : "self-start"
+                    }`}
+                  >
+                    {message.type === "AI" ? (
+                      <>
+                        <div
+                          key={message.id}
+                          className="flex items-stretch gap-4 pb-3 t w-full"
+                        >
+                          <AIChatIcon className="self-end" />
 
-                <div className="p-4 bg-white max-w-lg rounded-tl-xl rounded-br-lg rounded-tr-xl">
-                  <p>{chat.botAnswer}</p>
-                </div>
-              </div>
-            ))}
-            {isLoading ? (
-              <div className="dotLoader p-5 rounded-full flex space-x-3">
-                <div className="w-5 h-5 dotLoader1 bg-[#4F46E5] rounded-full animate-bounce"></div>
-                <div className="w-5 h-5 dotLoader2 bg-[#4F46E5] rounded-full animate-bounce"></div>
-                <div className="w-5 h-5 dotLoader3 bg-[#4F46E5] rounded-full animate-bounce"></div>
-              </div>
-            ) : isError ? (
-              <h1>Something is wrong!</h1>
-            ) : null}
-          </div>
-
-          {userChatData?.map((chat: UserChat) => (
-            <div className="flex justify-end w-full">
-              <div key={chat.id} className=" gap-4 pb-3 flex items-stretch">
-                <div className="p-4 bg-white max-w-lg rounded-tl-xl rounded-bl-lg rounded-tr-xl">
-                  <p>{chat.userQuery}</p>
-                </div>
-                <div className="self-end">
-                  <img src={Avatar3} className="h-10 w-10 rounded-full" />
-                </div>
+                          <div className="p-4 bg-white max-w-xl rounded-tl-xl rounded-br-lg rounded-tr-xl">
+                            <p>{message.message}</p>
+                          </div>
+                        </div>
+                        {isLoading ? (
+                          <div className="dotLoader p-5 rounded-full flex space-x-3">
+                            <div className="w-5 h-5 dotLoader1 bg-[#4F46E5] rounded-full animate-bounce"></div>
+                            <div className="w-5 h-5 dotLoader2 bg-[#4F46E5] rounded-full animate-bounce"></div>
+                            <div className="w-5 h-5 dotLoader3 bg-[#4F46E5] rounded-full animate-bounce"></div>
+                          </div>
+                        ) : isError ? (
+                          <h1>Something is wrong!</h1>
+                        ) : null}
+                      </>
+                    ) : (
+                      <div className="flex justify-end w-full">
+                        <div
+                          key={message.id}
+                          className=" gap-4 pb-3 flex items-stretch"
+                        >
+                          <div className="p-4 bg-white max-w-xl rounded-tl-xl rounded-bl-lg rounded-tr-xl">
+                            <p>{message.message}</p>
+                          </div>
+                          <div className="self-end">
+                            <img
+                              src={Avatar3}
+                              className="h-10 w-10 rounded-full"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
+          </div>
         </div>
 
         <div className="w-full flex flex-col justify-end min-h-full">

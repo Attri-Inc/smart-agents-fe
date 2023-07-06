@@ -10,6 +10,7 @@ import { TOKEN } from "./constants/authentication";
 import PageNotFound from "./views/authentication/PageNotFound";
 import WorkFlow from "./views/WorkFlow";
 import Settings from "./views/settings";
+import MultiFormStepper from "./components/FromSteper";
 
 const App = (): JSX.Element => {
   const PrivateRoute = ({ children }: any) => {
@@ -21,6 +22,7 @@ const App = (): JSX.Element => {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/onboarding" element={<MultiFormStepper />} />
           <Route
             path="/"
             element={

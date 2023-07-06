@@ -38,6 +38,7 @@ export default {
         "backgoundColor-green": "#0F766E",
         "backgoundColor-blue": "#0464FC",
         "authBackgoundColor": "#1d2228",
+        "lightBlue": "#0C4A6E",
         
       },
       boxShadow: {

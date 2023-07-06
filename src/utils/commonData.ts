@@ -27,6 +27,16 @@ export const interestTopicsKeyword: InterestTopicsKeywordType[] = [
     {id: 10, label: "Hollywood"},
 ]
 
+
+export const countries: any[] = [
+    { name: "India" },
+    { name: "U.S" },
+    { name: "Canada" },
+    { name: "Germany" },
+    { name: "Europe" },
+    { name: "Turkey" },
+  ];
+
 export const timeFormatData: TimeFormatDataType[] = [
     {id: 1, name: "24 hour format"},
     {id: 2, name: "12 hour format"},
