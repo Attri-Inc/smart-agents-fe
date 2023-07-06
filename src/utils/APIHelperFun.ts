@@ -63,7 +63,7 @@ export const generateEmailSubject = async (message: string): Promise<any> => {
   const data = await apiClient.get(`/generate_subject?message=${message}`);
   return data;
 };
-export const sendEmailToSingleContact = async (message: string, recipient: string): Promise<any> => {
+export const sendEmailToSingleContact = async (message: string, recipient: string | string[]): Promise<any> => {
   const data = await apiClient.get(`send_email?recipient=${recipient}&message=${message}`);
   return data;
 };
@@ -71,7 +71,12 @@ export const cancelFollowUpAPI = async (all: boolean, registered_email: string):
   const data = await apiClient.get(`cancel_follow_up?all=${all}&registered_email=${registered_email}`);
   return data;
 };
-export const sendAPI = async (all: boolean, registered_email: string): Promise<any> => {
-  const data = await apiClient.put(`cancel_follow_up?all=${all}&registered_email=${registered_email}`, {name: 'Riyaz'});
+export const sendFollowUp = async (send: boolean, registered_email: string, interaction_id: number): Promise<any> => {
+  const data = await apiClient.put(`/workflow`, {send, registered_email, interaction_id });
   return data;
 };
+export const scheduleFollowUp = async (schedule_date: string, registered_email: string, interaction_id: number): Promise<any> => {
+  const data = await apiClient.put(`/workflow`, {schedule_date, registered_email, interaction_id });
+  return data;
+};
+

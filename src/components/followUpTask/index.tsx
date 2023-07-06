@@ -2,14 +2,18 @@ import CustomButton from "../customButton";
 import FollowUpSkeleton from "../Common/skeleton/FollowUpSkeleton";
 import Avatar from "../../assets/Avatar3.png";
 import Badge from "../Common/Badge";
-import { todosConstants } from "../../constants";
+import moment from "moment";
 import {
   cancelFollowUpAPI,
   getFollowUp,
-  sendAPI,
+  scheduleFollowUp,
+  sendFollowUp,
 } from "../../utils/APIHelperFun";
 import { useQuery } from "react-query";
 import { useState } from "react";
+import CustomDialog from "../Common/CustomDialog";
+import TrendingUp from "../icons/TrendingUp";
+import Spinner from "../Common/skeleton/Spinner";
 
 const FollowUpTask = (): JSX.Element => {
   const {
@@ -19,8 +23,13 @@ const FollowUpTask = (): JSX.Element => {
   } = useQuery("followUp", () => getFollowUp(true));
 
   const [loading, setLoading] = useState<boolean>(false);
-  const { send, cancelAllFollowUp, cancelFollowUp, Schedule } = todosConstants;
+  const [currentFollowUp, setCurrentFollowUp] = useState<any>();
+  const [date, setDate] = useState<string>("");
+  const [isScheduleModalOpen, setIsScheduleModalOpen] =
+    useState<boolean>(false);
 
+  const scheduleModalOpenToggle = () =>
+    setIsScheduleModalOpen(!isScheduleModalOpen);
   const { worflows } = !isError && !isLoading && followUpList.data;
 
   if (isLoading) return <FollowUpSkeleton />;
@@ -31,6 +40,20 @@ const FollowUpTask = (): JSX.Element => {
       </div>
     );
 
+  const ScheduleFollowUpTitle = () => (
+    <div className="flex gap-4 items-center">
+      <TrendingUp color="#4F46E5" className="font-medium text-indigo-600" />
+      <h1 className="font-inter text-base font-medium text-indigo-600 pb-2">
+        Send an Email
+      </h1>
+    </div>
+  );
+
+  const handleOnClickScheduleFollowUp = (todo: any) => {
+    scheduleModalOpenToggle();
+    setCurrentFollowUp(todo);
+  };
+
   const renderButtonOnTodosCard = (todo: any) => (
     <div className="mt-4">
       <CustomButton
@@ -38,14 +61,14 @@ const FollowUpTask = (): JSX.Element => {
         disabled={false}
         containerStyle="text-xs bg-white text-gray-700 rounded border mr-4 font-medium"
         type="button"
-        handleClick={() => {}}
+        handleClick={() => handleSendFollowUp(todo)}
       />
       <CustomButton
         title="Schedule"
         disabled={false}
         containerStyle="text-xs bg-white text-gray-700 rounded  border font-medium"
         type="button"
-        handleClick={() => {}}
+        handleClick={() => handleOnClickScheduleFollowUp(todo)}
       />
     </div>
   );
@@ -65,7 +88,38 @@ const FollowUpTask = (): JSX.Element => {
   const handleCancelAllFollowUp = async (todo: any) => {
     try {
       setLoading(true);
-      await sendAPI(true, todo.registered_email);
+      await cancelFollowUpAPI(true, todo.registered_email);
+      setLoading(false);
+      // setEmailSubject(response.data);
+    } catch (error) {
+      setLoading(false);
+      // Handle error
+      console.error("Error fetching email subject:", error);
+    }
+  };
+
+  const handleScheduleFollowUp = async () => {
+    console.log("currentFollowUp", currentFollowUp);
+    const followdate = moment(date).format("YYYY/MM/DD");
+    try {
+      setLoading(true);
+      await scheduleFollowUp(
+        followdate,
+        currentFollowUp.registered_email,
+        currentFollowUp.interaction_id
+      );
+      setLoading(false);
+      // setEmailSubject(response.data);
+    } catch (error) {
+      setLoading(false);
+      // Handle error
+      console.error("Error fetching email subject:", error);
+    }
+  };
+  const handleSendFollowUp = async (todo: any) => {
+    try {
+      setLoading(true);
+      await sendFollowUp(true, todo.registered_email, todo.interaction_id);
       setLoading(false);
       // setEmailSubject(response.data);
     } catch (error) {
@@ -137,6 +191,49 @@ const FollowUpTask = (): JSX.Element => {
           </li>
         ))}
       </ul>
+      <CustomDialog
+        isOpen={isScheduleModalOpen}
+        title={<ScheduleFollowUpTitle />}
+        toggleModal={scheduleModalOpenToggle}
+        width="w-6/12"
+        LogComminicationForm={
+          <div className="pt-4">
+            <div className="mb-6">
+              <label className="block mb-2 font-medium text-inter text-sm text-gray-700 dark:text-white">
+                Subject
+              </label>
+              <div className="flex items-center">
+                <input
+                  type="date"
+                  id="date"
+                  pattern="\d{2}/\d{2}/\d{4}"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  className="shadow-sm uppercase bg-white border  border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                  placeholder="Subject"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-4 justify-end pt-2">
+              <button
+                onClick={scheduleModalOpenToggle}
+                className="py-2 px-3 bg-white text-inter text-gray-700 rounded-md border"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleScheduleFollowUp}
+                className="py-2 px-3 bg-indigo-600 text-white rounded-md flex items-center gap-3"
+              >
+                Save {loading && <Spinner size="w-5 h-5" className="ml-2" />}
+              </button>
+            </div>
+          </div>
+        }
+      />
     </div>
   );
 };

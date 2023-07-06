@@ -1,11 +1,5 @@
-import React, { useState } from "react";
-import { randomId } from "../../../utils/helper";
-import { FaPlus } from "react-icons/fa";
-import FileUpload from "./FileUpload";
-import MenuList from "../../Common/MenuList";
+import { useState } from "react";
 import SelectOption from "./SelectOption";
-
-type Props = {};
 
 const people: any[] = [
   { name: "Wade Cooper" },
@@ -16,7 +10,7 @@ const people: any[] = [
   { name: "Hellen Schmidt" },
 ];
 
-const CrmUrlConfiguration = (props: Props) => {
+const CrmUrlConfiguration = () => {
   const [selectedCRM, setSelectedCRM] = useState<any>();
 
   return (
@@ -34,6 +28,8 @@ const CrmUrlConfiguration = (props: Props) => {
             options={people}
             selected={selectedCRM}
             setSelected={setSelectedCRM}
+            rounded="rounded-lg"
+            placeholder="Please choose one"
           />
         </div>
       </div>

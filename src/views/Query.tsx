@@ -11,13 +11,8 @@ interface UserChat {
   id: string;
   userQuery: string;
 }
-interface AIChatData {
-  id: string;
-  botAnswer: string;
-}
+
 const Query = () => {
-  const [userChatData, setUserChatData] = useState<UserChat[]>([]);
-  const [AIChatData, setAIChatData] = useState<AIChatData[]>([]);
   const [chat, setChat] = useState<any[]>([]);
   const [query, setQuery] = useState("");
   const userInputChat = useRef() as MutableRefObject<HTMLInputElement>;

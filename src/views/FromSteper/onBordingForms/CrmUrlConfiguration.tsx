@@ -1,8 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import SelectOption from "./SelectOption";
-import CustomInput from "../../Common/CustomTextInput";
-
-type Props = {};
 
 const people: any[] = [
   { name: "Wade Cooper" },
@@ -13,7 +10,7 @@ const people: any[] = [
   { name: "Hellen Schmidt" },
 ];
 
-const CrmUrlConfiguration = (props: Props) => {
+const CrmUrlConfiguration = () => {
   const [selectedCRM, setSelectedCRM] = useState<any>();
 
   return (
@@ -31,6 +28,8 @@ const CrmUrlConfiguration = (props: Props) => {
             options={people}
             selected={selectedCRM}
             setSelected={setSelectedCRM}
+            placeholder="Please choose one"
+            rounded="rounded-lg"
           />
         </div>
       </div>

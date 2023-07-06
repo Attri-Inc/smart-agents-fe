@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Introduction from "./onBordingForms/Introduction";
 import TimeLocationForm from "./onBordingForms/TimeLocationForm";
 import AccountConfiguration from "./onBordingForms/AccountConfiguration";
 import OrganizationConfiguration from "./onBordingForms/OrganizationConfiguration";
-import SocialProfileConfiguration from "./onBordingForms/SocialProfileConfiguration";
 import TopicInterest from "./onBordingForms/TopicInterest";
 import FavouriteWebsites from "./onBordingForms/FavouriteWebsites";
 import DriveConfiguration from "./onBordingForms/DriveConfiguration";
 import CrmUrlConfiguration from "./onBordingForms/CrmUrlConfiguration";
 import CRMLogin from "./onBordingForms/CRMLogin";
 import ImportCRMConfiguration from "./onBordingForms/ImportCRMConfiguration";
+import OnBoardingFinished from "./onBordingForms/OnBoardingFinished";
 
 const MultiFormStepper = () => {
   // Array of form steps
@@ -25,13 +26,11 @@ const MultiFormStepper = () => {
     <CrmUrlConfiguration />,
     <CRMLogin />,
     <ImportCRMConfiguration />,
-
-    <Step1 />,
-    <Step2 />,
-    <Step3 />,
+    <OnBoardingFinished />,
     // Add more steps as needed
   ];
   const [currentStep, setCurrentStep] = useState(0);
+  const navigation = useNavigate();
 
   const handleNext = () => {
     setCurrentStep((prevStep: number) => prevStep + 1);
@@ -50,6 +49,34 @@ const MultiFormStepper = () => {
     return formSteps[currentStep];
   };
 
+  const handleNextButtonClick = () => {
+    if (currentStep !== 10) {
+      handleNext();
+    } else navigation("/");
+  };
+
+  const renderSkipAndNextButton = () => {
+    if (currentStep === 4 || currentStep === 5) {
+      return (
+        <button
+          onClick={handleSkip}
+          className="px-6 py-2 bg-gray-800 text-gray-400 rounded-md"
+        >
+          I’ll Skip for now
+        </button>
+      );
+    } else {
+      return (
+        <button
+          onClick={handleNextButtonClick}
+          className="px-6 py-2 bg-indigo-600 text-white rounded-md"
+        >
+          {currentStep === 6 ? "Finish setting up profile" : "Next"}
+        </button>
+      );
+    }
+  };
+
   return (
     <div className="h-screen flex-col flex justify-center items-center bg-authBackgoundColor">
       <div className="w-4/12">
@@ -64,23 +91,16 @@ const MultiFormStepper = () => {
             </button>
           </div>
         ) : (
-          <div className="mt-4">
-            {/* {currentStep > 0 && (
+          <div className="mt-4 flex justify-between">
+            {currentStep > 0 && (
               <button
                 onClick={handleBack}
-                className="mr-4 px-4 py-2 bg-blue-500 text-white rounded-md"
+                className="px-6 py-2 bg-indigo-600 text-white rounded-md"
               >
                 Back
               </button>
-            )} */}
-            {currentStep < formSteps.length - 1 && (
-              <button
-                onClick={handleNext}
-                className="px-6 py-2 bg-indigo-600 text-white rounded-md"
-              >
-                Next
-              </button>
             )}
+            {renderSkipAndNextButton()}
             {/* {currentStep < formSteps.length - 1 && (
               <button
                 onClick={handleSkip}
@@ -95,10 +115,5 @@ const MultiFormStepper = () => {
     </div>
   );
 };
-
-// Example form steps
-const Step1 = () => <div>Step 1</div>;
-const Step2 = () => <div>Step 2</div>;
-const Step3 = () => <div>Step 3</div>;
 
 export default MultiFormStepper;

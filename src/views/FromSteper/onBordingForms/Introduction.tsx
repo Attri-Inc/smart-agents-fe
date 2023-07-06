@@ -1,8 +1,4 @@
-import React from "react";
-
-type Props = {};
-
-const Introduction = (props: Props) => {
+const Introduction = () => {
   return (
     <div className="text-white max-w-xl text-xl font-inter">
       <h1 className="py-2">👋 Hello Arjun, Good to see you!</h1>

@@ -1,16 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   InterestTopicsKeywordType,
   interestTopicsKeyword,
 } from "../../../utils/commonData";
-import InterestTopicsList from "../../../views/settings/component/InterestTopicsList";
-import CustomDialog from "../../Common/CustomDialog";
+import CustomDialog from "../../../components/Common/CustomDialog";
 import { FaPlus, FaTimes } from "react-icons/fa";
 import { randomId } from "../../../utils/helper";
 
-type Props = {};
-
-const TopicInterest = (props: Props) => {
+const TopicInterest = () => {
   const [interestTopics, setInterestTopics] = useState<
     InterestTopicsKeywordType[]
   >(interestTopicsKeyword);
@@ -53,7 +50,7 @@ const TopicInterest = (props: Props) => {
   return (
     <div>
       <div className="text-white  border-b border-gray-700 pb-4">
-        <h1 className="text-lg font-semibold">
+        <h1 className="text-xl font-semibold">
           Select your Topics of Interest
         </h1>
         <p className="text-sm pt-2">

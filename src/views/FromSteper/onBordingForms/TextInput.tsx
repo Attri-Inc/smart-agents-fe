@@ -1,5 +1,3 @@
-import React from "react";
-
 const TextInput = ({ name, label, register, required, errors }: any) => {
   return (
     <div>

@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import CustomTextInput from "../../Common/CustomTextInput";
+import { useState } from "react";
+import CustomTextInput from "../../../components/Common/CustomTextInput";
 
-type Props = {};
-
-const CRMLogin = (props: Props) => {
+const CRMLogin = () => {
   const [userName, setUserName] = useState<string>("");
   const handleUserName = (e: any) => {
     setUserName(e.target.value);

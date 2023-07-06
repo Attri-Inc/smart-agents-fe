@@ -1,6 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Highlights from "./views/Highlights";
-import TimeLinesPage from "./views/TimeLines";
 import Home from "./views/Home";
 import Query from "./views/Query";
 import CustomerList from "./views/CustomerList";
@@ -10,7 +9,7 @@ import { TOKEN } from "./constants/authentication";
 import PageNotFound from "./views/authentication/PageNotFound";
 import WorkFlow from "./views/WorkFlow";
 import Settings from "./views/settings";
-import MultiFormStepper from "./components/FromSteper";
+import MultiFormStepper from "./views/FromSteper";
 
 const App = (): JSX.Element => {
   const PrivateRoute = ({ children }: any) => {
@@ -60,14 +59,6 @@ const App = (): JSX.Element => {
             element={
               <PrivateRoute>
                 <Highlights />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/timelines"
-            element={
-              <PrivateRoute>
-                <TimeLinesPage />
               </PrivateRoute>
             }
           />

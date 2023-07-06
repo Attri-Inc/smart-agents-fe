@@ -1,10 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import SelectOption from "./SelectOption";
-import { FiUpload } from "react-icons/fi";
-import Upload from "../../icons/upload";
 import { FaTimes } from "react-icons/fa";
-
-type Props = {};
+import Upload from "../../../components/icons/Upload";
 
 const people: any[] = [
   { name: "Wade Cooper" },
@@ -15,10 +12,9 @@ const people: any[] = [
   { name: "Hellen Schmidt" },
 ];
 
-const ImportCRMConfiguration = (props: Props) => {
+const ImportCRMConfiguration = () => {
   const [selectedCRM, setSelectedCRM] = useState<any>();
   const [selectedFile, setSelectedFile] = useState<any>([]);
-  const [errorMessage, setErrorMessage] = useState("");
 
   const handleFileChange = (event: any) => {
     const files = event.target.files;
@@ -40,6 +36,8 @@ const ImportCRMConfiguration = (props: Props) => {
             options={people}
             selected={selectedCRM}
             setSelected={setSelectedCRM}
+            placeholder="choose one"
+            rounded="rounded-lg"
           />
         </div>
         <div className="flex gap-4 items-center">
@@ -90,9 +88,6 @@ const ImportCRMConfiguration = (props: Props) => {
                 onChange={handleFileChange}
               />
             </div>
-            {errorMessage && (
-              <p className="ml-3 text-red-500">{errorMessage}</p>
-            )}
           </label>
         )}
       </div>

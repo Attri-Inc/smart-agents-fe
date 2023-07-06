@@ -1,43 +1,12 @@
-import React, { useEffect, useState } from "react";
-import AutoComplete from "../Common/AutoComplete";
 import { Link } from "react-router-dom";
 import UserGroup from "../icons/UserGroup";
 import { FaShare } from "react-icons/fa";
-import { useQuery } from "react-query";
-import { generateEmailSubject } from "../../utils/APIHelperFun";
-
-type Props = {};
 
 const TrendingTopicsModal = ({
   currentReadingTopic,
   toggleShareModal,
-  setEmailSubject,
-  setIsEmailSubjectLoading,
-  isSetMultipleSelectModalOpen,
+  toggleShareModalMultiple,
 }: any) => {
-  useEffect(() => {
-    // Function to send API request
-    const fetchEmailSubject = async () => {
-      try {
-        setIsEmailSubjectLoading(true);
-        const response = await generateEmailSubject(
-          currentReadingTopic.summary
-        );
-        setEmailSubject(response.data);
-        setIsEmailSubjectLoading(false);
-      } catch (error) {
-        // Handle error
-        setIsEmailSubjectLoading(false);
-        console.error("Error fetching email subject:", error);
-      }
-    };
-
-    // Call the function when the component mounts
-    fetchEmailSubject();
-  }, []);
-
-  //   console.log("subjject", subjject);
-
   return (
     <div className="flex gap-20 py-4">
       <div className="w-7/12">
@@ -67,10 +36,7 @@ const TrendingTopicsModal = ({
           </h1>
           <div className="flex gap-4 items-center">
             <UserGroup
-              onClick={() => {
-                toggleShareModal();
-                isSetMultipleSelectModalOpen(true);
-              }}
+              onClick={toggleShareModalMultiple}
               color="#000000"
               className="opacity-40 cursor-pointer"
             />

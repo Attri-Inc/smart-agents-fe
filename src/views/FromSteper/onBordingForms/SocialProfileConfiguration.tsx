@@ -1,4 +1,4 @@
-import Twitter from "../../icons/Twitter";
+import Twitter from "../../../components/icons/Twitter";
 import { FaFacebookSquare, FaLinkedin } from "react-icons/fa";
 import { BsInstagram } from "react-icons/bs";
 

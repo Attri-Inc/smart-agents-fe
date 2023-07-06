@@ -1,9 +1,4 @@
-import { Placeholder } from "@aws-amplify/ui-react";
-import React from "react";
-
-type Props = {};
-
-const SelectInputBox = ({ label, options, placeholder }: any) => {
+const SelectInputBox = ({ label, placeholder }: any) => {
   return (
     <>
       <label className="block mb-2 text-sm font-medium text-white dark:text-white">

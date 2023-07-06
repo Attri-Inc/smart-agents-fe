@@ -1,5 +1,3 @@
-import React from "react";
-
 const Upload = (props: any) => {
   return (
     <svg
