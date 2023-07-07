@@ -128,7 +128,7 @@ const ShareEmailForm = ({
           onClick={handleSendEmailToSingleContact}
           className="py-2 px-3 bg-indigo-600 text-white rounded-md flex items-center gap-3"
         >
-          Save {isEmailSending && <Spinner size="w-5 h-5" className="ml-2" />}
+          Send {isEmailSending && <Spinner size="w-5 h-5" className="ml-2" />}
         </button>
       </div>
     </div>
