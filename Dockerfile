@@ -8,7 +8,7 @@ COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
 
-RUN npm build
+RUN npm run build
 
 ########### RUN ###########
 FROM steebchen/nginx-spa:stable
