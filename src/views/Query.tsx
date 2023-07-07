@@ -1,4 +1,4 @@
-import { useState, useRef, MutableRefObject } from "react";
+import { useState, useRef, MutableRefObject, useEffect } from "react";
 import Sidebar from "../components/sidebar";
 import { randomId } from "../utils/helper";
 import Avatar3 from "../assets/Avatar3.png";
@@ -13,10 +13,12 @@ interface UserChat {
 }
 
 const Query = () => {
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const [chat, setChat] = useState<any[]>([]);
   const [query, setQuery] = useState("");
   const userInputChat = useRef() as MutableRefObject<HTMLInputElement>;
   const [isListening, setIsListening] = useState(false);
+  const [currentQueryIndex, setCurrentQueryIndex] = useState<any>(null);
 
   let recognition: SpeechRecognition | null;
 
@@ -110,13 +112,34 @@ const Query = () => {
     }
   };
 
+  useEffect(() => {
+    if (chat.length > 0) {
+      const currentQuery = chat.find(
+        (message) => message.type === "AI" && !message.response
+      );
+      const currentIndex = currentQuery ? chat.indexOf(currentQuery) : null;
+      setCurrentQueryIndex(currentIndex);
+    }
+  }, [chat]);
+
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  }, [chat]);
+
   return (
-    <div className="relative h-screen overflow-hidden md:flex divide-gray-200 divide-x">
+    <div className="relative h-screen overflow-hidden md:flex divide-gray-200 divide-x ">
       <div className="absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out">
         <Sidebar />
       </div>
       <div className="w-full px-8 py-4 h-screen overflow-hidden  bg-indigo-100">
-        <div className="[&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] w-full h-[38rem] overflow-y-auto">
+        <div
+          className="[&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] w-full h-[38rem] overflow-y-auto"
+          ref={chatContainerRef}
+          style={{ overflowY: "auto" }}
+        >
           <div className="w-full mx-auto">
             <div className="flex flex-col overflow-hidden">
               <div className="flex flex-col">
@@ -139,14 +162,16 @@ const Query = () => {
                             <p>{message.message}</p>
                           </div>
                         </div>
-                        {isLoading ? (
-                          <div className="dotLoader p-5 rounded-full flex space-x-3">
-                            <div className="w-5 h-5 dotLoader1 bg-[#4F46E5] rounded-full animate-bounce"></div>
-                            <div className="w-5 h-5 dotLoader2 bg-[#4F46E5] rounded-full animate-bounce"></div>
-                            <div className="w-5 h-5 dotLoader3 bg-[#4F46E5] rounded-full animate-bounce"></div>
-                          </div>
-                        ) : isError ? (
-                          <h1>Something is wrong!</h1>
+                        {currentQueryIndex === index ? (
+                          isLoading ? (
+                            <div className="dotLoader p-5 rounded-full flex space-x-3">
+                              <div className="w-5 h-5 dotLoader1 bg-[#4F46E5] rounded-full animate-bounce"></div>
+                              <div className="w-5 h-5 dotLoader2 bg-[#4F46E5] rounded-full animate-bounce"></div>
+                              <div className="w-5 h-5 dotLoader3 bg-[#4F46E5] rounded-full animate-bounce"></div>
+                            </div>
+                          ) : isError ? (
+                            <h1>Something is wrong!</h1>
+                          ) : null
                         ) : null}
                       </>
                     ) : (

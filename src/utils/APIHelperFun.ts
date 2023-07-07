@@ -1,38 +1,53 @@
-import apiClient from "./http-common"
+import apiClient from "./http-common";
 
 export const fetchTrendingTopics = async (): Promise<any> => {
-  const data = await apiClient.get('/get_trending_success');
+  const data = await apiClient.get("/get_trending_success");
   return data;
 };
 export const getNetworHighlights = async (): Promise<any> => {
-  const data = await apiClient.get('/network_highlights');
+  const data = await apiClient.get("/network_highlights");
   return data;
 };
 
-export const getNetworHighlightsByEmail = async (email: string): Promise<any> => {
-  const data = await apiClient.get(`/network_highlights?registered_email=${email}`);
+export const getNetworHighlightsByEmail = async (
+  email: string
+): Promise<any> => {
+  const data = await apiClient.get(
+    `/network_highlights?registered_email=${email}`
+  );
   return data;
 };
 
 export const getTopConnections = async (): Promise<any> => {
-  const data = await apiClient.get('/top_connections');
+  const data = await apiClient.get("/top_connections");
   return data;
 };
 export const getcustomerCommonInterest = async (): Promise<any> => {
-  const data = await apiClient.get('/common_interest');
+  const data = await apiClient.get("/common_interest");
   return data;
 };
-export const getNetworkContacts = async (intervalDays: number): Promise<any> => {
-  const data = await apiClient.get(`/network_growth?interval_days=${intervalDays}`);
+export const getNetworkContacts = async (
+  intervalDays: number
+): Promise<any> => {
+  const data = await apiClient.get(
+    `/network_growth?interval_days=${intervalDays}`
+  );
   return data;
 };
 
 export const getTimeLines = async (): Promise<any> => {
-  const data = await apiClient.get(`/interaction_items?registered_email=aaron@acleelaw.com`);
+  const data = await apiClient.get(
+    `/interaction_items?registered_email=aaron@acleelaw.com`
+  );
   return data;
 };
-export const getEmailCommunicationDetails = async (email: string, type: string): Promise<any> => {
-  const data = await apiClient.get(`/activity_extract?customer_email=${email}&activity_type=${type}`);
+export const getEmailCommunicationDetails = async (
+  email: string,
+  type: string
+): Promise<any> => {
+  const data = await apiClient.get(
+    `/activity_extract?customer_email=${email}&activity_type=${type}`
+  );
   return data;
 };
 
@@ -45,7 +60,6 @@ export const getCustomerDetails = async (email: string): Promise<any> => {
   const data = await apiClient.get(`/customer?registered_email=${email}`);
   return data;
 };
-
 
 export const customerChat = async (query: string): Promise<any> => {
   const data = await apiClient.get(`/chat?query=${query}`);
@@ -63,20 +77,37 @@ export const generateEmailSubject = async (message: string): Promise<any> => {
   const data = await apiClient.get(`/generate_subject?message=${message}`);
   return data;
 };
-export const sendEmailToSingleContact = async (message: string, recipient: string | string[]): Promise<any> => {
-  const data = await apiClient.get(`send_email?recipient=${recipient}&message=${message}`);
+export const sendEmailToSingleContact = async (
+  message: string,
+  recipient: string | string[]
+): Promise<any> => {
+  const data = await apiClient.get(
+    `send_email?recipient=${recipient}&message=${message}`
+  );
   return data;
 };
-export const cancelFollowUpAPI = async (all: boolean, registered_email: string): Promise<any> => {
-  const data = await apiClient.get(`cancel_follow_up?all=${all}&registered_email=${registered_email}`);
+export const cancelFollowUpAPI = async (
+  all: boolean,
+  registered_email: string
+): Promise<any> => {
+  const data = await apiClient.get(
+    `cancel_follow_up?all=${all}&registered_email=${registered_email}`
+  );
   return data;
 };
-export const sendFollowUp = async (send: boolean, registered_email: string, interaction_id: number): Promise<any> => {
-  const data = await apiClient.put(`/workflow`, {send, registered_email, interaction_id });
+export const sendFollowUp = async (formData: any): Promise<any> => {
+  const data = await apiClient.put(`/workflow`, formData, {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  });
   return data;
 };
-export const scheduleFollowUp = async (schedule_date: string, registered_email: string, interaction_id: number): Promise<any> => {
-  const data = await apiClient.put(`/workflow`, {schedule_date, registered_email, interaction_id });
+export const scheduleFollowUp = async (formData: any): Promise<any> => {
+  const data = await apiClient.put(`/workflow`, formData, {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  });
   return data;
 };
-

@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
 import UserGroup from "../icons/UserGroup";
-import { FaShare } from "react-icons/fa";
 
 const TrendingTopicsModal = ({
   currentReadingTopic,
-  toggleShareModal,
   toggleShareModalMultiple,
 }: any) => {
   return (
@@ -40,11 +38,11 @@ const TrendingTopicsModal = ({
               color="#000000"
               className="opacity-40 cursor-pointer"
             />
-            <FaShare
+            {/* <FaShare
               onClick={toggleShareModal}
               color="#000000"
               className="opacity-40 cursor-pointer"
-            />
+            /> */}
           </div>
         </div>
       </div>

@@ -65,9 +65,12 @@ const TrendingTopics = (): JSX.Element => {
                 <li
                   className="border m-4 p-4 rounded-lg inline-block cursor-pointer"
                   onClick={() => {
+                    const bodyText = topics.summary + " " + topics.link;
+                    console.log(topics.link, "topics.link");
+
                     toggle();
                     setCurrentReadingTopic(topics);
-                    setEmailMessage(topics.summary);
+                    setEmailMessage(bodyText);
                     setEmailSubject(topics.subject);
                   }}
                 >
@@ -109,23 +112,6 @@ const TrendingTopics = (): JSX.Element => {
             currentReadingTopic={currentReadingTopic}
             toggleShareModal={toggleShareModal}
             toggleShareModalMultiple={toggleShareModalMultiple}
-          />
-        }
-      />
-      <CustomDialog
-        isOpen={isShareModalOpen}
-        title={<RenderShareEmailTitle />}
-        toggleModal={toggleShareModal}
-        width="w-6/12"
-        LogComminicationForm={
-          <ShareEmailForm
-            isMultipleSelectModalOpen={isMultipleSelectModalOpen}
-            toggleShareModal={toggleShareModal}
-            setEmailMessage={setEmailMessage}
-            setEmailSubject={setEmailSubject}
-            currentReadingTopic={currentReadingTopic}
-            emailSubject={emailSubject}
-            emailMessage={emailMessage}
           />
         }
       />

@@ -44,7 +44,7 @@ const FollowUpTask = (): JSX.Element => {
     <div className="flex gap-4 items-center">
       <TrendingUp color="#4F46E5" className="font-medium text-indigo-600" />
       <h1 className="font-inter text-base font-medium text-indigo-600 pb-2">
-        Send an Email
+        Schedule Follow up
       </h1>
     </div>
   );
@@ -99,15 +99,15 @@ const FollowUpTask = (): JSX.Element => {
   };
 
   const handleScheduleFollowUp = async () => {
-    console.log("currentFollowUp", currentFollowUp);
     const followdate = moment(date).format("YYYY/MM/DD");
+
+    const formData = new URLSearchParams();
+    formData.append("schedule_date", followdate);
+    formData.append("registered_email", currentFollowUp.registered_email);
+    formData.append("interaction_id", currentFollowUp.interaction_id);
     try {
       setLoading(true);
-      await scheduleFollowUp(
-        followdate,
-        currentFollowUp.registered_email,
-        currentFollowUp.interaction_id
-      );
+      await scheduleFollowUp(formData);
       setLoading(false);
       // setEmailSubject(response.data);
     } catch (error) {
@@ -117,9 +117,13 @@ const FollowUpTask = (): JSX.Element => {
     }
   };
   const handleSendFollowUp = async (todo: any) => {
+    const formData: any = new URLSearchParams();
+    formData.append("send", true);
+    formData.append("registered_email", todo.registered_email);
+    formData.append("interaction_id", todo.interaction_id);
     try {
       setLoading(true);
-      await sendFollowUp(true, todo.registered_email, todo.interaction_id);
+      await sendFollowUp(formData);
       setLoading(false);
       // setEmailSubject(response.data);
     } catch (error) {
@@ -181,7 +185,7 @@ const FollowUpTask = (): JSX.Element => {
                   On {todo.interaction_time.slice(0, 10)}
                 </span>
               </div>
-              <div>
+              <div className="flex-col flex justify-end h-[100px]">
                 {todo.status_code == "Follow up"
                   ? getTodosButtons(todo)
                   : // getTodosButtons()
@@ -195,12 +199,12 @@ const FollowUpTask = (): JSX.Element => {
         isOpen={isScheduleModalOpen}
         title={<ScheduleFollowUpTitle />}
         toggleModal={scheduleModalOpenToggle}
-        width="w-6/12"
+        width="w-4/12"
         LogComminicationForm={
           <div className="pt-4">
             <div className="mb-6">
               <label className="block mb-2 font-medium text-inter text-sm text-gray-700 dark:text-white">
-                Subject
+                Select Date
               </label>
               <div className="flex items-center">
                 <input

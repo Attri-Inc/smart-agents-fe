@@ -9,7 +9,7 @@ const Badge = ({ style, label, handleClick }: BadgeProps) => {
   return (
     <span
       onClick={handleClick && handleClick}
-      className={`${style} text-sm text-inter px-3 py-1.5 rounded-full dark:bg-blue-900 dark:text-blue-300`}
+      className={`${style} text-xs text-inter px-3 py-1.5 rounded-full dark:bg-blue-900 dark:text-blue-300`}
     >
       {label}
     </span>
