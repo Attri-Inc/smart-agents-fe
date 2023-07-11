@@ -29,8 +29,6 @@ const Query = () => {
     isError: isAllChatError,
   } = useQuery("chat_history", getChatData);
 
-  console.log("AllPreviousData", AllPreviousData);
-
   let recognition: SpeechRecognition | null;
 
   const handleToggleListening = () => {
@@ -66,7 +64,7 @@ const Query = () => {
         setChat((prev: any) => [
           ...prev,
           {
-            type: "USER",
+            bot: false,
             message: finalTranscript,
             id: randomId(),
           },
@@ -159,7 +157,6 @@ const Query = () => {
     <div className="relative h-screen overflow-hidden md:flex divide-gray-200 divide-x ">
       <div className="absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out">
         <Sidebar />
-        {/* <ChatHistory chatData={chatData} timeframe="7days" /> */}
       </div>
       {!allChatLoading && !isAllChatError && (
         <ChatHistory
@@ -231,9 +228,9 @@ const Query = () => {
           </div>
         </div>
 
-        <div className="flex flex-col justify-end min-h-full">
-          <div className="flex items-center w-9/12 fixed bottom-4">
-            <form onSubmit={handleOnQuerySearch} className="w-10/12">
+        <div className="flex flex-col justify-end min-h-full w-10/12">
+          <div className="flex items-center fixed bottom-4 w-full">
+            <form onSubmit={handleOnQuerySearch} className="w-7/12">
               <input
                 disabled={isLoading}
                 type="text"
@@ -245,7 +242,7 @@ const Query = () => {
               />
             </form>
           </div>
-          <div className="absolute right-16 bottom-7 cursor-pointer">
+          <div className="absolute right-28 bottom-7 cursor-pointer">
             {/* <AudioSpeech /> */}
             <button onClick={handleToggleListening}>
               {isListening ? <BiMicrophone /> : <BiMicrophoneOff />}
