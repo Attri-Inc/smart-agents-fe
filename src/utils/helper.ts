@@ -13,3 +13,26 @@ export const randomId = function(length = 6): string {
   
     return { isLoading, error, data };
   };
+
+  export const transformChatData = (data: any) => {
+    var transformedData: any = [];
+    
+    data.forEach(function(item: any) {
+      var botMessage = {
+        bot: true,
+        id: item.timestamp,
+        message: item.Assistant
+      };
+      var userMessage = {
+        bot: false,
+        id: item.timestamp,
+        message: item.User
+      };
+      
+      transformedData.push(userMessage);
+      transformedData.push(botMessage);
+    });
+    
+    return transformedData;
+  }
+  

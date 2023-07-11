@@ -11,6 +11,7 @@ import CrmUrlConfiguration from "./onBordingForms/CrmUrlConfiguration";
 import CRMLogin from "./onBordingForms/CRMLogin";
 import ImportCRMConfiguration from "./onBordingForms/ImportCRMConfiguration";
 import OnBoardingFinished from "./onBordingForms/OnBoardingFinished";
+import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 
 const MultiFormStepper = () => {
   // Array of form steps
@@ -30,6 +31,7 @@ const MultiFormStepper = () => {
     // Add more steps as needed
   ];
   const [currentStep, setCurrentStep] = useState(0);
+
   const navigation = useNavigate();
 
   const handleNext = () => {
@@ -69,9 +71,10 @@ const MultiFormStepper = () => {
       return (
         <button
           onClick={handleNextButtonClick}
-          className="px-6 py-2 bg-indigo-600 text-white rounded-md"
+          className="px-6 py-2 flex items-center gap-2 bg-indigo-600 text-white rounded-md"
         >
           {currentStep === 6 ? "Finish setting up profile" : "Next"}
+          {currentStep !== 6 && <BiRightArrow />}
         </button>
       );
     }
@@ -95,9 +98,9 @@ const MultiFormStepper = () => {
             {currentStep > 0 && (
               <button
                 onClick={handleBack}
-                className="px-6 py-2 bg-indigo-600 text-white rounded-md"
+                className="px-6 py-2 text-xs font-medium flex items-center gap-2 bg-gray-800 text-gray-400 rounded-md"
               >
-                Back
+                <BiLeftArrow /> Back
               </button>
             )}
             {renderSkipAndNextButton()}
