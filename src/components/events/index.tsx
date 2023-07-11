@@ -20,7 +20,7 @@ const Events = (): JSX.Element => {
   return (
     <div className="w-full">
       {events.data.length > 0 ? (
-        <ul className="w-full flex flex-nowrap mb-4 overflow-x-scroll scrollbar-hide">
+        <ul className="w-full h-fit flex flex-nowrap mb-4 overflow-x-scroll scrollbar-hide">
           {events.data.map((event: any) => {
             return (
               <li className="border m-4 p-3 rounded-lg inline-block">

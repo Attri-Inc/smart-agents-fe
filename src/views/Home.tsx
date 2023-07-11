@@ -38,12 +38,12 @@ const Home = (): JSX.Element => {
                 </h1>
                 <Events />
               </div>
-            </div>
-            <div className="w-full">
-              <h1 className="font-inter font-bold text-gray-900 text-xl px-4">
-                Trending Today
-              </h1>
-              <TrendingTopics />
+              <div className="w-full">
+                <h1 className="font-inter font-bold text-gray-900 text-xl px-4">
+                  Trending Today
+                </h1>
+                <TrendingTopics />
+              </div>
             </div>
           </div>
           <div className="h-28 bg-gradient-to-t from-indigo-200 border-t text-black sticky bottom-0">

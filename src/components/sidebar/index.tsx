@@ -8,6 +8,7 @@ import Settings from "../icons/Settings";
 import Home from "../icons/Home";
 import User from "../icons/User";
 import Hilight from "../icons/Hilight";
+import Notes from "../icons/Notes";
 
 const menuList: any[] = [
   {
@@ -33,6 +34,12 @@ const menuList: any[] = [
     url: "workflow",
     label: "WorkFlow",
     renderIcon: <FiMap className="text-xl font-extrabold	text-gray-400" />,
+  },
+  {
+    id: 4,
+    url: "agreements",
+    label: "Agreements",
+    renderIcon: <Notes className="text-xl font-extrabold	text-gray-400" />,
   },
 ];
 

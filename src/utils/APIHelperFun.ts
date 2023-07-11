@@ -111,3 +111,12 @@ export const scheduleFollowUp = async (formData: any): Promise<any> => {
   });
   return data;
 };
+
+export const getChatData = async (): Promise<any> => {
+  const data = await apiClient.get(`/chat_history`);
+  return data;
+};
+export const getChatDataByDate = async (date: string): Promise<any> => {
+  const data = await apiClient.get(`/chat_history?date=${date}`);
+  return data;
+};

@@ -21,6 +21,7 @@ const TextInput = <T extends FieldValues>({
   required,
   errors,
 }: TextInputProps<T>) => {
+  console.log("errors", errors);
   return (
     <div>
       <label

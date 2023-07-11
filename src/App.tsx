@@ -4,12 +4,15 @@ import Home from "./views/Home";
 import Query from "./views/Query";
 import CustomerList from "./views/CustomerList";
 import CustomerDetails from "./views/customerDetails";
+import Signup from "./views/authentication/Signup";
 import Login from "./views/authentication/Login";
 import { TOKEN } from "./constants/authentication";
 import PageNotFound from "./views/authentication/PageNotFound";
 import WorkFlow from "./views/WorkFlow";
 import Settings from "./views/settings";
 import MultiFormStepper from "./views/FromSteper";
+import Agreement from "./views/agreement";
+import NewAgreement from "./views/agreement/NewAgreement";
 
 const App = (): JSX.Element => {
   const PrivateRoute = ({ children }: any) => {
@@ -21,6 +24,7 @@ const App = (): JSX.Element => {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/onboarding" element={<MultiFormStepper />} />
           <Route
             path="/"
@@ -67,6 +71,22 @@ const App = (): JSX.Element => {
             element={
               <PrivateRoute>
                 <WorkFlow />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/agreements"
+            element={
+              <PrivateRoute>
+                <Agreement />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/agreements/:new"
+            element={
+              <PrivateRoute>
+                <NewAgreement />
               </PrivateRoute>
             }
           />

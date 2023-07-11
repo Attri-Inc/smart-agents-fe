@@ -3,9 +3,11 @@ import Sidebar from "../components/sidebar";
 import { randomId } from "../utils/helper";
 import Avatar3 from "../assets/Avatar3.png";
 import { useQuery } from "react-query";
-import { customerChat } from "../utils/APIHelperFun";
+import { customerChat, getChatData } from "../utils/APIHelperFun";
 import AIChatIcon from "../components/icons/AIChatIcon";
 import { BiMicrophone, BiMicrophoneOff } from "react-icons/bi";
+import ChatHistory from "./chatBot/ChatHistory";
+import { useNavigate } from "react-router-dom";
 
 interface UserChat {
   id: string;
@@ -19,6 +21,15 @@ const Query = () => {
   const userInputChat = useRef() as MutableRefObject<HTMLInputElement>;
   const [isListening, setIsListening] = useState(false);
   const [currentQueryIndex, setCurrentQueryIndex] = useState<any>(null);
+  const navigate = useNavigate();
+
+  const {
+    data: AllPreviousData,
+    isLoading: allChatLoading,
+    isError: isAllChatError,
+  } = useQuery("chat_history", getChatData);
+
+  console.log("AllPreviousData", AllPreviousData);
 
   let recognition: SpeechRecognition | null;
 
@@ -92,7 +103,10 @@ const Query = () => {
     onSuccess: (data: any) => {
       setChat((prev) => [
         ...prev,
-        { message: data.data.message, id: randomId(10), type: "AI" },
+        {
+          ...data.data,
+          bot: true,
+        },
       ]);
     },
   });
@@ -105,7 +119,7 @@ const Query = () => {
         ...prev,
         {
           message: e.target.userTextInput.value,
-          type: "USER",
+          bot: false,
           id: randomId(),
         },
       ]);
@@ -115,7 +129,7 @@ const Query = () => {
   useEffect(() => {
     if (chat.length > 0) {
       const currentQuery = chat.find(
-        (message) => message.type === "AI" && !message.response
+        (message) => message.type && !message.response
       );
       const currentIndex = currentQuery ? chat.indexOf(currentQuery) : null;
       setCurrentQueryIndex(currentIndex);
@@ -129,11 +143,31 @@ const Query = () => {
     }
   }, [chat]);
 
+  const renderBotChat = (message: any): JSX.Element => {
+    if (message.type == "internal_url") {
+      const pageUrl = message.url.split("/")[3];
+      navigate(`/${pageUrl}`);
+    }
+    return (
+      <div className="p-4 bg-white max-w-xl rounded-tl-xl rounded-br-lg rounded-tr-xl">
+        <p>{message.message}</p>
+      </div>
+    );
+  };
+
   return (
     <div className="relative h-screen overflow-hidden md:flex divide-gray-200 divide-x ">
       <div className="absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition duration-200 ease-in-out">
         <Sidebar />
+        {/* <ChatHistory chatData={chatData} timeframe="7days" /> */}
       </div>
+      {!allChatLoading && !isAllChatError && (
+        <ChatHistory
+          chatData={AllPreviousData.data}
+          timeframe="1month"
+          setChat={setChat}
+        />
+      )}
       <div className="w-full px-8 py-4 h-screen overflow-hidden  bg-indigo-100">
         <div
           className="[&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] w-full h-[38rem] overflow-y-auto"
@@ -147,10 +181,10 @@ const Query = () => {
                   <div
                     key={index}
                     className={`my-2 ${
-                      message.type == "USER" ? "self-end" : "self-start"
+                      !message.bot ? "self-end" : "self-start"
                     }`}
                   >
-                    {message.type === "AI" ? (
+                    {message.bot ? (
                       <>
                         <div
                           key={message.id}
@@ -158,9 +192,7 @@ const Query = () => {
                         >
                           <AIChatIcon className="self-end" />
 
-                          <div className="p-4 bg-white max-w-xl rounded-tl-xl rounded-br-lg rounded-tr-xl">
-                            <p>{message.message}</p>
-                          </div>
+                          {renderBotChat(message)}
                         </div>
                         {currentQueryIndex === index ? (
                           isLoading ? (
@@ -199,21 +231,21 @@ const Query = () => {
           </div>
         </div>
 
-        <div className="w-full flex flex-col justify-end min-h-full">
+        <div className="flex flex-col justify-end min-h-full">
           <div className="flex items-center w-9/12 fixed bottom-4">
-            <form onSubmit={handleOnQuerySearch} className="w-full">
+            <form onSubmit={handleOnQuerySearch} className="w-10/12">
               <input
+                disabled={isLoading}
                 type="text"
                 id="userTextInput"
                 name="userTextInput"
-                // onClick={handleOnChangeQuerySearch}
                 ref={userInputChat}
-                className="shadow appearance-none border rounded-3xl w-full py-4 px-3 text-gray-700 leading-tight focus:outline-none"
+                className="shadow appearance-none border rounded-3xl py-4 px-3 w-full text-gray-700 leading-tight focus:outline-none"
                 placeholder="Send a message."
               />
             </form>
           </div>
-          <div className="absolute right-32 bottom-7 cursor-pointer">
+          <div className="absolute right-16 bottom-7 cursor-pointer">
             {/* <AudioSpeech /> */}
             <button onClick={handleToggleListening}>
               {isListening ? <BiMicrophone /> : <BiMicrophoneOff />}

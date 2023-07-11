@@ -82,7 +82,7 @@ const TrendingTopics = (): JSX.Element => {
                           className="font-medium text-indigo-600"
                         />
                       </div>
-                      <h1 className="font-inter text-base font-medium text-indigo-600 pb-2">
+                      <h1 className="font-inter text-base font-medium text-indigo-600 pb-2 break-words line-clamp-2">
                         {topics.subject}
                       </h1>
                     </div>
