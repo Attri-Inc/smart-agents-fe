@@ -1,4 +1,4 @@
-import { FaArrowLeft, FaBars, FaPlus } from "react-icons/fa";
+import { FaArrowLeft, FaPlus } from "react-icons/fa";
 import Call from "../../components/icons/Call";
 import Mail from "../../components/icons/Mail";
 import Avatar from "../../assets/Ellipse 1.png";

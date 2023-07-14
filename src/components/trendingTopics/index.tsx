@@ -29,10 +29,6 @@ const TrendingTopics = (): JSX.Element => {
   console.log("trendingTopics", trendingTopics);
 
   const { data } = !isLoading && !isError && trendingTopics?.data;
-  const getOtherLinks: any[] | string =
-    !isLoading && !isError && Array.isArray(data.AI)
-      ? Object.entries(data)[0]
-      : data;
 
   const RenderTrendingTile = () => (
     <div className="flex gap-4 items-center">

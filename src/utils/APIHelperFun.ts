@@ -35,9 +35,15 @@ export const getNetworkContacts = async (
   return data;
 };
 
-export const getTimeLines = async (): Promise<any> => {
+export const getTimeLines = async (email: string): Promise<any> => {
   const data = await apiClient.get(
-    `/interaction_items?registered_email=aaron@acleelaw.com`
+    `/interaction_items?registered_email=${email}`
+  );
+  return data;
+};
+export const getCustomerInteraction = async (email: string): Promise<any> => {
+  const data = await apiClient.get(
+    `/customer_details?registered_email=${email}`
   );
   return data;
 };
@@ -66,7 +72,11 @@ export const getCustomerNextMeetDetails = async (email: string): Promise<any> =>
 };
 
 export const addToWorkflow = async (formData: any): Promise<any> => {
-  const data = await apiClient.post(`manual_workflow/`, formData);
+  const data = await apiClient.post(`/manual_workflow`, formData);
+  return data;
+};
+export const addToLogCommunication = async (formData: any): Promise<any> => {
+  const data = await apiClient.post(`/add_communication`, formData);
   return data;
 };
 

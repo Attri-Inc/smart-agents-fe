@@ -1,4 +1,3 @@
-import { useGoogleLogin } from "@react-oauth/google";
 import { useEffect } from "react";
 import Logo from "../../assets/AISA-logo.png";
 import { TOKEN } from "../../constants/authentication";

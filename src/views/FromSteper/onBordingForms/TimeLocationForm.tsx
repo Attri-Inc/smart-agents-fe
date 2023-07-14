@@ -1,4 +1,3 @@
-import { GrLocation } from "react-icons/gr";
 import SelectOption from "./SelectOption";
 import {
   TimeFormatDataType,
@@ -6,7 +5,6 @@ import {
   dateFormatDate,
 } from "../../../utils/commonData";
 import Map from "../../../components/icons/Map";
-import AutoComplete from "../../../components/Common/AutoComplete";
 
 export const timeFormatData: TimeFormatDataType[] = [
   { id: 1, name: "24:00" },

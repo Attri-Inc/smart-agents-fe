@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { randomId } from "../../../utils/helper";
 import { FaPlus } from "react-icons/fa";
 import FileUpload from "./FileUpload";
 

@@ -32,7 +32,7 @@ const MultiFormStepper = () => {
   >(interestTopicsKeyword);
   // const [favouriteWebsites, setFavouriteWebsites] = useState<any[]>([""]);
   const [driveLink, setDriveLink] = useState<any[]>([""]);
-  const [isProfileLoading, setIsProfileLoading] = useState<boolean>();
+  // const [isProfileLoading, setIsProfileLoading] = useState<boolean>();
 
   const isSelectedTag = () => {
     return interestTopics.some((tag: any) => tag.isSelected === true);
@@ -102,7 +102,7 @@ const MultiFormStepper = () => {
       .filter((tag) => tag.isSelected == true)
       .map((item) => item.label);
 
-    const formData = new FormData();
+    const formData = new URLSearchParams();
     formData.append("name", "Riyaz");
     formData.append("country", country.name);
     formData.append("internal_doc_path", JSON.stringify(driveLink));

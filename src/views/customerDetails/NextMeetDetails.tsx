@@ -1,13 +1,10 @@
-import React from "react";
 import { getCustomerNextMeetDetails } from "../../utils/APIHelperFun";
 import { useQuery } from "react-query";
 import Spinner from "../../components/Common/skeleton/Spinner";
 import { FaLink } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-type Props = {};
-
-const NextMeetDetails = (props: Props) => {
+const NextMeetDetails = () => {
   const {
     data: nextMeet,
     isLoading: isNextMeetLoading,
@@ -15,8 +12,6 @@ const NextMeetDetails = (props: Props) => {
   } = useQuery("next_meet", () =>
     getCustomerNextMeetDetails("yashwanth.reddy@attri.ai")
   );
-
-  // const {} = !isNextMeetLoading && !isNextMeetError && nextMeet.data
 
   if (isNextMeetError) return <div className="pl-6">Something is wrong</div>;
   if (isNextMeetLoading)

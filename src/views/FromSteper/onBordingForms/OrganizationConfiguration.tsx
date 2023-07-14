@@ -1,13 +1,9 @@
-import { randomId } from "../../../utils/helper";
 import { FaPlus } from "react-icons/fa";
 
 const OrganizationConfiguration = ({
   organizationWebsites,
   setOrganizationWebsite,
 }: any) => {
-  const handleAddOrganizationWebsite = () => {
-    setOrganizationWebsite((prev: any) => [...prev, { id: randomId(5) }]);
-  };
   // const handleRemoveOrganizationWebsite = (id: string) => {
   //   setOrganizationWebsite(() => {
   //     return organizationWebsites.filter((website: any) => website.id != id);

@@ -6,10 +6,9 @@ import React, { useState } from "react";
 import Sidebar from "../../components/sidebar";
 import {
   getCustomerDetails,
-  getCustomerNextMeetDetails,
+  getCustomerInteraction,
 } from "../../utils/APIHelperFun";
 import { useQuery } from "react-query";
-import { FaLink } from "react-icons/fa";
 import CustomerDetails from "./CustomerDetails";
 import LogCommunicationForm from "./LogCommunicationForm";
 import CustomerTimeline from "./CustomerTimeline";
@@ -32,6 +31,11 @@ const CustomerDetailsPage = (): JSX.Element => {
     isLoading: isCustomerDetailsLoading,
     isError: isCustomerDetailsErorr,
   } = useQuery("customer_details", () => getCustomerDetails(registered_email));
+
+  const { data: customerInteraction, isLoading: isCustomerInteractionLoading } =
+    useQuery("customer_interaction", () =>
+      getCustomerInteraction("aisa@attri.com")
+    );
 
   const { customer_details } =
     !isCustomerDetailsLoading &&
@@ -67,17 +71,31 @@ const CustomerDetailsPage = (): JSX.Element => {
                       <h1 className="text-sm font-semibold text-inter text-gray-500">
                         Last Contact
                       </h1>
-                      <h2 className="text-sm text-inter text-gray-900 pt-1">
-                        Fri, 24th May, 2023
-                      </h2>
+                      {isCustomerInteractionLoading ? (
+                        <Spinner size="w-5 h-5" />
+                      ) : (
+                        <h2 className="text-sm text-inter text-gray-900 pt-1">
+                          {customerInteraction.data.customer_details.latest_interaction_time.slice(
+                            0,
+                            10
+                          )}
+                        </h2>
+                      )}
                     </div>
                     <div className="pl-6">
                       <h1 className="text-sm font-semibold text-inter text-gray-500">
                         Total Interaction
                       </h1>
-                      <h2 className="text-sm text-inter text-gray-900 pt-1">
-                        203
-                      </h2>
+                      {isCustomerInteractionLoading ? (
+                        <Spinner size="w-5 h-5" />
+                      ) : (
+                        <h2 className="text-sm text-inter text-gray-900 pt-1">
+                          {
+                            customerInteraction.data.customer_details
+                              .number_of__interaction
+                          }
+                        </h2>
+                      )}
                     </div>
                     <NextMeetDetails />
                   </div>

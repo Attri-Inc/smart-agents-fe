@@ -2,7 +2,6 @@ import { useQuery } from "react-query";
 import { getEmailCommunicationDetails } from "../../utils/APIHelperFun";
 import Spinner from "../../components/Common/skeleton/Spinner";
 import Attach from "../../components/icons/Attach";
-import ExpandInputSearchBar from "../../components/Common/ExpandInputSearchBar";
 
 const EmailCommunications = () => {
   const {

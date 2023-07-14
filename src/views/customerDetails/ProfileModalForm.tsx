@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import avatar from "../../assets/Ellipse 1.png";
 import DropdownMenuList from "../../components/Common/DropdownMenuList";
 
@@ -95,6 +95,7 @@ const ProfileModalForm = ({ toggleModal }: any) => {
       </div>
       <div className="flex gap-4 justify-end border-t pt-2">
         <button
+          type="button"
           onClick={toggleModal}
           className="py-2 px-3 bg-white text-inter text-gray-700 rounded-md border"
         >
