@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Highlights from "./views/Highlights";
 import Home from "./views/Home";
 import Query from "./views/Query";
-import CustomerList from "./views/CustomerList";
+import CustomerList from "./views/customerList/CustomerList";
 import CustomerDetails from "./views/customerDetails";
 import Signup from "./views/authentication/Signup";
 import Login from "./views/authentication/Login";

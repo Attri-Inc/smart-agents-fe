@@ -1,19 +1,11 @@
 import { useState } from "react";
-import {
-  InterestTopicsKeywordType,
-  interestTopicsKeyword,
-} from "../../../utils/commonData";
+import { InterestTopicsKeywordType } from "../../../utils/commonData";
 import CustomDialog from "../../../components/Common/CustomDialog";
-import { FaPlus, FaTimes } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 import { randomId } from "../../../utils/helper";
 
-const TopicInterest = () => {
-  const [interestTopics, setInterestTopics] = useState<
-    InterestTopicsKeywordType[]
-  >(interestTopicsKeyword);
-
+const TopicInterest = ({ interestTopics, setInterestTopics }: any) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isHovered, setIsHovered] = useState<number | null>(null);
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
 
@@ -30,14 +22,6 @@ const TopicInterest = () => {
   };
   const toggleModal = () => setIsOpen(!isOpen);
 
-  const handleMouseEnter = (id: number) => {
-    setIsHovered(id);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(null);
-  };
-
   const handleCustomTopic = () => {
     setInterestTopics((prev: any) => [
       ...prev,
@@ -46,7 +30,26 @@ const TopicInterest = () => {
     toggleModal();
   };
 
-  console.log("interestTopics", interestTopics);
+  const handleClick = (topic: InterestTopicsKeywordType) => {
+    const transformedData = interestTopics.map(
+      (item: InterestTopicsKeywordType) => {
+        console.log("item.id == topic.id", item.id, topic.id);
+        if (item.id == topic.id) {
+          return {
+            id: item.id,
+            label: item.label,
+            isSelected: item.isSelected ? false : true,
+          };
+        } else {
+          return {
+            ...item,
+          };
+        }
+      }
+    );
+    setInterestTopics(transformedData);
+  };
+
   return (
     <div>
       <div className="text-white  border-b border-gray-700 pb-4">
@@ -62,15 +65,14 @@ const TopicInterest = () => {
         <div className="flex flex-wrap">
           {interestTopics.map((topic: any) => (
             <button
-              onMouseEnter={() => handleMouseEnter(topic.id)}
-              onMouseLeave={handleMouseLeave}
-              onClick={() => {}}
-              className={`py-2 px-4 cursor-pointer text-sm bg-gray-800 text-gray-400 text-inter flex items-center gap-4 justify-between font-medium m-3 rounded-full
-                 hover:bg-black hover:text-white`}
+              onClick={() => handleClick(topic)}
+              className={`py-2 px-4 cursor-pointer ${
+                topic.isSelected ? "bg-black text-white" : " bg-gray-800"
+              } text-sm text-gray-400 text-inter flex items-center gap-4 justify-between font-medium m-3 rounded-full
+                `}
               key={topic.id}
             >
               {topic.label}{" "}
-              {isHovered == topic.id && <FaTimes className="close-icon" />}
             </button>
           ))}
         </div>

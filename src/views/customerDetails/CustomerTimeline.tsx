@@ -16,9 +16,7 @@ const CustomerTimeline = ({ toggleModal }: Props) => {
     data: timeLines,
     isLoading: timeLinesDataLoading,
     isError: timeLinesDataEror,
-  } = useQuery("time_lines", getTimeLines);
-
-  console.log("timeLines", timeLines);
+  } = useQuery("time_lines", () => getTimeLines("aisa@attri.com"));
 
   const { interaction_items } =
     !timeLinesDataLoading && !timeLinesDataEror && timeLines.data;

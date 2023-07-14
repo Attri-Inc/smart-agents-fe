@@ -243,7 +243,6 @@ const Query = () => {
             </form>
           </div>
           <div className="absolute right-28 bottom-7 cursor-pointer">
-            {/* <AudioSpeech /> */}
             <button onClick={handleToggleListening}>
               {isListening ? <BiMicrophone /> : <BiMicrophoneOff />}
             </button>

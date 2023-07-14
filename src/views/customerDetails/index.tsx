@@ -4,13 +4,17 @@ import CustomeDialog from "../../components/Common/CustomDialog";
 import React, { useState } from "react";
 
 import Sidebar from "../../components/sidebar";
-import { getCustomerDetails } from "../../utils/APIHelperFun";
+import {
+  getCustomerDetails,
+  getCustomerInteraction,
+} from "../../utils/APIHelperFun";
 import { useQuery } from "react-query";
-import { FaLink } from "react-icons/fa";
 import CustomerDetails from "./CustomerDetails";
 import LogCommunicationForm from "./LogCommunicationForm";
 import CustomerTimeline from "./CustomerTimeline";
 import EmailCommunications from "./EmailCommunications";
+import Spinner from "../../components/Common/skeleton/Spinner";
+import NextMeetDetails from "./NextMeetDetails";
 
 const CustomerDetailsPage = (): JSX.Element => {
   const [userAskedText, setUserAskedText] = React.useState<any>();
@@ -27,6 +31,11 @@ const CustomerDetailsPage = (): JSX.Element => {
     isLoading: isCustomerDetailsLoading,
     isError: isCustomerDetailsErorr,
   } = useQuery("customer_details", () => getCustomerDetails(registered_email));
+
+  const { data: customerInteraction, isLoading: isCustomerInteractionLoading } =
+    useQuery("customer_interaction", () =>
+      getCustomerInteraction("aisa@attri.com")
+    );
 
   const { customer_details } =
     !isCustomerDetailsLoading &&
@@ -46,7 +55,7 @@ const CustomerDetailsPage = (): JSX.Element => {
           <Sidebar />
         </div>
         <div className="w-full h-screen overflow-y-auto">
-          <div className="w-full bg-gray-50">
+          <div className="w-full bg-gray-50 ">
             <div className="w-full flex justify-between">
               <div className="w-3/12 bg-white pt-10 pl-4">
                 <CustomerDetails
@@ -62,30 +71,33 @@ const CustomerDetailsPage = (): JSX.Element => {
                       <h1 className="text-sm font-semibold text-inter text-gray-500">
                         Last Contact
                       </h1>
-                      <h2 className="text-sm text-inter text-gray-900 pt-1">
-                        Fri, 24th May, 2023
-                      </h2>
+                      {isCustomerInteractionLoading ? (
+                        <Spinner size="w-5 h-5" />
+                      ) : (
+                        <h2 className="text-sm text-inter text-gray-900 pt-1">
+                          {customerInteraction.data.customer_details.latest_interaction_time.slice(
+                            0,
+                            10
+                          )}
+                        </h2>
+                      )}
                     </div>
                     <div className="pl-6">
                       <h1 className="text-sm font-semibold text-inter text-gray-500">
                         Total Interaction
                       </h1>
-                      <h2 className="text-sm text-inter text-gray-900 pt-1">
-                        203
-                      </h2>
+                      {isCustomerInteractionLoading ? (
+                        <Spinner size="w-5 h-5" />
+                      ) : (
+                        <h2 className="text-sm text-inter text-gray-900 pt-1">
+                          {
+                            customerInteraction.data.customer_details
+                              .number_of__interaction
+                          }
+                        </h2>
+                      )}
                     </div>
-                    <div className="pl-6">
-                      <h1 className="text-sm font-semibold text-inter text-gray-500">
-                        Next Meet
-                      </h1>
-                      <h2 className="text-inter text-gray-900 pt-1">
-                        Fri, 24th May, 2023
-                      </h2>
-                      <div className="flex items-center gap-2 font-xs text-gray-500 pt-1">
-                        <small className="">Google meet</small>
-                        <FaLink classname="font-xs" />
-                      </div>
-                    </div>
+                    <NextMeetDetails />
                   </div>
                 </div>
                 <EmailCommunications />

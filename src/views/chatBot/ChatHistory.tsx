@@ -99,7 +99,7 @@ const ChatHistory = ({ chatData, timeframe, setChat }: any) => {
       console.log("error", error);
     }
   };
-
+  console.log("monthGroup", groupedChatData);
   return (
     <div className="border border-gray-300 rounded-lg p-4 w-96">
       <div className="flex justify-between pb-4 items-center">
@@ -125,7 +125,9 @@ const ChatHistory = ({ chatData, timeframe, setChat }: any) => {
                       : ""
                   } flex my-2 justify-between items-center py-2 rounded-md px-4 cursor-pointer  hover:bg-indigo-500 hover:text-white`}
                 >
-                  <p className="text-sm">{day.day}</p>
+                  <p className="text-sm">
+                    {day.day} {day.date}
+                  </p>
                   <FiDownload className="" />
                 </li>
               ))}

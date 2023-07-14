@@ -2,23 +2,22 @@ import { useState } from "react";
 import SelectOption from "./SelectOption";
 import { FaTimes } from "react-icons/fa";
 import Upload from "../../../components/icons/Upload";
+import Checkbox from "../../../components/Common/CheckBox";
 
-const people: any[] = [
-  { name: "Wade Cooper" },
-  { name: "Arlene Mccoy" },
-  { name: "Devon Webb" },
-  { name: "Tom Cook" },
-  { name: "Tanya Fox" },
-  { name: "Hellen Schmidt" },
-];
+const people: any[] = [{ name: "Copper CRM" }];
 
 const ImportCRMConfiguration = () => {
   const [selectedCRM, setSelectedCRM] = useState<any>();
   const [selectedFile, setSelectedFile] = useState<any>([]);
+  const [autoImport, setAutoImport] = useState<boolean>(true);
 
   const handleFileChange = (event: any) => {
     const files = event.target.files;
     setSelectedFile([...selectedFile, ...files]);
+  };
+
+  const handleCheckboxChange = (isChecked: boolean) => {
+    setAutoImport(isChecked);
   };
 
   return (
@@ -41,13 +40,19 @@ const ImportCRMConfiguration = () => {
           />
         </div>
         <div className="flex gap-4 items-center">
-          <input
+          <Checkbox
+            label="Option 2"
+            checked={autoImport}
+            onChange={handleCheckboxChange}
+          />
+          {/* <input
             id="terms"
             type="checkbox"
-            value=""
+            checked={isChecked}
+            onChange={handleCheckboxChange}
             className="w-4 h-4 border border-gray-300 rounded-2xl bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
             required
-          />
+          /> */}
           <p className="text-gray-50 text-sm font-medium">Auto Import</p>
         </div>
         <div className="w-full container mx-auto py-10">
@@ -86,6 +91,7 @@ const ImportCRMConfiguration = () => {
                 className="hidden"
                 multiple
                 onChange={handleFileChange}
+                disabled={autoImport}
               />
             </div>
           </label>

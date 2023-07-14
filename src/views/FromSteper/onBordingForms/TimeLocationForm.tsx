@@ -1,16 +1,24 @@
-import { GrLocation } from "react-icons/gr";
 import SelectOption from "./SelectOption";
-import { useState } from "react";
 import {
+  TimeFormatDataType,
   countries,
   dateFormatDate,
-  timeFormatData,
 } from "../../../utils/commonData";
+import Map from "../../../components/icons/Map";
 
-const TimeLocationForm = () => {
-  const [country, setCountry] = useState<any>();
-  const [dateFormat, setDateFormat] = useState<any>();
-  const [timeFormat, setTimeFormat] = useState<any>();
+export const timeFormatData: TimeFormatDataType[] = [
+  { id: 1, name: "24:00" },
+  { id: 2, name: "12:00" },
+];
+
+const TimeLocationForm = ({
+  country,
+  setCountry,
+  dateFormat,
+  setDateFormat,
+  timeFormat,
+  setTimeFormat,
+}: any) => {
   return (
     <div>
       <h1 className="text-xl text-white font-semibold border-b border-gray-700 pb-4">
@@ -29,12 +37,15 @@ const TimeLocationForm = () => {
               rounded="rounded-l-lg"
               placeholder="Choose one"
             />
+            {/* <AutoComplete
+              options={countries}
+              setSelected={country}
+              setSelectContacts={setCountry}
+              // selected={selected}
+              // isMultipleSelectModalOpen={isMultipleSelectModalOpen}
+            /> */}
             <span className="inline-flex cursor-pointer w-[130px] gap-2 items-center px-2 text-md font-medium text-gray-50 bg-gray-800 border border-r-1 border-gray-600 rounded-r-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
-              <GrLocation
-                className="text-lg text-gray-50"
-                style={{ color: "#fff" }}
-              />{" "}
-              Find me
+              <Map className="text-lg text-white" /> Find me
             </span>
           </div>
         </div>

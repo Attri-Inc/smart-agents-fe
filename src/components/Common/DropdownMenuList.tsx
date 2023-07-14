@@ -15,7 +15,7 @@ interface MenuListProps {
   setSelected: (value: Option) => void;
 }
 
-const SelectOption: React.FC<MenuListProps> = ({
+const DropdownMenuList: React.FC<MenuListProps> = ({
   options,
   selected,
   setSelected,
@@ -32,11 +32,11 @@ const SelectOption: React.FC<MenuListProps> = ({
           <Listbox.Button
             className={`relative cursor-pointer w-full ${
               rounded ? rounded : ""
-            }    border-gray-700 border bg-gray-800 py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm`}
+            }    border-gray-700 border bg-white py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm`}
           >
             <span
               className={`block truncate text-inter ${
-                selected ? "text-gray-50" : " text-gray-500"
+                selected ? "text-gray-700" : " text-gray-700"
               } font-medium text-sm `}
             >
               {selected ? selected.name : placeholder}
@@ -54,7 +54,7 @@ const SelectOption: React.FC<MenuListProps> = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto z-20 rounded-md bg-gray-700 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto z-20 rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {options.map((option: Option, personIdx: number) => (
                 <Listbox.Option
                   key={personIdx}
@@ -68,7 +68,7 @@ const SelectOption: React.FC<MenuListProps> = ({
                   {({ selected }) => (
                     <>
                       <span
-                        className={`block truncate text-inter text-gray-400 text-sm ${
+                        className={`block truncate text-inter text-gray-900 text-sm ${
                           selected ? "font-medium" : "font-normal"
                         }`}
                       >
@@ -86,4 +86,4 @@ const SelectOption: React.FC<MenuListProps> = ({
   );
 };
 
-export default SelectOption;
+export default DropdownMenuList;

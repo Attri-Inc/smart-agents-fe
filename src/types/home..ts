@@ -7,3 +7,8 @@ export interface TrendingTopicsType {
     label: string;
   }
   
+  export interface CountryType {
+    id: number;
+    name: string;
+    countryCode: string;
+  }

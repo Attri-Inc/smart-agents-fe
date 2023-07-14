@@ -1,4 +1,3 @@
-import { useGoogleLogin } from "@react-oauth/google";
 import { useEffect } from "react";
 import Logo from "../../assets/AISA-logo.png";
 import { TOKEN } from "../../constants/authentication";
@@ -9,7 +8,7 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { signUp } from "../../utils/authAPIHandler";
+import { gooogleLogin, signUp } from "../../utils/authAPIHandler";
 import Spinner from "../../components/Common/skeleton/Spinner";
 
 type FormValues = {
@@ -79,22 +78,10 @@ const Signup = () => {
     }
   };
 
-  const handleGoogleLogin = useGoogleLogin({
-    onSuccess: (codeResponse) => {
-      fetch(codeResponse.scope)
-        .then((data) => {
-          return data.json();
-        })
-        .then((post) => {
-          console.log("post", post);
-        });
-      if (codeResponse.code) {
-        localStorage.setItem(TOKEN, JSON.stringify(codeResponse.code));
-        navigate("/onboarding");
-      }
-    },
-    flow: "auth-code",
-  });
+  const handleGoogleLogin = async () => {
+    const response = await gooogleLogin();
+    console.log("response", response);
+  };
   return (
     <div className="w-full h-screen pb-8 flex items-center justify-center bg-authBackgoundColor">
       <div className="w-1/3 max-w-md flex-col flex justify-center items-center">
@@ -261,7 +248,7 @@ const Signup = () => {
                 {isSignupLoading && <Spinner size="h-4 w-4" />}
               </button>
               <button
-                onClick={() => handleGoogleLogin()}
+                onClick={handleGoogleLogin}
                 type="button"
                 className=" w-full text-indigo-700 bg-indigo-50  hover:bg-indigo-100 focus:ring-4 focus:outline-none focus:ring-indigo-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center dark:focus:ring-[#4285F4]/55 mr-2 mb-2"
               >
