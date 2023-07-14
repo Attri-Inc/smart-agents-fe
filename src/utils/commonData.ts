@@ -1,6 +1,7 @@
 export interface InterestTopicsKeywordType{
     id: number;
     label: string;
+    isSelected: boolean;
 }
 export interface TimeFormatDataType{
     id: number;
@@ -15,16 +16,16 @@ export interface DateFormatDataType{
     name: string;
 }
 export const interestTopicsKeyword: InterestTopicsKeywordType[] = [
-    {id: 1, label: "Artificial Intelligence"},
-    {id: 2, label: "Virtual Reality"},
-    {id: 3, label: "AR"},
-    {id: 4, label: "SaaS"},
-    {id: 5, label: "Entertainment"},
-    {id: 6, label: "LLM"},
-    {id: 7, label: "GPT-3"},
-    {id: 8, label: "Music"},
-    {id: 9, label: "Netflix"},
-    {id: 10, label: "Hollywood"},
+    {id: 1, label: "Artificial Intelligence", isSelected: false},
+    {id: 2, label: "Virtual Reality", isSelected: false},
+    {id: 3, label: "AR", isSelected: false},
+    {id: 4, label: "SaaS", isSelected: false},
+    {id: 5, label: "Entertainment", isSelected: false},
+    {id: 6, label: "LLM", isSelected: false},
+    {id: 7, label: "GPT-3", isSelected: false},
+    {id: 8, label: "Music", isSelected: false},
+    {id: 9, label: "Netflix", isSelected: false},
+    {id: 10, label: "Hollywood", isSelected: false},
 ]
 
 

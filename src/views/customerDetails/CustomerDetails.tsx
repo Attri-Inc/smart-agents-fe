@@ -4,15 +4,31 @@ import Mail from "../../components/icons/Mail";
 import Avatar from "../../assets/Ellipse 1.png";
 import { useNavigate } from "react-router-dom";
 import ProfileSkeleton from "../../components/Common/skeleton/ProfileSkeleton";
+import CustomeDialog from "../../components/Common/CustomDialog";
+import { MdEdit } from "react-icons/md";
+import { useState } from "react";
+import WorkFlowModal from "./WorkFlowModal";
+import ProfileModalForm from "./ProfileModalForm";
 
 const CustomerDetails = ({
   isError,
   isLoading,
   customerDetails,
 }: any): JSX.Element => {
+  const [isModalOpen, setisModalOpen] = useState<boolean>(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState<boolean>(false);
+  const toggleProfileModal = () => setIsProfileModalOpen(!isProfileModalOpen);
+  const toggleModal = () => setisModalOpen(!isModalOpen);
   const navigate = useNavigate();
+
   if (isLoading) return <ProfileSkeleton />;
-  if (isError) return <h1>Something is wrong!</h1>;
+  if (isError)
+    return (
+      <div className="h-screen">
+        {" "}
+        <h1>Something is wrong!</h1>
+      </div>
+    );
 
   return (
     <div>
@@ -42,7 +58,7 @@ const CustomerDetails = ({
           <div className="flex justify-center items-center gap-4 pt-2">
             <div>
               <span className="bg-indigo-50 block p-4 rounded-full">
-                <FaPlus className="text-indigo-500" />
+                <FaPlus className="text-indigo-500 text-xl font-bold" />
               </span>
               <p className="text-center text-sm font-semibold text-inter text-gray-500 pt-2">
                 Log
@@ -50,7 +66,10 @@ const CustomerDetails = ({
             </div>
             <div>
               <span className="bg-indigo-50 block p-4 rounded-full hover:text-indigo-400">
-                <Mail color="#6366F1" />
+                <Mail
+                  color="#6366F1"
+                  className="text-indigo-500 text-xl font-bold"
+                />
               </span>
               <p className="text-center text-sm font-semibold text-inter text-gray-500 pt-2">
                 Email
@@ -58,20 +77,36 @@ const CustomerDetails = ({
             </div>
             <div>
               <span className="bg-indigo-50 block p-4 rounded-full">
-                <Call color="#6366F1" />
+                <Call
+                  color="#6366F1"
+                  className="text-indigo-500 text-xl font-bold"
+                />
               </span>
               <p className="text-center text-sm font-semibold text-inter text-gray-500 pt-2">
                 Call
               </p>
             </div>
             <div>
-              <span className="bg-indigo-50 block p-4 rounded-full">
-                <FaBars className="text-indigo-500 text-xl font-bold" />
+              <span
+                className="bg-indigo-50 block p-4 rounded-full"
+                onClick={toggleModal}
+              >
+                <MdEdit className="text-indigo-500 text-xl font-bold" />
               </span>
               <p className="text-center text-sm font-semibold text-inter text-gray-500 pt-2">
-                More
+                Edit
               </p>
             </div>
+          </div>
+          <div
+            className="py-1 mt-4 w-full  px-4 border rounded-md border-gray-400 cursor-pointer hover:shadow-sm"
+            onClick={toggleProfileModal}
+          >
+            <div className="flex justify-between">
+              <p className="text-sm font-medium text-gray-700">Initial Call</p>
+              <span className="text-gray-700 cursor-pointer">...</span>
+            </div>
+            <p className="text-sm text-gray-500">Realstate Sales Funnel</p>
           </div>
         </div>
         <div>
@@ -123,6 +158,24 @@ const CustomerDetails = ({
           </div>
         </div>
       </div>
+
+      <CustomeDialog
+        title="Edit Contact Person"
+        isOpen={isModalOpen}
+        toggleModal={toggleModal}
+        width="w-5/12"
+        LogComminicationForm={<ProfileModalForm toggleModal={toggleModal} />}
+      />
+
+      <CustomeDialog
+        title="Add to Workflow"
+        isOpen={isProfileModalOpen}
+        toggleModal={toggleProfileModal}
+        width="w-4/12"
+        LogComminicationForm={
+          <WorkFlowModal toggleModal={toggleProfileModal} />
+        }
+      />
     </div>
   );
 };

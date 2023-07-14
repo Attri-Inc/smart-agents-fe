@@ -26,6 +26,8 @@ const TrendingTopics = (): JSX.Element => {
     isError,
   } = useQuery("trending_topics", fetchTrendingTopics);
 
+  console.log("trendingTopics", trendingTopics);
+
   const { data } = !isLoading && !isError && trendingTopics?.data;
   const getOtherLinks: any[] | string =
     !isLoading && !isError && Array.isArray(data.AI)
@@ -59,46 +61,43 @@ const TrendingTopics = (): JSX.Element => {
             <div className="w-full py-4">
               <h1 className="text-center text-inter">Something is wrong!</h1>
             </div>
-          ) : Array.isArray(getOtherLinks) ? (
-            getOtherLinks[1].map((topics: any) => (
+          ) : (
+            Object.keys(data).map((link: string) => (
               <>
-                <li
-                  className="border m-4 p-4 rounded-lg inline-block cursor-pointer"
-                  onClick={() => {
-                    const bodyText = topics.summary + " " + topics.link;
-                    console.log(topics.link, "topics.link");
+                {data[link].map((topics: any) => (
+                  <li
+                    className="border m-4 p-4 rounded-lg inline-block cursor-pointer"
+                    onClick={() => {
+                      const bodyText = topics.summary + " " + topics.link;
 
-                    toggle();
-                    setCurrentReadingTopic(topics);
-                    setEmailMessage(bodyText);
-                    setEmailSubject(topics.subject);
-                  }}
-                >
-                  <div className="w-96">
-                    <div className="flex gap-4">
-                      <div className="mt-2">
-                        <TrendingUp
-                          color="#4F46E5"
-                          className="font-medium text-indigo-600"
-                        />
+                      toggle();
+                      setCurrentReadingTopic(topics);
+                      setEmailMessage(bodyText);
+                      setEmailSubject(topics.subject);
+                    }}
+                  >
+                    <div className="w-96">
+                      <div className="flex gap-4">
+                        <div className="mt-2">
+                          <TrendingUp
+                            color="#4F46E5"
+                            className="font-medium text-indigo-600"
+                          />
+                        </div>
+                        <h1 className="font-inter text-base font-medium text-indigo-600 pb-2 break-words line-clamp-2">
+                          {topics.subject}
+                        </h1>
                       </div>
-                      <h1 className="font-inter text-base font-medium text-indigo-600 pb-2 break-words line-clamp-2">
-                        {topics.subject}
-                      </h1>
+                      <div className="">
+                        <p className="font-inter text-gray-500 break-words line-clamp-4">
+                          {topics.summary}
+                        </p>
+                      </div>
                     </div>
-                    <div className="">
-                      <p className="font-inter text-gray-500 break-words line-clamp-4">
-                        {topics.summary}
-                      </p>
-                    </div>
-                  </div>
-                </li>
+                  </li>
+                ))}
               </>
             ))
-          ) : (
-            <div className="w-full">
-              <h1 className="text-center py-8 text-inter ">{getOtherLinks}</h1>
-            </div>
           )}
         </ul>
       </div>

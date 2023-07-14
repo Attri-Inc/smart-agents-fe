@@ -1,15 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import React from "react";
-import QueryInput from "../components/Common/QueryInput";
-import Sidebar from "../components/sidebar";
+import QueryInput from "../../components/Common/QueryInput";
+import Sidebar from "../../components/sidebar";
 import { useQuery } from "react-query";
-import { getCustomerList } from "../utils/APIHelperFun";
-import Avatar from "../assets/Ellipse 1.png";
+import { getCustomerList } from "../../utils/APIHelperFun";
+import Avatar from "../../assets/Ellipse 1.png";
 import { FiClock } from "react-icons/fi";
-import LinkedIn from "../components/icons/LinkedIn";
-import Twitter from "../components/icons/Twitter";
-import Email from "../components/icons/Email";
-import TableSkeleton from "../components/Common/skeleton/TableSkeleton";
+import LinkedIn from "../../components/icons/LinkedIn";
+import Twitter from "../../components/icons/Twitter";
+import Email from "../../components/icons/Email";
+import TableSkeleton from "../../components/Common/skeleton/TableSkeleton";
 
 const Customers = (): JSX.Element => {
   const [userAskedText, setUserAskedText] = React.useState<any>();
@@ -43,6 +43,7 @@ const Customers = (): JSX.Element => {
               Your Contact
             </h1>
             <div className="w-8/12">
+              {/* <Table columns={column} data={data} /> */}
               <table className="border-x border-b w-full text-sm text-left text-gray-500 h-screen">
                 <thead className="border-y font-inter text-xs text-gray-500 uppercase bg-gray-50">
                   <tr className="divider-gray-200">

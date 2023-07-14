@@ -60,6 +60,15 @@ export const getCustomerDetails = async (email: string): Promise<any> => {
   const data = await apiClient.get(`/customer?registered_email=${email}`);
   return data;
 };
+export const getCustomerNextMeetDetails = async (email: string): Promise<any> => {
+  const data = await apiClient.get(`/next_meeting?registered_email=${email}`);
+  return data;
+};
+
+export const addToWorkflow = async (formData: any): Promise<any> => {
+  const data = await apiClient.post(`manual_workflow/`, formData);
+  return data;
+};
 
 export const customerChat = async (query: string): Promise<any> => {
   const data = await apiClient.get(`/chat?query=${query}`);

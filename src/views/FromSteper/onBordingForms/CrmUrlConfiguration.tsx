@@ -1,14 +1,7 @@
 import { useState } from "react";
 import SelectOption from "./SelectOption";
 
-const people: any[] = [
-  { name: "Wade Cooper" },
-  { name: "Arlene Mccoy" },
-  { name: "Devon Webb" },
-  { name: "Tom Cook" },
-  { name: "Tanya Fox" },
-  { name: "Hellen Schmidt" },
-];
+const people: any[] = [{ name: "Copper CRM" }];
 
 const CrmUrlConfiguration = () => {
   const [selectedCRM, setSelectedCRM] = useState<any>();
