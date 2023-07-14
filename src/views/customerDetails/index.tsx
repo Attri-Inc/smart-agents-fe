@@ -59,6 +59,7 @@ const CustomerDetailsPage = (): JSX.Element => {
             <div className="w-full flex justify-between">
               <div className="w-3/12 bg-white pt-10 pl-4">
                 <CustomerDetails
+                  toggleLogModal={toggleModal}
                   customerDetails={customer_details}
                   isLoading={isCustomerDetailsLoading}
                   isError={isCustomerDetailsErorr}
@@ -114,17 +115,16 @@ const CustomerDetailsPage = (): JSX.Element => {
           </div>
         </div>
       </div>
-      {isModalOpen && (
-        <CustomeDialog
-          title="Log Communication"
-          isOpen={isModalOpen}
-          toggleModal={toggleModal}
-          width="w-4/12"
-          LogComminicationForm={
-            <LogCommunicationForm toggleModal={toggleModal} />
-          }
-        />
-      )}
+
+      <CustomeDialog
+        title="Log Communication"
+        isOpen={isModalOpen}
+        toggleModal={toggleModal}
+        width="w-4/12"
+        LogComminicationForm={
+          <LogCommunicationForm toggleModal={toggleModal} />
+        }
+      />
     </>
   );
 };

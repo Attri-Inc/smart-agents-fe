@@ -14,6 +14,7 @@ const CustomerDetails = ({
   isError,
   isLoading,
   customerDetails,
+  toggleLogModal,
 }: any): JSX.Element => {
   const [isModalOpen, setisModalOpen] = useState<boolean>(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState<boolean>(false);
@@ -57,7 +58,10 @@ const CustomerDetails = ({
           </div>
           <div className="flex justify-center items-center gap-4 pt-2">
             <div>
-              <span className="bg-indigo-50 block p-4 rounded-full">
+              <span
+                onClick={toggleLogModal}
+                className="bg-indigo-50 block p-4 rounded-full cursor-pointer"
+              >
                 <FaPlus className="text-indigo-500 text-xl font-bold" />
               </span>
               <p className="text-center text-sm font-semibold text-inter text-gray-500 pt-2">
@@ -65,7 +69,7 @@ const CustomerDetails = ({
               </p>
             </div>
             <div>
-              <span className="bg-indigo-50 block p-4 rounded-full hover:text-indigo-400">
+              <span className="bg-indigo-50 block p-4 rounded-full hover:text-indigo-400 cursor-pointer">
                 <Mail
                   color="#6366F1"
                   className="text-indigo-500 text-xl font-bold"
@@ -76,7 +80,7 @@ const CustomerDetails = ({
               </p>
             </div>
             <div>
-              <span className="bg-indigo-50 block p-4 rounded-full">
+              <span className="bg-indigo-50 block p-4 rounded-full cursor-pointer">
                 <Call
                   color="#6366F1"
                   className="text-indigo-500 text-xl font-bold"
@@ -88,7 +92,7 @@ const CustomerDetails = ({
             </div>
             <div>
               <span
-                className="bg-indigo-50 block p-4 rounded-full"
+                className="bg-indigo-50 block p-4 rounded-full cursor-pointer"
                 onClick={toggleModal}
               >
                 <MdEdit className="text-indigo-500 text-xl font-bold" />

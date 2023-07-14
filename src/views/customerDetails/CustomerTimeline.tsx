@@ -61,8 +61,8 @@ const CustomerTimeline = ({ toggleModal }: Props) => {
                 !timeLinesDataEror &&
                 interaction_items?.map((timeline: any, index: any) => {
                   const color =
-                    timelineColurs[timeline.interaction_type.toLowerCase()] &&
-                    timelineColurs[timeline.interaction_type.toLowerCase()]
+                    timelineColurs[timeline.registered_email.toLowerCase()] &&
+                    timelineColurs[timeline.registered_email.toLowerCase()]
                       .bgColor;
                   return (
                     <li className={`mb-10 ml-6 marker:`} key={index}>
@@ -70,16 +70,16 @@ const CustomerTimeline = ({ toggleModal }: Props) => {
                         className={`absolute flex items-center justify-center w-8 h-8 ${color} rounded-full -left-3.5 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900`}
                       >
                         {timelineColurs[
-                          timeline.interaction_type.toLowerCase()
+                          timeline.registered_email.toLowerCase()
                         ] &&
                           timelineColurs[
-                            timeline.interaction_type.toLowerCase()
+                            timeline.registered_email.toLowerCase()
                           ].icon}
                       </span>
                       <div className="w-full pl-2">
                         <div className="flex justify-between items-center">
                           <h1 className="capitalize">
-                            {timeline.interaction_type}
+                            {timeline.registered_email}
                           </h1>
                           <h1 className="text-gray-500 text-lg">...</h1>
                         </div>
